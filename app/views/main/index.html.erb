@@ -1,0 +1,153 @@
+<html>
+  <header>
+  </header>
+  <body style="margin: 0px; padding: 0px;">
+    <div style="display: table; width: 97%;margin-top: 1vh;margin-left: auto;margin-right: auto">
+      <div style="display: table-row;">
+        <div style="width: 80%;float: left;" class="header-cell">
+            <table style="width: 100%;">
+              <tr>
+                <td style="text-align: right;width: 30%;" >
+                  <div style="display: table-row">
+                    <div style="display: table-cell;">
+                      <strong>Scan Patient Barcode</strong>
+                    </div>
+                    <div style="display: table-cell;float: right;">
+                      <img style="display: block;height: 30px;" src="/assets/barcode.jpg">
+                    </div>
+                  </div>
+                </td>
+                <td style="border: 0em !important;" colspan="6">
+                  <input type="text" id="barcode" class="scanner" style="width: 95%;" autofocus>
+                </td>
+              </tr>
+              <tr>
+                <td style="border: 0em !important;padding: 10px;">
+                  &nbsp;
+                </td>
+                <td style="border: 0em !important;">
+                  <b>Facility</b>
+                </td>
+                <td style="border: 0em !important;">
+                  <b>:</b>
+                </td>
+                <td style="border: 0em !important;">
+                  San Jose del Negrito
+                </td>
+                <td style="border: 0em !important;">
+                  <b>User</b>
+                </td>
+                <td style="border: 0em !important;">
+                  <b>:</b>
+                </td>
+                <td style="border: 0em !important;">
+                  <%= User.current.display_name%>
+                </td>
+              </tr>
+            </table>
+        </div>
+        <div class="header-cell" style="float: right; width: 13%;text-align: center;vertical-align: middle;">
+            <h2>eDX</h2>
+          <%= Date.today.strftime("%d %b %Y")%>
+        </div>
+      </div>
+
+      <div style="border: 3px solid #06425C;margin-top: 3vh;height: 60vh;">
+          <div style="width: 100%; background-color: #006495;height: 4vh;text-align: center;color: white;padding-top: 1vh;">
+              <span style="font-size: 20px;font-weight: bold;">Actions</span>
+          </div>
+          <div style="display: table; padding-top: 10px;padding-left: 10px;margin-left: auto;margin-right: auto;">
+            <div style="display: table-row">
+              <div onmousedown="window.location='/general_inventory/new'" style="display: table-cell;padding: 20px;">
+                <img  src="/assets/add_drugs.png">
+              </div>
+              <div onmousedown="window.location='/general_inventory'" style="display: table-cell;padding: 20px;">
+                <img src="/assets/available_drugs.png">
+              </div>
+              <div onmousedown="window.location='/general_inventory'" style="display: table-cell;padding: 20px;">
+                <img src="/assets/mobile_clinic.png">
+              </div>
+              <div style="display: table-cell;padding: 20px;">
+                <img src="/assets/report.png">
+              </div>
+              <div onmousedown="window.location='/main/settings'"style="display: table-cell;padding: 20px;">
+                <img src="/assets/settings.png">
+              </div>
+            </div>
+            <div style="display: table-row">
+              <div style="display: table-cell;text-align: center;" onmousedown="window.location='/general_inventory/new'">
+                Add Item
+              </div>
+              <div onmousedown="window.location='/general_inventory'" style="display: table-cell;text-align: center;">
+                View Inventory
+              </div>
+              <div onmousedown="window.location='/general_inventory'" style="display: table-cell;text-align: center;">
+                Mobile Clinic
+              </div>
+              <div style="display: table-cell;text-align: center;">
+                Reports
+              </div>
+              <div onmousedown="window.location='/main/settings'" style="display: table-cell;text-align: center;">
+                Settings
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="footer" >
+      <button onmousedown="window.location = '/logout'" class="bttn bttn-danger bttn-lg gradient" style="margin-top: 1vh;height: 8vh;margin-left: 2vh;" type="button">Logout</button>
+    </div>
+  </body>
+
+  <script type="text/javascript">
+    var timerHand;
+
+    function checkBarcode()
+    {
+      console.log("Checking")
+      var barcodeTxt = document.getElementById("barcode");
+      if (barcodeTxt.value.trim().match(/[A-Z0-9]+\$/)) {
+
+        if ((barcodeTxt.value.trim().replace(/\$/, "")).replace(/\-/,"").toUpperCase().length == 7)
+        {
+          window.location = "/patient/"+barcodeTxt.value.trim().replace(/\$/, "").replace(/\-/,"");
+        }
+        else
+        {
+          barcodeTxt.value = "";
+          initializeListener();
+        }
+
+      }
+      else
+      {
+        initializeListener();
+      }
+    }
+
+    function cancelDispense()
+    {
+      initializeListener();
+      hideLayer('backGround','dispenseForm')
+    }
+
+
+    function initializeListener()
+    {
+      document.getElementById("barcode").focus();
+      timerHand = setTimeout(function () {
+        checkBarcode();
+      }, 3000);
+
+    }
+
+
+    $('.editRx').on('click', function(e) {
+      clearTimeout(timerHand);
+    });
+
+    setTimeout(initializeListener(), 3000);
+  </script>
+
+</html>

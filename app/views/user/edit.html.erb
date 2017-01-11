@@ -1,0 +1,19 @@
+<%= javascript_include_tag "barcode" %>
+<script>
+  var tt_cancel_destination = "/main/settings"
+  //barcodeFocusOnce = true;
+  //barcodeScanAction = gotoNextPage;
+</script>
+
+<%= form_for :user, :url => edit_user_path  do |f| %>
+
+    <select id="language_preference" name="language_preference" helpText="Language Preference">
+      <option></option>
+      <% (languages).each do |w| %>
+          <option value="<%= w[0] %>"><%= w[1] %></option>
+      <% end %>
+    </select>
+
+    <%= hidden_field_tag 'user_id', @user.id%>
+    <%= submit_tag value="Submit"%>
+<% end %>

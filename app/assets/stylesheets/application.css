@@ -1,0 +1,192 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+body{
+    font-family: "Nimbus Sans L", "Arial Narrow", sans-serif;
+    overflow: hidden;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;
+}
+
+table.th{
+    text-align: left;
+}
+div.footer{
+    position: absolute;
+    bottom: 0px;
+    height: 10vh;
+    width: 100%;
+    background-color: #666;
+    margin: 0px;
+    margin-bottom: 0px;
+}
+
+.bttn {
+    padding: 14px 24px;
+    border: 0 none;
+    font-weight: 700;
+    font-size: inherit !important;
+    font-family: "Nimbus Sans L", "Arial Narrow", sans-serif !important;
+    letter-spacing: 1px;
+    line-height: inherit !important;
+    text-transform: uppercase;
+}
+
+.bttn:focus, .bttn:active:focus, .bttn.active:focus {
+    outline: 0 none;
+}
+
+.bttn-primary {
+    background: #0099cc;
+    color: #ffffff;
+    background: -moz-linear-gradient(top,  #33a6cc 50%, #0099cc 50%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#33a6cc), color-stop(50%,#0099cc)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #33a6cc 50%,#0099cc 50%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #33a6cc 50%,#0099cc 50%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #33a6cc 50%,#0099cc 50%); /* IE10+ */
+    background: linear-gradient(to bottom,  #33a6cc 50%,#0099cc 50%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33a6cc', endColorstr='#0099cc',GradientType=0 ); /* IE6-9 */
+}
+
+.bttn-default {
+    border: 2px solid #C4C4C4;
+    color: #737373;
+    padding: 12px 22px;
+}
+.bttn-success {
+    background: #00bf6f;
+    color: #ffffff;
+    background: -moz-linear-gradient(top,  #39bf87 50%, #00bf6f 50%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#39bf87), color-stop(50%,#00bf6f)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #39bf87 50%,#00bf6f 50%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #39bf87 50%,#00bf6f 50%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #39bf87 50%,#00bf6f 50%); /* IE10+ */
+    background: linear-gradient(to bottom,  #39bf87 50%,#00bf6f 50%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#39bf87', endColorstr='#00bf6f',GradientType=0 ); /* IE6-9 */
+}
+.bttn-info {
+    background: #31cde8;
+    color: #ffffff;
+    background: -moz-linear-gradient(top,  #5fd4e8 50%, #31cde8 50%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#5fd4e8), color-stop(50%,#31cde8)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #5fd4e8 50%,#31cde8 50%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #5fd4e8 50%,#31cde8 50%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #5fd4e8 50%,#31cde8 50%); /* IE10+ */
+    background: linear-gradient(to bottom,  #5fd4e8 50%,#31cde8 50%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5fd4e8', endColorstr='#31cde8',GradientType=0 ); /* IE6-9 */
+}
+.bttn-warning {
+    background: #eb8f34;
+    color: #ffffff;
+    background: -moz-linear-gradient(top,  #eba259 50%, #eb8f34 50%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#eba259), color-stop(50%,#eb8f34)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #eba259 50%,#eb8f34 50%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #eba259 50%,#eb8f34 50%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #eba259 50%,#eb8f34 50%); /* IE10+ */
+    background: linear-gradient(to bottom,  #eba259 50%,#eb8f34 50%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eba259', endColorstr='#eb8f34',GradientType=0 ); /* IE6-9 */
+}
+.bttn-danger {
+    background: #f25454;
+    color: #ffffff;
+    background: -moz-linear-gradient(top,  #f26d6d 50%, #f25454 50%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#f26d6d), color-stop(50%,#f25454)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #f26d6d 50%,#f25454 50%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #f26d6d 50%,#f25454 50%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #f26d6d 50%,#f25454 50%); /* IE10+ */
+    background: linear-gradient(to bottom,  #f26d6d 50%,#f25454 50%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f26d6d', endColorstr='#f25454',GradientType=0 ); /* IE6-9 */
+}
+
+div.header-cell{
+    border: 3px outset blue;
+    box-shadow: 4px 4px grey;
+    height: 15vh;
+    display: table-cell;
+    padding: 10px;
+    font-size: 18px;
+}
+.scanner{
+    border: 0px;
+    border-bottom: 1px solid black !important;
+    font-size: 30px;
+    letter-spacing: 1px;
+}
+
+.opaqueLayer
+{
+    display:none;
+    position:absolute;
+    top:0px;
+    left:0px;
+    opacity:0.6;
+    filter:alpha(opacity=60);
+    background-color: #000000;
+    z-Index:1000;
+}
+
+.questionLayer
+{
+    position:absolute;
+    display:none;
+    z-Index:1001;
+
+
+}
+
+#shadow, #question {
+    -moz-user-select: none;
+}
+.table {
+    border-collapse: collapse !important;
+}
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #ddd !important;
+}
+div.male{
+    height: 45px;
+    background-color: rgb(201, 212, 236);
+    border: 2px solid rgb(73, 93, 135);
+    border-radius: 15px;
+    display: table-cell;
+    padding: 10px;
+}
+
+div.female{
+    height: 45px;
+    background-color: rgb(253, 216, 248);
+    border: 2px solid magenta;
+    border-radius: 30px;
+    display: table-cell;
+    padding: 5px;
+    width: 45px;
+    margin: 5px;
+}
+.dialogBox{
+    display: table;
+    background-color: #F9F6F4;
+    height: 30vh;
+    width: 30vw;
+    margin-top: 20vh;
+    margin-left: 30vw;
+    border: 5px outset #003366;
+    border-radius: 15px;
+}

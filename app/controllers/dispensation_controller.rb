@@ -1,0 +1,2 @@
+class DispensationController < ApplicationController
+end

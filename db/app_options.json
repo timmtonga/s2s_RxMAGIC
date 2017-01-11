@@ -1,0 +1,3 @@
+{"dose_forms": ["Inhalant", "Spray", "Cream", "Foam", "Oil", "Solution", "Suspension", "Lotion","Bar", "Capsule",
+  "Gel", "Ointment", "Paste", "Powder", "Tablet"], "dose_units": ["grams/Litre", "mg/Litre", "grams/ml","g/ml",
+  "grams","miligrams","kilograms","Liter", "Milliliter", "Mole"], "languages":[["ENG", "English"],["ESP", "Spanish"]]}

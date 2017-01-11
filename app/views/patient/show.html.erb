@@ -1,0 +1,109 @@
+<html>
+  <header>
+
+  </header>
+  <body style="margin: 0px; padding: 0px;">
+    <div style="display: table; width: 97%;margin-top: 1vh;margin-left: auto;margin-right: auto">
+      <div style="display: table-row;">
+      <div style="width: 70%;float: left;" class="header-cell">
+        <table style="width: 100%;">
+          <tr>
+            <td rowspan="3">
+                <div class="<%=@patient.gender.downcase%>">
+                  <img src="/assets/<%=@patient.gender.downcase%>.png">
+                </div>
+            </td>
+            <td colspan="6">
+              <span style="font-weight: bold;font-size: 25px;"><%= @patient.fullname %></span>
+            </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <th style="text-align: left;">Patient #</th>
+            <th>:</th>
+            <td><%= @patient.formatted_pnid %></td>
+            <th style="text-align: left;">Age</th>
+            <th>:</th>
+            <td><%= @patient.age %></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <th style="text-align: left;">National ID</th>
+            <th>:</th>
+            <td><%= @patient.nat_id %></td>
+            <th style="text-align: left;">Marital Status</th>
+            <th>:</th>
+            <td><%= @patient.marital_status %></td>
+          </tr>
+        </table>
+      </div>
+      <div class="header-cell" style="float: right; width: 23%;">
+        <div style="display: table-row">
+          <div style="display: table-cell;vertical-align: top;">
+            <img style="height: 30px;" src="/assets/barcode.jpg">
+            <strong>Scan Bottle</strong>
+          </div>
+        </div>
+        <div style="display: table-row">
+          <div style="display: table-cell;">
+            <input type="text" id="barcode" class="scanner" style="width: 95%;" autofocus>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="footer" >
+      <button class="bttn bttn-success bttn-lg gradient" style="margin-top: 1vh;height: 8vh;
+          margin-right: 2vh;float: right;" type="button" onmousedown="window.location='/'">Finish</button>
+    </div>
+  </body>
+
+  <script type="text/javascript">
+    var timerHand;
+
+    function checkBarcode()
+    {
+      var barcodeTxt = document.getElementById("barcode");
+      if (barcodeTxt.value.trim().match(/[A-Z0-9]+\$/)) {
+
+        if ((barcodeTxt.value.trim().replace(/\$/, "")).replace(/\-/,"").toUpperCase().length == 7)
+        {
+////
+        }
+        else
+        {
+          barcodeTxt.value = "";
+          initializeListener();
+        }
+
+      }
+      else
+      {
+        initializeListener();
+      }
+    }
+
+    function cancelDispense()
+    {
+      initializeListener();
+      hideLayer('backGround','dispenseForm')
+    }
+
+
+    function initializeListener()
+    {
+      document.getElementById("barcode").focus();
+      timerHand = setTimeout(function () {
+        checkBarcode();
+      }, 3000);
+
+    }
+
+
+    $('.editRx').on('click', function(e) {
+      clearTimeout(timerHand);
+    });
+
+    setTimeout(initializeListener(), 3000);
+  </script>
+</html>

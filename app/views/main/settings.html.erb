@@ -1,0 +1,39 @@
+<div style="height: 8vh;border: 1px inset black; border-width: 0px 0px 3px 0px;">
+  <h1 style="margin-left: 2vw;">Settings</h1>
+</div>
+
+<div style="height: 60vh;">
+  <div style="display: table; padding-top: 10px;padding-left: 10px;margin-left: auto;margin-right: auto;">
+    <div style="display: table-row">
+      <div onmousedown="window.location='/user/update_password'" style="display: table-cell;width: 10vw;">
+        <img style="margin-left: 3vw;" src="/assets/change_password.png">
+      </div>
+      <div onmousedown="window.location='/user/<%= User.current.id%>/edit'" style="display: table-cell;width: 10vw;">
+        <img style="margin-left: 3vw;" src="/assets/change_language.png">
+      </div>
+      <div style="display: table-cell;width: 10vw;" onmousedown="window.location='/drug'">
+        <img style="margin-left: 3vw;" src="/assets/drugs_list.png">
+      </div>
+      <div onmousedown="window.location='/user'"style="display: table-cell;width: 10vw;">
+        <img style="margin-left: 3vw;" src="/assets/user_edit.png">
+      </div>
+    </div>
+    <div style="display: table-row">
+      <div style="display: table-cell;text-align: center;padding: 10px;" onmousedown="window.location='/user/update_password'">
+        Change User Password
+      </div>
+      <div style="display: table-cell;text-align: center;padding: 10px;" onmousedown="window.location='/user/<%= User.current.id%>/edit'">
+        Change Language Preference
+      </div>
+      <div style="display: table-cell;text-align: center;" onmousedown="window.location='/drug'">
+        Manage Drug List
+      </div>
+      <div style="display: table-cell;text-align: center;padding: 10px;" onmousedown="window.location='/user'">
+        Manage Users
+      </div>
+    </div>
+  </div>
+</div>
+<div class="footer" >
+  <button onmousedown="window.location = '/'" class="bttn bttn-success bttn-lg gradient" style="margin-top: 1vh;height: 8vh;margin-right: 2vh;float: right;" type="button">Finish</button>
+</div>

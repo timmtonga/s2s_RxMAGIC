@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>eDispensing</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'jquery-1.12.0.min.js' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body style="background-color: white;">
+  <div id="shadow" class="opaqueLayer"> </div>
+  <div id="question" class="questionLayer" style="font-size: 0.9em;">
+    <div class="dialogBox">
+      <div style="display: table-row">
+        <div style="display: table-cell; text-align: center;">
+          &nbsp;
+        </div>
+      </div>
+      <div style="display: table-row">
+        <div style="display: table-cell; text-align: center;">
+          <h2 id="message">Are you sure?</h2>
+        </div>
+      </div>
+      <div style="display: table-row">
+        <div style="display: table-cell; text-align: center;">
+          <button id="bttnYes"><span>Yes</span></button>
+          <button onMouseDown="hideLayer('shadow', 'question')"><span>No</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%= yield %>
+
+</body>
+</html>
