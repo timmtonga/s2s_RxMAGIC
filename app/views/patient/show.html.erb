@@ -1,56 +1,255 @@
-<html>
+<html xmlns="http://www.w3.org/1999/html">
   <header>
-
+      <style type="text/css">
+        th.tab{
+          border: 1px outset silver;
+          background-color: #39bf87;
+          padding: 15px;
+        }
+        div.mobi-div{
+          padding-left: 10px;
+          padding-top: 5px;
+        }
+      </style>
   </header>
   <body style="margin: 0px; padding: 0px;">
-    <div style="display: table; width: 97%;margin-top: 1vh;margin-left: auto;margin-right: auto">
-      <div style="display: table-row;">
-      <div style="width: 70%;float: left;" class="header-cell">
-        <table style="width: 100%;">
-          <tr>
-            <td rowspan="3">
-                <div class="<%=@patient.gender.downcase%>">
-                  <img src="/assets/<%=@patient.gender.downcase%>.png">
+
+    <div id="dispenseForm" class="questionLayer" style="font-size: 0.9em;">
+      <div style="margin-top: 10vh;margin-left: 15vw; height: 60vh;width: 70vw;background-color: #eeeeff;border: 3px outset black;">
+          <table style="width: 100%; border: 2px solid black; border-width: 0px 0px 2px 0px;">
+            <tr>
+              <td style="width: 20%;">Bottle ID</td>
+              <th id="bottle_id" style="text-align: left;width: 20%;">&nbsp;</th>
+              <td style="text-align: left;width: 20%;">Directions</td>
+              <th style="text-align: left;">&nbsp;</th>
+              <td style="width: 5%;" rowspan="2">
+                <img style="padding-right: 2px;float: right;" src="/assets/delete.png" onmousedown="cancelDispense()">
+              </td>
+            </tr>
+            <tr>
+              <td>Route</td>
+              <th style="text-align: left;">&nbsp;</th>
+              <td>Quantity</td>
+              <td style="text-align: left;">&nbsp;</td>
+            </tr>
+          </table>
+        <div style="display: table;width: 100%;">
+          <div style="display: table-row">
+            <div style="display: table-cell;width: 15%;padding: 5px;vertical-align: top;">
+                <table width="100%" style="border-collapse:separate;border-spacing:0 10px;">
+                  <tr>
+                    <th class="tab" onmousedown="showDispenseDiv('routesDiv')">Administration Route</th>
+                  </tr>
+                  <tr>
+                    <th class="tab" onmousedown="showDispenseDiv('doseDiv')">Dose</th>
+                  </tr>
+                  <tr>
+                    <th class="tab" onmousedown="showDispenseDiv('directionsDiv')">Directions</th>
+                  </tr>
+                  <tr>
+                    <th class="tab" onmousedown="showDispenseDiv('qtyDiv')">QTY/Duration</th>
+                  </tr>
+                </table>
+            </div>
+            <div style="display: table-cell;border: 2px solid black;border-width: 0px 0px 0px 2px;height: 50vh;">
+              <div class="mobi-div" id="routesDiv" >
+                <h2>Select Route of Administration</h2>
+                <table width="100" style="border-collapse: collapse">
+                  <tr>
+                    <td>
+                      <div class="radioDiv">
+                        <input type="radio" name="administration" class="radio" id="route-oral">
+                        <label class="custom" for="route-oral">Oral</label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="radioDiv">
+                        <input type="radio" name="administration" class="radio" id="route-topical">
+                        <label class="custom" for="route-topical"> Topical </label>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="radioDiv">
+                        <input type="radio" name="administration" class="radio" id="route-respiratory">
+                        <label class="custom" for="route-respiratory"> Respiratory</label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="radioDiv">
+                        <input type="radio" name="administration" class="radio" id="route-injection">
+                        <label class="custom" for="route-injection"> Injection</label>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="radioDiv">
+                        <input type="radio" name="administration" class="radio" id="route-other">
+                        <label class="custom" for="route-other"> Other </label>
+                      </div>
+                    </td>
+                    <td>
+                      &nbsp;
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="mobi-div" id="directionsDiv" style="display: none;">
+                <h2>Select directions</h2>
+                <table width="100" style="border-collapse: collapse">
+                  <tr>
+                    <td>
+                      <div class="radioDiv">
+                        <input type="radio" name="frequency" class="radio" id="OD">
+                        <label class="custom" for="OD">Once a day</label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="radioDiv">
+                        <input type="radio" name="frequency" class="radio" id="BD">
+                        <label class="custom" for="BD"> Twice a day </label>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="radioDiv">
+                        <input type="radio" name="frequency" class="radio" id="TDS">
+                        <label class="custom" for="TDS"> Three times a day</label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="radioDiv">
+                        <input type="radio" name="frequency" class="radio" id="QID">
+                        <label class="custom" for="QID"> Four times a day</label>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="radioDiv">
+                        <input type="radio" name="frequency" class="radio" id="5XD">
+                        <label class="custom" for="5XD">Five times a day</label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="radioDiv">
+                        <input type="radio" name="frequency" class="radio" id="Q4HRS">
+                        <label class="custom" for="Q4HRS"> Six times a day</label>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="radioDiv">
+                        <input type="radio" name="frequency" class="radio" id="QOD">
+                        <label class="custom" for="QOD"> Every other day</label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="radioDiv">
+                        <input type="radio" name="frequency" class="radio" id="QWK">
+                        <label class="custom" for="QWK"> Once a week</label>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="mobi-div" id="qtyDiv" style="display: none;">
+                <div style="margin-top: 5px;">
+                  <label for="qty"><span style="font-weight: bold;font-size: 20px;">Enter Quantity</span></label>
+                  <input type="text" id="qty" style="font-size: 20px;">
                 </div>
-            </td>
-            <td colspan="6">
-              <span style="font-weight: bold;font-size: 25px;"><%= @patient.fullname %></span>
-            </td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <th style="text-align: left;">Patient #</th>
-            <th>:</th>
-            <td><%= @patient.formatted_pnid %></td>
-            <th style="text-align: left;">Age</th>
-            <th>:</th>
-            <td><%= @patient.age %></td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <th style="text-align: left;">National ID</th>
-            <th>:</th>
-            <td><%= @patient.nat_id %></td>
-            <th style="text-align: left;">Marital Status</th>
-            <th>:</th>
-            <td><%= @patient.marital_status %></td>
-          </tr>
-        </table>
-      </div>
-      <div class="header-cell" style="float: right; width: 23%;">
-        <div style="display: table-row">
-          <div style="display: table-cell;vertical-align: top;">
-            <img style="height: 30px;" src="/assets/barcode.jpg">
-            <strong>Scan Bottle</strong>
-          </div>
-        </div>
-        <div style="display: table-row">
-          <div style="display: table-cell;">
-            <input type="text" id="barcode" class="scanner" style="width: 95%;" autofocus>
+                <div style="margin-top: 5px;">
+                  <table width="100" style="border-collapse: collapse">
+                    <tr>
+                      <td style="padding: 2px;"><button onmousedown="appendToQuantity(1)"><span>1</span></button></td>
+                      <td style="padding: 2px;"><button onmousedown="appendToQuantity(2)"><span>2</span></button></td>
+                      <td style="padding: 2px;"><button onmousedown="appendToQuantity(3)"><span>3</span></button></td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 2px;"><button onmousedown="appendToQuantity(4)"><span>4</span></button></td>
+                      <td style="padding: 2px;"><button onmousedown="appendToQuantity(5)"><span>5</span></button></td>
+                      <td style="padding: 2px;"><button onmousedown="appendToQuantity(6)"><span>6</span></button></td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 2px;"><button onmousedown="appendToQuantity(7)"><span>7</span></button></td>
+                      <td style="padding: 2px;"><button onmousedown="appendToQuantity(8)"><span>8</span></button></td>
+                      <td style="padding: 2px;"><button onmousedown="appendToQuantity(9)"><span>9</span></button></td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 2px;"><button onmousedown="appendToQuantity(0)"><span>0</span></button></td>
+                      <td style="padding: 2px;"><button onmousedown="appendToQuantity('.')"><span>.</span></button></td>
+                      <td style="padding: 2px;"><button onmousedown="appendToQuantity('del')"><span>del</span></button></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+    <div style="display: table; width: 97%;margin-top: 1vh;margin-left: auto;margin-right: auto">
+      <div style="display: table-row;">
+        <div style="width: 70%;float: left;" class="header-cell">
+          <table style="width: 100%;">
+            <tr>
+              <td rowspan="3">
+                  <div class="<%=@patient.gender.downcase%>">
+                    <img src="/assets/<%=@patient.gender.downcase%>.png">
+                  </div>
+              </td>
+              <td colspan="6">
+                <span style="font-weight: bold;font-size: 25px;"><%= @patient.fullname %></span>
+              </td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <th style="text-align: left;">Patient #</th>
+              <th>:</th>
+              <td><%= @patient.formatted_pnid %></td>
+              <th style="text-align: left;">Age</th>
+              <th>:</th>
+              <td><%= @patient.age %></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <th style="text-align: left;">National ID</th>
+              <th>:</th>
+              <td><%= @patient.nat_id %></td>
+              <th style="text-align: left;">Marital Status</th>
+              <th>:</th>
+              <td><%= @patient.marital_status %></td>
+            </tr>
+          </table>
+        </div>
+        <div class="header-cell" style="float: right; width: 23%;">
+          <div style="display: table-row">
+            <div style="display: table-cell;vertical-align: top;">
+              <img style="height: 30px;" src="/assets/barcode.jpg">
+              <strong>Scan Bottle</strong>
+            </div>
+          </div>
+          <div style="display: table-row">
+            <div style="display: table-cell;">
+              <input type="text" id="barcode" class="scanner" style="width: 95%;" autofocus>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display: table-row;">
+        <div style="border: 1px solid blue;margin-top: 15px; height: 65vh; ">
+            <% if has_prescribe %>
+              <%= render '/patient/prescribe_view' %>
+            <% else %>
+              <%= render '/patient/dispense_view' %>
+            <% end %>
+        </div>
+      </div>
     </div>
     <div class="footer" >
       <button class="bttn bttn-success bttn-lg gradient" style="margin-top: 1vh;height: 8vh;
@@ -66,9 +265,10 @@
       var barcodeTxt = document.getElementById("barcode");
       if (barcodeTxt.value.trim().match(/[A-Z0-9]+\$/)) {
 
-        if ((barcodeTxt.value.trim().replace(/\$/, "")).replace(/\-/,"").toUpperCase().length == 7)
+        if ((barcodeTxt.value.trim().replace(/\$/, "")).replace(/\-/,"").toUpperCase().length >= 7)
         {
-////
+              showDispenseForm()
+              document.getElementById("bottle_id").innerHTML= barcodeTxt.value.trim().replace(/\$/, "").replace(/\-/,"").toUpperCase();
         }
         else
         {
@@ -86,7 +286,7 @@
     function cancelDispense()
     {
       initializeListener();
-      hideLayer('backGround','dispenseForm')
+      hideLayer('shadow', 'dispenseForm')
     }
 
 
@@ -99,11 +299,23 @@
 
     }
 
-
-    $('.editRx').on('click', function(e) {
-      clearTimeout(timerHand);
-    });
-
     setTimeout(initializeListener(), 3000);
+
+    function showDispenseDiv(option)
+    {
+      $(".mobi-div").css("display", "none")
+      document.getElementById(option).style.display= "";
+    }
+
+    function appendToQuantity(item){
+      qty = document.getElementById("qty");
+      if (item == "del"){
+       qty.value = qty.value.substring(0,qty.value.toString().length-1)
+      }
+      else
+      {
+        qty.value = qty.value.toString() + item;
+      }
+    }
   </script>
 </html>

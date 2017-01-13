@@ -1,7 +1,7 @@
 class PatientController < ApplicationController
   def show
     @patient = Patient.find_by_patient_identifier(params[:id])
-    @history = Dispensation.where("patient_id = ? and voided = ?",params[:id],false).order(dispensation_date: :desc).limit(10)
+    @history = Dispensation.where("patient_id = ? and voided = ?",@patient.id,false).order(dispensation_date: :desc).limit(10)
   end
 
   def ajax_patient

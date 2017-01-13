@@ -3,6 +3,10 @@ class Drug < ActiveRecord::Base
   def ingredient
     temp = self.name.gsub(self.dose_form, "")
     return temp.gsub(self.dose_strength, "").squish
-
   end
+
+  def category
+    return self.drug_category.category
+  end
+
 end

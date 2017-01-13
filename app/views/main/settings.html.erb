@@ -5,30 +5,30 @@
 <div style="height: 60vh;">
   <div style="display: table; padding-top: 10px;padding-left: 10px;margin-left: auto;margin-right: auto;">
     <div style="display: table-row">
-      <div onmousedown="window.location='/user/update_password'" style="display: table-cell;width: 10vw;">
-        <img style="margin-left: 3vw;" src="/assets/change_password.png">
+      <div style="display: table-cell;width: 10vw;" onmousedown="window.location='/user/update_password'">
+        <img style="padding-left: 4vw;" src="/assets/change_password.png">
       </div>
-      <div onmousedown="window.location='/user/<%= User.current.id%>/edit'" style="display: table-cell;width: 10vw;">
-        <img style="margin-left: 3vw;" src="/assets/change_language.png">
+      <div style="display: table-cell;width: 10vw;" onmousedown="window.location='/user/<%= User.current.id%>/edit'">
+        <img style="padding-left: 4vw;" src="/assets/change_language.png">
       </div>
       <div style="display: table-cell;width: 10vw;" onmousedown="window.location='/drug'">
-        <img style="margin-left: 3vw;" src="/assets/drugs_list.png">
+        <img style="padding-left: 4vw;" src="/assets/drugs_list.png">
       </div>
-      <div onmousedown="window.location='/user'"style="display: table-cell;width: 10vw;">
-        <img style="margin-left: 3vw;" src="/assets/user_edit.png">
+      <div style="display: table-cell;width: 10vw;" onmousedown="window.location='/user'">
+        <img style="padding-left: 4vw;" src="/assets/user_edit.png">
       </div>
     </div>
     <div style="display: table-row">
-      <div style="display: table-cell;text-align: center;padding: 10px;" onmousedown="window.location='/user/update_password'">
+      <div style="display: table-cell;text-align: center;" onmousedown="window.location='/user/update_password'">
         Change User Password
       </div>
-      <div style="display: table-cell;text-align: center;padding: 10px;" onmousedown="window.location='/user/<%= User.current.id%>/edit'">
+      <div style="display: table-cell;text-align: center;" onmousedown="window.location='/user/<%= User.current.id%>/edit'">
         Change Language Preference
       </div>
       <div style="display: table-cell;text-align: center;" onmousedown="window.location='/drug'">
         Manage Drug List
       </div>
-      <div style="display: table-cell;text-align: center;padding: 10px;" onmousedown="window.location='/user'">
+      <div style="display: table-cell;text-align: center;" onmousedown="window.location='/user'">
         Manage Users
       </div>
     </div>
