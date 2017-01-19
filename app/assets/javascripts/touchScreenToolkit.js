@@ -209,7 +209,7 @@ if((document.forms[0] != undefined ? (document.forms[0].getAttribute("extended")
     try {
         include("standard");
         include("calendar");
-        include("datepicker");
+        //include("datepicker");
         calledMethod = "loadTouchscreenToolkit()";
         setTimeout("loadTouchscreenToolkit()", timerout);
     }catch(e){}

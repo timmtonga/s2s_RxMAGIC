@@ -30,17 +30,37 @@ class UserController < ApplicationController
   end
 
   def edit
-    @user = User.current
-    if request.post?
-      @user.update_attributes(:language => params[:language_preference])
 
-      if @user.save
-        flash[:message] = "User language preference successfully updated"
-      else
-        flash[:message] = t("messages.invalid_credentials")
+    if request.post?
+      user = User.find(params[:user_id])
+      case params[:section]
+        when "language preference"
+          user.update_attributes(:language => params[:language_preference])
+          if user.save
+            flash[:message] = "User language preference successfully updated"
+          else
+            flash[:message] = t("messages.invalid_credentials")
+          end
+        when "password"
+          user.update_attributes(:password => params[:user][:plain_password], :salt => nil)
+
+          if user.save
+            flash[:message] = "User password successfully updated"
+          else
+            flash[:message] = t("messages.invalid_credentials")
+          end
+        when "role"
+          user.update_attributes(:role => params[:role])
+          if user.save
+            flash[:message] = "User role preference successfully updated"
+          else
+            flash[:message] = t("messages.invalid_credentials")
+          end
       end
       redirect_to "/main/settings" and return
     else
+      @user = User.find(params[:id])
+      @edit_section = params[:section]
       render :layout =>  "touch"
     end
 
@@ -82,24 +102,6 @@ class UserController < ApplicationController
   def username_availability
     user = User.find_by_username(params[:search_str])
     render :text => user.blank? ? '' : 'N/A' and return
-  end
-
-  def update_password
-
-    @user = User.current
-    if request.post?
-      @user.update_attributes(:password => params[:user][:plain_password], :salt => nil)
-
-      if @user.save
-        flash[:message] = "User successfully updated"
-      else
-        flash[:message] = t("messages.invalid_credentials")
-      end
-      redirect_to "/main/settings" and return
-    else
-      render :layout =>  "touch"
-    end
-
   end
 
   def query

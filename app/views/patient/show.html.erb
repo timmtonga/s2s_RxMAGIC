@@ -28,7 +28,7 @@
             </tr>
             <tr>
               <td>Route</td>
-              <th style="text-align: left;">&nbsp;</th>
+              <th style="text-align: left;" id="route_type">&nbsp;</th>
               <td>Quantity</td>
               <td style="text-align: left;">&nbsp;</td>
             </tr>
@@ -41,30 +41,37 @@
                     <th class="tab" onmousedown="showDispenseDiv('routesDiv')">Administration Route</th>
                   </tr>
                   <tr>
+                    <th class="tab" onmousedown="showDispenseDiv('doseTypeDiv')">Dose Type</th>
+                  </tr>
+                  <tr>
                     <th class="tab" onmousedown="showDispenseDiv('doseDiv')">Dose</th>
                   </tr>
                   <tr>
                     <th class="tab" onmousedown="showDispenseDiv('directionsDiv')">Directions</th>
                   </tr>
                   <tr>
-                    <th class="tab" onmousedown="showDispenseDiv('qtyDiv')">QTY/Duration</th>
+                    <th class="tab" onmousedown="showDispenseDiv('qtyDiv')">Duration</th>
                   </tr>
                 </table>
             </div>
             <div style="display: table-cell;border: 2px solid black;border-width: 0px 0px 0px 2px;height: 50vh;">
+              <%= form_for :prescription, :html => { :class => "form-horizontal pmap_inventory" }, :url => "/refill"  do |f| %>
+              <div style="position: absolute;left: 65vw;top: 60vh;" onmousedown="showDispenseDiv('doseTypeDiv')" class="nextButton" id="dispNext">
+                Next
+              </div>
               <div class="mobi-div" id="routesDiv" >
                 <h2>Select Route of Administration</h2>
                 <table width="100" style="border-collapse: collapse">
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="administration" class="radio" id="route-oral">
+                        <input type="radio" name="administration" class="radio" id="route-oral" onchange="setRoute('Oral')" required>
                         <label class="custom" for="route-oral">Oral</label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="administration" class="radio" id="route-topical">
+                        <input type="radio" name="administration" class="radio" id="route-topical" onchange="setRoute('Topical')" required>
                         <label class="custom" for="route-topical"> Topical </label>
                       </div>
                     </td>
@@ -72,13 +79,13 @@
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="administration" class="radio" id="route-respiratory">
+                        <input type="radio" name="administration" class="radio" id="route-respiratory" onchange="setRoute('Respiratory')" required>
                         <label class="custom" for="route-respiratory"> Respiratory</label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="administration" class="radio" id="route-injection">
+                        <input type="radio" name="administration" class="radio" id="route-injection" onchange="setRoute('Injection')" required>
                         <label class="custom" for="route-injection"> Injection</label>
                       </div>
                     </td>
@@ -86,12 +93,62 @@
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="administration" class="radio" id="route-other">
+                        <input type="radio" name="administration" class="radio" id="route-other" onchange="setRoute('Other')" required>
                         <label class="custom" for="route-other"> Other </label>
                       </div>
                     </td>
                     <td>
                       &nbsp;
+                    </td>
+                  </tr>
+                </table>
+
+              </div>
+              <div class="mobi-div" id="doseDiv" style="display: none;">
+                <div style="margin-top: 5px;">
+                  <label for="dose"><span style="font-weight: bold;font-size: 20px;">Enter dose</span></label> <br/>
+                  <input type="text" id="dose" style="font-size: 20px;" required>
+                </div>
+                <div style="margin-top: 5px;">
+                  <table width="100" cellspacing="15" >
+                    <tr>
+                      <td class="customButton" onmousedown="append(1,'dose')"><span>1</span></td>
+                      <td class="customButton" onmousedown="append(2,'dose')"><span>2</span></td>
+                      <td class="customButton" onmousedown="append(3,'dose')"><span>3</span></td>
+                    </tr>
+                    <tr>
+                      <td class="customButton" onmousedown="append(4,'dose')"><span>4</span></td>
+                      <td class="customButton" onmousedown="append(5,'dose')"><span>5</span></td>
+                      <td class="customButton" onmousedown="append(6,'dose')"><span>6</span></td>
+                    </tr>
+                    <tr>
+                      <td class="customButton" onmousedown="append(7,'dose')"><span>7</span></td>
+                      <td class="customButton" onmousedown="append(8,'dose')"><span>8</span></td>
+                      <td class="customButton" onmousedown="append(9,'dose')"><span>9</span></td>
+                    </tr>
+                    <tr>
+                      <td class="customButton" onmousedown="append(0,'dose')"><span>0</span></td>
+                      <td class="customButton" onmousedown="append('.','dose')"><span>.</span></td>
+                      <td class="customButton" onmousedown="append('del','dose')"><span>del</span></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <div class="mobi-div" id="doseTypeDiv" style="display: none;">
+                <h2>Select Dose Type</h2>
+                <table width="100" style="border-collapse: collapse">
+                  <tr>
+                    <td>
+                      <div class="radioDiv">
+                        <input type="radio" name="doseType" class="radio" id="typePRN" required>
+                        <label class="custom" for="typePRN">As needed</label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="radioDiv">
+                        <input type="radio" name="doseType" class="radio" id="typeNPRN" required>
+                        <label class="custom" for="typeNPRN"> As prescribed </label>
+                      </div>
                     </td>
                   </tr>
                 </table>
@@ -102,13 +159,13 @@
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="OD">
+                        <input type="radio" name="frequency" class="radio" id="OD" required>
                         <label class="custom" for="OD">Once a day</label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="BD">
+                        <input type="radio" name="frequency" class="radio" id="BD" required>
                         <label class="custom" for="BD"> Twice a day </label>
                       </div>
                     </td>
@@ -116,13 +173,13 @@
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="TDS">
+                        <input type="radio" name="frequency" class="radio" id="TDS" required>
                         <label class="custom" for="TDS"> Three times a day</label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="QID">
+                        <input type="radio" name="frequency" class="radio" id="QID" required>
                         <label class="custom" for="QID"> Four times a day</label>
                       </div>
                     </td>
@@ -130,13 +187,13 @@
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="5XD">
+                        <input type="radio" name="frequency" class="radio" id="5XD" required>
                         <label class="custom" for="5XD">Five times a day</label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="Q4HRS">
+                        <input type="radio" name="frequency" class="radio" id="Q4HRS" required>
                         <label class="custom" for="Q4HRS"> Six times a day</label>
                       </div>
                     </td>
@@ -144,13 +201,13 @@
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="QOD">
+                        <input type="radio" name="frequency" class="radio" id="QOD" required>
                         <label class="custom" for="QOD"> Every other day</label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="QWK">
+                        <input type="radio" name="frequency" class="radio" id="QWK" required>
                         <label class="custom" for="QWK"> Once a week</label>
                       </div>
                     </td>
@@ -159,34 +216,36 @@
               </div>
               <div class="mobi-div" id="qtyDiv" style="display: none;">
                 <div style="margin-top: 5px;">
-                  <label for="qty"><span style="font-weight: bold;font-size: 20px;">Enter Quantity</span></label>
-                  <input type="text" id="qty" style="font-size: 20px;">
+                  <label for="qty"><span style="font-weight: bold;font-size: 20px;">Enter number of days</span></label> <br/>
+                  <input type="text" id="qty" style="font-size: 20px;" required>
                 </div>
                 <div style="margin-top: 5px;">
-                  <table width="100" style="border-collapse: collapse">
+                  <table width="100" cellspacing="15" >
                     <tr>
-                      <td style="padding: 2px;"><button onmousedown="appendToQuantity(1)"><span>1</span></button></td>
-                      <td style="padding: 2px;"><button onmousedown="appendToQuantity(2)"><span>2</span></button></td>
-                      <td style="padding: 2px;"><button onmousedown="appendToQuantity(3)"><span>3</span></button></td>
+                      <td class="customButton" onmousedown="append(1,'qty')"><span>1</span></td>
+                      <td class="customButton" onmousedown="append(2,'qty')"><span>2</span></td>
+                      <td class="customButton" onmousedown="append(3,'qty')"><span>3</span></td>
                     </tr>
                     <tr>
-                      <td style="padding: 2px;"><button onmousedown="appendToQuantity(4)"><span>4</span></button></td>
-                      <td style="padding: 2px;"><button onmousedown="appendToQuantity(5)"><span>5</span></button></td>
-                      <td style="padding: 2px;"><button onmousedown="appendToQuantity(6)"><span>6</span></button></td>
+                      <td class="customButton" onmousedown="append(4,'qty')"><span>4</span></td>
+                      <td class="customButton" onmousedown="append(5,'qty')"><span>5</span></td>
+                      <td class="customButton" onmousedown="append(6,'qty')"><span>6</span></td>
                     </tr>
                     <tr>
-                      <td style="padding: 2px;"><button onmousedown="appendToQuantity(7)"><span>7</span></button></td>
-                      <td style="padding: 2px;"><button onmousedown="appendToQuantity(8)"><span>8</span></button></td>
-                      <td style="padding: 2px;"><button onmousedown="appendToQuantity(9)"><span>9</span></button></td>
+                      <td class="customButton" onmousedown="append(7,'qty')"><span>7</span></td>
+                      <td class="customButton" onmousedown="append(8,'qty')"><span>8</span></td>
+                      <td class="customButton" onmousedown="append(9,'qty')"><span>9</span></td>
                     </tr>
                     <tr>
-                      <td style="padding: 2px;"><button onmousedown="appendToQuantity(0)"><span>0</span></button></td>
-                      <td style="padding: 2px;"><button onmousedown="appendToQuantity('.')"><span>.</span></button></td>
-                      <td style="padding: 2px;"><button onmousedown="appendToQuantity('del')"><span>del</span></button></td>
+                      <td class="customButton" onmousedown="append(0,'qty')"><span>0</span></td>
+                      <td class="customButton" onmousedown="append('.','qty')"><span>.</span></td>
+                      <td class="customButton" onmousedown="append('del','qty')"><span>del</span></td>
                     </tr>
                   </table>
                 </div>
               </div>
+              <%= hidden_field :patient_id, :value => @patient.id %>
+              <% end %>
             </div>
           </div>
         </div>
@@ -285,6 +344,8 @@
 
     function cancelDispense()
     {
+      var barcodeTxt = document.getElementById("barcode");
+      barcodeTxt.value = "";
       initializeListener();
       hideLayer('shadow', 'dispenseForm')
     }
@@ -303,19 +364,88 @@
 
     function showDispenseDiv(option)
     {
-      $(".mobi-div").css("display", "none")
+      var tabs = ['routesDiv','doseTypeDiv','doseDiv','directionsDiv','qtyDiv'];
+      var currentTab = tabs.indexOf(option);
+      var button = document.getElementById('dispNext');
+      $(".mobi-div").css("display", "none");
       document.getElementById(option).style.display= "";
-    }
 
-    function appendToQuantity(item){
-      qty = document.getElementById("qty");
-      if (item == "del"){
-       qty.value = qty.value.substring(0,qty.value.toString().length-1)
+      if (option == 'qtyDiv')
+      {
+        button.setAttribute("onmousedown", "validateDisp()")
+        button.innerHTML = "Finish"
       }
       else
       {
-        qty.value = qty.value.toString() + item;
+        button.setAttribute("onmousedown", "showDispenseDiv('"+ tabs[currentTab+1] + "')")
+        button.innerHTML = "Next"
       }
+
+    }
+
+    function append(item,control){
+      input = document.getElementById(control);
+      if (item == "del"){
+        input.value = qty.value.substring(0,input.value.toString().length-1)
+      }
+      else
+      {
+        input.value = input.value.toString() + item;
+      }
+    }
+
+    function setRoute(route) {
+      document.getElementById("route_type").innerHTML = route;
+    }
+
+    function validateDisp() {
+
+      checkRoute = document.getElementsByName("administration");
+      checkDoseType = document.getElementsByName("doseType");
+      checkdirections = document.getElementsByName("frequency");
+
+      if (checkRadio(checkRoute))
+      {
+        if (checkRadio(checkDoseType))
+        {
+          if (parseFloat(document.getElementById('dose').value) > 0)
+          {
+            if (checkRadio(checkdirections)){
+              if (parseFloat(document.getElementById('qty').value) > 0){
+                document.forms[0].submit()
+              }
+              else {
+                showDispenseDiv('qtyDiv');
+              }
+            }
+            else {
+              showDispenseDiv('directionsDiv');
+            }
+          }
+          else {
+            showDispenseDiv('doseDiv');
+          }
+        }
+        else
+        {
+          showDispenseDiv('doseTypeDiv');
+        }
+      }
+      else
+      {
+        showDispenseDiv('routesDiv');
+      }
+    }
+
+    function checkRadio(list)
+    {
+      for(i=0; i < list.length; i++){
+        if(list[i].checked)
+        {
+          return true;
+        }
+      }
+      return false;
     }
   </script>
 </html>

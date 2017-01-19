@@ -39,9 +39,8 @@
           <td><%= drug.dose_strength %></td>
           <td><%= drug.dose_form %></td>
           <td>
-            <a href="/drug/<%= drug.id %>/edit">
-              <img style="float: left;" src="/assets/edit.png" title="Edit Drug">
-            </a>
+
+            <img style="float: left;" src="/assets/edit.png" onmousedown="window.location='/drug/<%= drug.id %>/edit'" title="Edit Drug">
             <img style="float: right;" src="/assets/delete.png" title="Void Drug"
                  onmousedown="confirmAction('/void_drug/<%= drug.id %>', 'Are you Sure?')">
           </td>

@@ -21,4 +21,10 @@ module ApplicationHelper
   def facility_name
     YAML.load_file("#{Rails.root}/config/application.yml")['facility_name']
   end
+  def user_roles
+    return ["Administrator", "Pharmacist"]
+  end
+  def report_options
+    return [["daily", "Daily"],["weekly","Weekly"],["monthly", "Monthly"], ["range", "Range"]]
+  end
 end

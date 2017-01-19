@@ -1,4 +1,4 @@
-<%= javascript_include_tag "barcode" %>
+
 <script>
   var tt_cancel_destination = "/main/settings"
   //barcodeFocusOnce = true;
@@ -7,13 +7,33 @@
 
 <%= form_for :user, :url => edit_user_path  do |f| %>
 
-    <select id="language_preference" name="language_preference" helpText="Language Preference">
-      <option></option>
-      <% (languages).each do |w| %>
-          <option value="<%= w[0] %>"><%= w[1] %></option>
-      <% end %>
-    </select>
+    <% if @edit_section == "language_preference"%>
+      <select id="language_preference" name="language_preference" helpText="Language Preference">
+        <option></option>
+        <% (languages).each do |w| %>
+            <option value="<%= w[0] %>"><%= w[1] %></option>
+        <% end %>
+      </select>
 
+    <% elsif @edit_section == "password"%>
+        <p><label for="user_plain_password">Password</label><br/>
+          <%= password_field 'user', 'plain_password', :xhelpText => 'Password' ,:textCase =>"lower",
+                             :validationRule => "\\w{4}\\w*", :validationMessage => "Password less than six characters",
+                             :value =>"", :minlength => 6 %></p>
+
+        <p><label for="user_confirm_password">Re-enter Password</label><br/>
+          <%= password_field 'user_confirm', 'password', :xhelpText => 'Password',:textCase =>"lower",
+                             :validationRule =>"\\w{4}\\w*", :validationMessage =>"Password less than FOUR characters." %></p>
+    <% elsif @edit_section == "role" %>
+        <select id="role" name="role" helpText="User Role">
+          <option></option>
+          <% (user_roles).each do |w| %>
+              <option value="<%= w %>"><%= w %></option>
+          <% end %>
+        </select>
+    <% end %>
+
+    <%= hidden_field_tag 'section', @edit_section%>
     <%= hidden_field_tag 'user_id', @user.id%>
     <%= submit_tag value="Submit"%>
 <% end %>

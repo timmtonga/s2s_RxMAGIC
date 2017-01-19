@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   ###################### Main Controller ##################################
 
   get "/main/settings"
+  get "/select_report" => "main#select_report"
+  post "/main/report"
   ###################### Drug Controller ##################################
   get "/drug/search"
   get "/void_drug/:id" => "drug#destroy"
@@ -29,11 +31,17 @@ Rails.application.routes.draw do
   get "/login" => "user#login"
   post "/login" => "user#login"
   get '/logout' => "user#logout"
-  post "/user/update_password"
-  get "/user/update_password"
   get "/query_users" => "user#query"
   get "/void_user/:id" => "user#destroy"
   post "/edit_user" => "user#edit"
+
+  ###################### Prescription Controller ##############################
+  get "/void_prescriptions/:id" => "prescription#destroy"
+  get "/prescriptions" => "prescription#ajax_prescriptions"
+  get "/prescription/refill"
+  post "/refill" => "prescription#refill"
+  post "/prescription/dispense"
+  post "/prescription/edit"
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

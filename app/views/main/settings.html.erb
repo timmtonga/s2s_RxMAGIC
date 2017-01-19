@@ -5,10 +5,10 @@
 <div style="height: 60vh;">
   <div style="display: table; padding-top: 10px;padding-left: 10px;margin-left: auto;margin-right: auto;">
     <div style="display: table-row">
-      <div style="display: table-cell;width: 10vw;" onmousedown="window.location='/user/update_password'">
+      <div style="display: table-cell;width: 10vw;" onmousedown="window.location='/user/<%= User.current.id%>/edit?section=password'">
         <img style="padding-left: 4vw;" src="/assets/change_password.png">
       </div>
-      <div style="display: table-cell;width: 10vw;" onmousedown="window.location='/user/<%= User.current.id%>/edit'">
+      <div style="display: table-cell;width: 10vw;" onmousedown="window.location='/user/<%= User.current.id%>/edit?section=language_preference'">
         <img style="padding-left: 4vw;" src="/assets/change_language.png">
       </div>
       <div style="display: table-cell;width: 10vw;" onmousedown="window.location='/drug'">
@@ -19,10 +19,11 @@
       </div>
     </div>
     <div style="display: table-row">
-      <div style="display: table-cell;text-align: center;" onmousedown="window.location='/user/update_password'">
+      <div style="display: table-cell;text-align: center;" onmousedown="window.location='/user/<%= User.current.id%>/edit?section=password'">
         Change User Password
       </div>
-      <div style="display: table-cell;text-align: center;" onmousedown="window.location='/user/<%= User.current.id%>/edit'">
+      <div style="display: table-cell;text-align: center;"
+           onmousedown="window.location='/user/<%= User.current.id%>/edit?section=language_preference'">
         Change Language Preference
       </div>
       <div style="display: table-cell;text-align: center;" onmousedown="window.location='/drug'">
