@@ -1,0 +1,25 @@
+<div style="height: 8vh;border: 1px inset black; border-width: 0px 0px 3px 0px;">
+  <h3 style="margin-left: 2vw;"><%= @report_type%></h3>
+</div>
+
+<div style="height: 75vh; overflow: auto;">
+  <table width="100%">
+    <tr>
+      <th>Item</th>
+      <th>Available Quantity</th>
+      <th>Amount Dispensed</th>
+    </tr>
+
+    <% (@items || []).each do |item| %>
+        <tr>
+          <td><%= item["name"] %></td>
+          <td><%= item["available"] %></td>
+          <td><%= item["dispensed"] %></td>
+        </tr>
+    <% end %>
+  </table>
+</div>
+
+<div class="footer" >
+  <button onmousedown="window.location = '/'" class="bttn bttn-success bttn-lg gradient" style="margin-top: 1vh;height: 8vh;margin-right: 2vh;float: right;" type="button">Finish</button>
+</div>
