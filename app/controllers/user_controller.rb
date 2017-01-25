@@ -16,7 +16,7 @@ class UserController < ApplicationController
                       :fathers_name => params[:user][:fathers_name], :mothers_name => params[:user][:mothers_name]})
 
     if @user.save
-      redirect_to @user
+      redirect_to "/user" and return
     else
       render 'new', :layout => "touch"
     end

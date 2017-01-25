@@ -1,0 +1,48 @@
+<%= form_for :user,  url: user_index_path do |f| %>
+
+
+        <%= f.label :username %>
+        <br>
+        <%= f.text_field :username, :class => "input_cell", :placeholder => "Username", :required => true,
+                         :textCase => "lower", :uniq_check => "/username_availability?search_str=" %>
+        <%= f.label :password %>
+        <br>
+        <%= f.password_field :password, :class => "input_cell", :placeholder => "Password",
+                             :required => true, :textCase => "lower" %>
+        <%= f.label :confirm_password %>
+        <br>
+        <%= f.password_field :confirm_password, :class => "input_cell",
+                             :placeholder => "Confirm the password entered", :required => true,
+                             :textCase => "lower" %>
+        <%= f.label :user_role %>
+        <br>
+        <%= select_tag "user[user_role]", options_for_select(user_roles, (@user.role rescue nil)),
+                       :class => 'input_cell', :placeholder => "Select user role", :required => true  %>
+
+        <%= f.label :first_name %>
+        <br>
+        <%= (f.text_field :first_name, :class => "input_cell") rescue "" %>
+
+
+
+        <%= f.label :middle_name %>
+        <br>
+        <%= (f.text_field :middle_name, :class => "input_cell",  :optional => :true) rescue "" %>
+
+
+        <%= f.label :fathers_name %>
+        <br>
+        <%= (f.text_field :fathers_name, :class => "input_cell") rescue "" %>
+
+
+        <%= f.label :mothers_name %>
+        <br>
+        <%= (f.text_field :mothers_name, :class => "input_cell") rescue "" %>
+
+    </fieldset>
+
+<% end %>
+
+<script type="text/javascript">
+  init();
+</script>
