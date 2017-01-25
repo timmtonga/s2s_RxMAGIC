@@ -2,6 +2,49 @@
   <span style="font-size: 20px;font-weight: bold;">Past Dispensations</span>
 </div>
 
-<div style="display: table; height: 60vh; overflow: auto;">
-
+<div style="height: 60vh; width: 100%; overflow: auto;">
+  <div style="display: table;">
+  <% (@history.each_slice(2).to_a || []).each do |dispensation| %>
+        <div style="display: table-row;">
+          <div style="display: table-cell;width:45vw;float: left;">
+            <div style="border: 1px solid silver; padding: 5px;margin: 5px;">
+              <div style="display: table;width: 100%;">
+                <div style="display: table-row;">
+                  <div style="display: table-cell;padding: 5px;">
+                    <b>Date:</b> <%= dispensation[0].dispensation_date.to_date.strftime("%b %d, %Y")%><br/>
+                    <b>Drug:</b> <%= dispensation[0].drug_name %><br/>
+                    <b>Directions:</b> <%= dispensation[0].dispensation_dir %><br/>
+                    <b>Quantity:</b> <%= dispensation[0].quantity %><br/>
+                  </div>
+                  <div style="display: table-cell;vertical-align: middle;padding: 5px;">
+                    <img style="float: right;" src="/assets/delete.png" title="Void Item"
+                         onmousedown="confirmAction('/void_dispensation/<%= dispensation[0].id %>', 'Are you Sure?')">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% unless dispensation[1].blank? %>
+              <div style="display: table-cell;width:45vw;float: right;">
+                <div style="border: 1px solid silver; padding: 5px;margin: 5px;">
+                  <div style="display: table;width: 100%;">
+                    <div style="display: table-row;">
+                      <div style="display: table-cell;padding: 5px;">
+                        <b>Date:</b> <%= dispensation[1].dispensation_date.to_date.strftime("%b %d, %Y")%><br/>
+                        <b>Drug:</b> <%= dispensation[1].drug_name %><br/>
+                        <b>Directions:</b> <%= dispensation[1].dispensation_dir %><br/>
+                        <b>Quantity:</b> <%= dispensation[1].quantity %><br/>
+                      </div>
+                      <div style="display: table-cell;vertical-align: middle;padding: 5px;">
+                        <img style="float: right;" src="/assets/delete.png" title="Void Item"
+                             onmousedown="confirmAction('/void_dispensation/<%= dispensation[1].id %>', 'Are you Sure?')">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          <% end %>
+        </div>
+  <% end %>
+  </div>
 </div>

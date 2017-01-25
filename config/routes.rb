@@ -38,10 +38,22 @@ Rails.application.routes.draw do
   ###################### Prescription Controller ##############################
   get "/void_prescriptions/:id" => "prescription#destroy"
   get "/prescriptions" => "prescription#ajax_prescriptions"
-  get "/prescription/refill"
-  post "/refill" => "prescription#refill"
   post "/prescription/dispense"
   post "/prescription/edit"
+
+
+  ###################### Dispensation Controller ##############################
+  get "/dispensation/refill"
+  post "/refill" => "dispensation#refill"
+  get "/print_dispensation_label/:id" => "dispensation#print_dispensation_label"
+  get "/void_dispensation/:id" => "dispensation#destroy"
+
+  ###################### Mobile Visit Controller ##############################
+  get "/void_mobile_visit/:id" => "mobile_visit#destroy"
+
+  ###################### Mobile Visit Product Controller ######################
+  get "/void_mobile_visit_product/:id" => "mobile_visit_product#destroy"
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -92,6 +104,8 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
+  resources :mobile_visit
+  resources :mobile_visit_product
   resources :general_inventory
   resources :drug_threshold
   resources :patient

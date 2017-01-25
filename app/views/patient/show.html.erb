@@ -21,7 +21,7 @@
               <td style="width: 20%;">Bottle ID</td>
               <th id="bottle_id" style="text-align: left;width: 20%;">&nbsp;</th>
               <td style="text-align: left;width: 20%;">Directions</td>
-              <th style="text-align: left;">&nbsp;</th>
+              <th style="text-align: left;" id="directionsDisp">&nbsp;</th>
               <td style="width: 5%;" rowspan="2">
                 <img style="padding-right: 2px;float: right;" src="/assets/delete.png" onmousedown="cancelDispense()">
               </td>
@@ -30,7 +30,7 @@
               <td>Route</td>
               <th style="text-align: left;" id="route_type">&nbsp;</th>
               <td>Quantity</td>
-              <td style="text-align: left;">&nbsp;</td>
+              <th style="text-align: left;" id="qtyDisp">&nbsp;</th>
             </tr>
           </table>
         <div style="display: table;width: 100%;">
@@ -65,13 +65,13 @@
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="administration" class="radio" id="route-oral" onchange="setRoute('Oral')" required>
+                        <input type="radio" name="administration" class="radio" value="oral" id="route-oral" onchange="setRoute('Oral')" required>
                         <label class="custom" for="route-oral">Oral</label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="administration" class="radio" id="route-topical" onchange="setRoute('Topical')" required>
+                        <input type="radio" name="administration" class="radio" value="topical" id="route-topical" onchange="setRoute('Topical')" required>
                         <label class="custom" for="route-topical"> Topical </label>
                       </div>
                     </td>
@@ -79,13 +79,13 @@
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="administration" class="radio" id="route-respiratory" onchange="setRoute('Respiratory')" required>
+                        <input type="radio" name="administration" class="radio" value="respiratory" id="route-respiratory" onchange="setRoute('Respiratory')" required>
                         <label class="custom" for="route-respiratory"> Respiratory</label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="administration" class="radio" id="route-injection" onchange="setRoute('Injection')" required>
+                        <input type="radio" name="administration" class="radio" value="injection" id="route-injection" onchange="setRoute('Injection')" required>
                         <label class="custom" for="route-injection"> Injection</label>
                       </div>
                     </td>
@@ -93,7 +93,7 @@
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="administration" class="radio" id="route-other" onchange="setRoute('Other')" required>
+                        <input type="radio" name="administration" class="radio" value="other" id="route-other" onchange="setRoute('Other')" required>
                         <label class="custom" for="route-other"> Other </label>
                       </div>
                     </td>
@@ -107,7 +107,7 @@
               <div class="mobi-div" id="doseDiv" style="display: none;">
                 <div style="margin-top: 5px;">
                   <label for="dose"><span style="font-weight: bold;font-size: 20px;">Enter dose</span></label> <br/>
-                  <input type="text" id="dose" style="font-size: 20px;" required>
+                  <input type="text" id="dose" name="dose" style="font-size: 20px;" required>
                 </div>
                 <div style="margin-top: 5px;">
                   <table width="100" cellspacing="15" >
@@ -140,13 +140,13 @@
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="doseType" class="radio" id="typePRN" required>
+                        <input type="radio" name="doseType" value="PRN" class="radio" id="typePRN" required>
                         <label class="custom" for="typePRN">As needed</label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="doseType" class="radio" id="typeNPRN" required>
+                        <input type="radio" name="doseType" value="NPRN" class="radio" id="typeNPRN" required>
                         <label class="custom" for="typeNPRN"> As prescribed </label>
                       </div>
                     </td>
@@ -159,13 +159,13 @@
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="OD" required>
+                        <input type="radio" name="frequency" class="radio" id="OD" value="OD" onchange="setDirections('OD')" required>
                         <label class="custom" for="OD">Once a day</label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="BD" required>
+                        <input type="radio" name="frequency" class="radio" id="BD" value="BD" onchange="setDirections('BD')" required>
                         <label class="custom" for="BD"> Twice a day </label>
                       </div>
                     </td>
@@ -173,13 +173,13 @@
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="TDS" required>
+                        <input type="radio" name="frequency" class="radio" id="TDS" value="TDS" onchange="setDirections('TDS')" required>
                         <label class="custom" for="TDS"> Three times a day</label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="QID" required>
+                        <input type="radio" name="frequency" class="radio" id="QID" value="QID" onchange="setDirections('QID')" required>
                         <label class="custom" for="QID"> Four times a day</label>
                       </div>
                     </td>
@@ -187,13 +187,13 @@
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="5XD" required>
+                        <input type="radio" name="frequency" class="radio" id="5XD" value="5XD" onchange="setDirections('5XD')" required>
                         <label class="custom" for="5XD">Five times a day</label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="Q4HRS" required>
+                        <input type="radio" name="frequency" class="radio" id="Q4HRS" value="Q4HRS" onchange="setDirections('Q4HRS')" required>
                         <label class="custom" for="Q4HRS"> Six times a day</label>
                       </div>
                     </td>
@@ -201,13 +201,13 @@
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="QOD" required>
+                        <input type="radio" name="frequency" class="radio" id="QOD" value="QOD" onchange="setDirections('QOD')" required>
                         <label class="custom" for="QOD"> Every other day</label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="QWK" required>
+                        <input type="radio" name="frequency" class="radio" id="QWK" value="QWK" onchange="setDirections('QWK')" required>
                         <label class="custom" for="QWK"> Once a week</label>
                       </div>
                     </td>
@@ -217,34 +217,36 @@
               <div class="mobi-div" id="qtyDiv" style="display: none;">
                 <div style="margin-top: 5px;">
                   <label for="qty"><span style="font-weight: bold;font-size: 20px;">Enter number of days</span></label> <br/>
-                  <input type="text" id="qty" style="font-size: 20px;" required>
+                  <input type="text" id="qty" style="font-size: 20px;" name="duration" required>
                 </div>
                 <div style="margin-top: 5px;">
                   <table width="100" cellspacing="15" >
                     <tr>
-                      <td class="customButton" onmousedown="append(1,'qty')"><span>1</span></td>
-                      <td class="customButton" onmousedown="append(2,'qty')"><span>2</span></td>
-                      <td class="customButton" onmousedown="append(3,'qty')"><span>3</span></td>
+                      <td class="customButton" onmousedown="append(1,'qty');setQuantity('qty')"><span>1</span></td>
+                      <td class="customButton" onmousedown="append(2,'qty');setQuantity('qty')"><span>2</span></td>
+                      <td class="customButton" onmousedown="append(3,'qty');setQuantity('qty')"><span>3</span></td>
                     </tr>
                     <tr>
-                      <td class="customButton" onmousedown="append(4,'qty')"><span>4</span></td>
-                      <td class="customButton" onmousedown="append(5,'qty')"><span>5</span></td>
-                      <td class="customButton" onmousedown="append(6,'qty')"><span>6</span></td>
+                      <td class="customButton" onmousedown="append(4,'qty');setQuantity('qty')"><span>4</span></td>
+                      <td class="customButton" onmousedown="append(5,'qty');setQuantity('qty')"><span>5</span></td>
+                      <td class="customButton" onmousedown="append(6,'qty');setQuantity('qty')"><span>6</span></td>
                     </tr>
                     <tr>
-                      <td class="customButton" onmousedown="append(7,'qty')"><span>7</span></td>
-                      <td class="customButton" onmousedown="append(8,'qty')"><span>8</span></td>
-                      <td class="customButton" onmousedown="append(9,'qty')"><span>9</span></td>
+                      <td class="customButton" onmousedown="append(7,'qty');setQuantity('qty')"><span>7</span></td>
+                      <td class="customButton" onmousedown="append(8,'qty');setQuantity('qty')"><span>8</span></td>
+                      <td class="customButton" onmousedown="append(9,'qty');setQuantity('qty')"><span>9</span></td>
                     </tr>
                     <tr>
-                      <td class="customButton" onmousedown="append(0,'qty')"><span>0</span></td>
-                      <td class="customButton" onmousedown="append('.','qty')"><span>.</span></td>
-                      <td class="customButton" onmousedown="append('del','qty')"><span>del</span></td>
+                      <td class="customButton" onmousedown="append(0,'qty');setQuantity('qty')"><span>0</span></td>
+                      <td class="customButton" onmousedown="append('.','qty');setQuantity('qty')"><span>.</span></td>
+                      <td class="customButton" onmousedown="append('del','qty');setQuantity('qty')"><span>del</span></td>
                     </tr>
                   </table>
                 </div>
               </div>
-              <%= hidden_field :patient_id, :value => @patient.id %>
+                  <input type="hidden" value="<%= @patient.id%>" name="patient_id" />
+                  <input type="hidden" name="bottle_id" id="btl_field"/>
+                  <input type="hidden" name="quantity" id="dispensed_quantity"/>
               <% end %>
             </div>
           </div>
@@ -328,6 +330,7 @@
         {
               showDispenseForm()
               document.getElementById("bottle_id").innerHTML= barcodeTxt.value.trim().replace(/\$/, "").replace(/\-/,"").toUpperCase();
+              document.getElementById("btl_field").value= barcodeTxt.value.trim().replace(/\$/, "").replace(/\-/,"").toUpperCase();
         }
         else
         {
@@ -398,6 +401,11 @@
       document.getElementById("route_type").innerHTML = route;
     }
 
+    function setDirections(frequency){
+      var field = document.getElementById("directionsDisp");
+      field.innerHTML = createDirections(document.getElementById("route_type").innerHTML, document.getElementById('dose').value, frequency)
+    }
+
     function validateDisp() {
 
       checkRoute = document.getElementsByName("administration");
@@ -446,6 +454,22 @@
         }
       }
       return false;
+    }
+
+    function  setQuantity(input) {
+      var duration = document.getElementById(input).value;
+      var frequencyList = document.getElementsByName("frequency")
+      var frequency = 1;
+      for(i=0; i < frequencyList.length; i++){
+        if(frequencyList[i].checked)
+        {
+          frequency = frequencyList[i].value;
+          break;
+        }
+      }
+      var qty = calcQuantity(parseFloat(document.getElementById('dose').value),frequency,duration);
+      document.getElementById("qtyDisp").innerHTML = qty;
+      document.getElementById("dispensed_quantity").value = qty;
     }
   </script>
 </html>

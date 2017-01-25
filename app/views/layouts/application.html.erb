@@ -6,6 +6,30 @@
   <%= javascript_include_tag 'jquery-1.12.0.min.js' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <style type="text/css">
+    ::-webkit-scrollbar {
+      height: 3vh;
+      width: 5vw;
+      background: #C0C0C0;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #404040;
+      -webkit-border-radius: 2ex;
+      height: 3vh;
+
+    }
+
+    ::-webkit-scrollbar-button {
+      height: 3vh;
+
+    }
+
+    ::-webkit-scrollbar-corner {
+      background: #000;
+    }
+
+  </style>
 </head>
 <body style="background-color: white;">
   <div id="shadow" class="opaqueLayer"> </div>

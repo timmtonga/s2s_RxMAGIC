@@ -6,7 +6,7 @@ module MainHelper
       records[item.drug_id]["available"] += item.current_quantity
     end
 
-    (inventory || []).each do |item|
+    (dispensations || []).each do |item|
       records[item.drug_id] = {"name" => Drug.find(item.drug_id).name, "available" => 0, "dispensed" => 0} if records[item.drug_id].blank?
       records[item.drug_id]["dispensed"] += item.quantity
     end

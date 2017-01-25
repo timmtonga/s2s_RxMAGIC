@@ -15,7 +15,15 @@
       $(document).ready(function() {
         // $.fn.dataTable.moment( 'MMM-YYYY' );
         $('#generalInventory').DataTable({"bLengthChange": false, "bDestroy": true, "pageLength":5});
+        search_box = $('#generalInventory').dataTable()
+        search = document.getElementsByTagName("input")[0];
+        search.setAttribute("id","search");
+        document.getElementById('search').setAttribute("onclick","showKeyboard();");
+        keyboard = document.getElementsByClassName("keypad")[0]
+        showAlphaKeypad();
       } );
+
+
     </script>
     <div style="height: 8vh;border: 1px inset black; border-width: 0px 0px 3px 0px;">
       <h1 style="margin-left: 2vw;">Inventory</h1>
@@ -62,4 +70,10 @@
     <div class="footer" >
       <button onmousedown="window.location = '/'" class="bttn bttn-success bttn-lg gradient" style="margin-top: 1vh;height: 8vh;margin-right: 2vh;float: right;" type="button">Finish</button>
       <button onmousedown="window.location = '/general_inventory/new'" class="bttn bttn-primary bttn-lg gradient" style="margin-top: 1vh;height: 8vh;margin-right: 2vh;float: right;" type="button">Add Item</button>
+    </div>
+
+    <div id="keypad">
+          <span class="keypad">
+          </span>
+
     </div>

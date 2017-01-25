@@ -1,20 +1,29 @@
+<style type="text/css">
+  .odd{
+    background-color: #B0BED9;
+  }
+  .even{
+
+  }
+</style>
+
 <div style="height: 8vh;border: 1px inset black; border-width: 0px 0px 3px 0px;">
   <h3 style="margin-left: 2vw;"><%= @report_type%></h3>
 </div>
 
 <div style="height: 75vh; overflow: auto;">
-  <table width="100%">
+  <table width="100%" >
     <tr>
-      <th>Item</th>
-      <th>Available Quantity</th>
-      <th>Amount Dispensed</th>
+      <th style="background-color: #2b2b2b;padding: 5px;color: #FFFFFF;border: 1px solid #ffffff;">Item</th>
+      <th style="background-color: #2b2b2b;padding: 5px;color: #FFFFFF;border: 1px solid #ffffff;">Available Quantity</th>
+      <th style="background-color: #2b2b2b;padding: 5px;color: #FFFFFF;border: 1px solid #ffffff;">Amount Dispensed</th>
     </tr>
 
-    <% (@items || []).each do |item| %>
-        <tr>
-          <td><%= item["name"] %></td>
-          <td><%= item["available"] %></td>
-          <td><%= item["dispensed"] %></td>
+    <% (@items || []).each do |drug,item| %>
+        <tr class="<%= cycle('odd','even') %>">
+          <td style="text-align: left;padding: 5px;"><%= item["name"] %></td>
+          <td style="text-align: left;padding: 5px;"><%= item["available"] %></td>
+          <td style="text-align: left;padding: 5px;"><%= item["dispensed"] %></td>
         </tr>
     <% end %>
   </table>

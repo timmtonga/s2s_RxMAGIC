@@ -36,7 +36,7 @@ module Misc
 
   end
 
-  def create_dispensation_label(item,quantity,lot_number,directions,patient_name,prescriber,rx_id)
+  def self.create_dispensation_label(item,quantity,directions,patient_name,rx_id)
 
     label = ZebraPrinter::StandardLabel.new
     label.font_size = 4
@@ -45,13 +45,10 @@ module Misc
     label.left_margin = 50
     label.draw_text("Rx:#{rx_id}",450,10,0,4,1,1,true)
     label.draw_multi_text("#{get_facility_name}")
-    label.draw_multi_text("Phone: #{get_facility_phone}") unless get_facility_phone.blank?
     label.draw_multi_text("Patient: #{patient_name}")
-    label.draw_multi_text("Physician: #{prescriber}")
     label.draw_multi_text("#{item}")
     label.draw_multi_text("Dir : #{directions}")
     label.draw_multi_text("QTY : #{quantity}")
-    label.draw_multi_text("Lot # :#{lot_number}")
     label.print(1)
 
   end
@@ -123,6 +120,15 @@ module Misc
       set["items"] = []
     end
     return sets
+  end
+
+  def self.create_directions(dose, route, frequency, prn)
+    routes = {"oral"=>"Take", "topical"=>"Apply", "injection"=>"Inject","respiratory"=>"Inhale","other"=>""}
+    frequencies = {"OD"=> "Once a day", "BD"=>"Twice a day", "TDS"=>"Three times a day", "QID"=>"Four times a day",
+                   "5XD"=>"Five times a day", "Q4HRS"=>"Six times a day","QOD"=>"Every other day",
+                   "QWK"=>"Once a week"}
+    prn = (prn == "PRN" ? "(Take as required)" : "")
+    return routes[route.downcase] + " "+ dose + " " + frequencies[frequency] + prn;
   end
 
   private
