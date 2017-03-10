@@ -14,9 +14,9 @@
 <div style="height: 75vh; overflow: auto;">
   <table width="100%" >
     <tr>
-      <th style="background-color: #2b2b2b;padding: 5px;color: #FFFFFF;border: 1px solid #ffffff;">Item</th>
-      <th style="background-color: #2b2b2b;padding: 5px;color: #FFFFFF;border: 1px solid #ffffff;">Available Quantity</th>
-      <th style="background-color: #2b2b2b;padding: 5px;color: #FFFFFF;border: 1px solid #ffffff;">Amount Dispensed</th>
+      <th style="background-color: #2b2b2b;padding: 5px;color: #FFFFFF;border: 1px solid #ffffff;"><%= t('menu.terms.item') %></th>
+      <th style="background-color: #2b2b2b;padding: 5px;color: #FFFFFF;border: 1px solid #ffffff;"><%= t('menu.terms.available_quantity') %></th>
+      <th style="background-color: #2b2b2b;padding: 5px;color: #FFFFFF;border: 1px solid #ffffff;"><%= t('menu.terms.amount_dispensed') %></th>
     </tr>
 
     <% (@items || []).each do |drug,item| %>
@@ -30,5 +30,6 @@
 </div>
 
 <div class="footer" >
-  <button onmousedown="window.location = '/'" class="bttn bttn-success bttn-lg gradient" style="margin-top: 1vh;height: 8vh;margin-right: 2vh;float: right;" type="button">Finish</button>
+  <button onmousedown="window.location = '/'" class="bttn bttn-success bttn-lg gradient"
+          style="margin-top: 1vh;height: 8vh;margin-right: 2vh;float: right;" type="button"><%= t('forms.buttons.finish') %></button>
 </div>

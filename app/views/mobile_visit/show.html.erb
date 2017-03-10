@@ -1,8 +1,5 @@
 <style type="text/css">
   .submitButton{
-    position: absolute;
-    left: 55vw;
-    top: 55vh;
     background-color: #4CAF50; /* Green */
     border: none;
     color: white;
@@ -15,16 +12,17 @@
     display: inline-block;
     font-size: 16px;
   }
+
 </style>
 <div id="dispenseForm" class="questionLayer" style="font-size: 0.9em;">
-  <div style="margin-top: 10vh;margin-left: 35vw; height: 60vh;width: 30vw;background-color: #eeeeff;border: 3px outset black;">
+  <div style="margin-top: 10vh;margin-left: 35vw; height: 65vh;width: 30vw;background-color: #eeeeff;border: 3px outset black;">
     <div style="display: table;width: 100%;">
       <div style="display: table-row">
         <div style="display: table-cell;height: 45vh;">
           <%= form_for :mobile_visit_product, :url => mobile_visit_product_index_path  do |f| %>
               <div style="padding: 10px;" id="qtyDiv" >
                 <div style="margin-top: 5px;">
-                  <label for="qty"><span style="font-weight: bold;font-size: 20px;">Enter amount taken</span></label> <br/>
+                  <label for="qty"><span style="font-weight: bold;font-size: 20px;"><%= t('forms.labels.enter_amount_taken') %></span></label> <br/>
                   <input type="text" id="qty" style="font-size: 20px;" name="amount" required>
                 </div>
                 <div style="margin-top: 5px;">
@@ -49,12 +47,21 @@
                       <td class="customButton" onmousedown="append('.','qty');"><span>.</span></td>
                       <td class="customButton" onmousedown="append('del','qty');"><span>del</span></td>
                     </tr>
+                    <tr>
+                      <td>
+                        <div class="submitButton" style="background-color: tomato !important;" onmousedown="cancelDispense()">
+                          <%= t('forms.buttons.cancel')%>
+                        </div>
+                      </td>
+                      <td colspan="2">
+                        <%= submit_tag t('forms.buttons.finish'), :class => "submitButton"%>
+                      </td>
+                    </tr>
                   </table>
                 </div>
               </div>
               <input type="hidden" value="<%= @visit.id%>" name="visit_id" />
               <input type="hidden" name="bottle_id" id="bottle_id"/>
-              <%= submit_tag "Finish", :class => "submitButton"%>
           <% end %>
         </div>
       </div>
@@ -63,14 +70,14 @@
 </div>
 
 <div id="updateForm" class="questionLayer" style="font-size: 0.9em;">
-  <div style="margin-top: 10vh;margin-left: 35vw; height: 60vh;width: 30vw;background-color: #eeeeff;border: 3px outset black;">
+  <div style="margin-top: 10vh;margin-left: 35vw; height: 65vh;width: 30vw;background-color: #eeeeff;border: 3px outset black;">
     <div style="display: table;width: 100%;">
       <div style="display: table-row">
-        <div style="display: table-cell;height: 45vh;">
+        <div style="display: table-cell;height: 60vh;">
           <%= form_for :mobile_visit_product, :method => :patch,:url => "/mobile_visit_product/update" do |f| %>
               <div style="padding: 10px;" id="qtyDiv" >
                 <div style="margin-top: 5px;">
-                  <label for="qty"><span style="font-weight: bold;font-size: 20px;">Enter amount remaining</span></label> <br/>
+                  <label for="qty"><span style="font-weight: bold;font-size: 20px;"><%= t('forms.labels.enter_amount_returned') %></span></label> <br/>
                   <input type="text" id="qtyRem" style="font-size: 20px;" name="amount" required>
                 </div>
                 <div style="margin-top: 5px;">
@@ -95,11 +102,20 @@
                       <td class="customButton" onmousedown="append('.','qtyRem');"><span>.</span></td>
                       <td class="customButton" onmousedown="append('del','qtyRem');"><span>del</span></td>
                     </tr>
+                    <tr>
+                      <td>
+                        <div class="submitButton" style="background-color: tomato !important;" onmousedown="hideLayer('shadow', 'updateForm')">
+                          <%= t('forms.buttons.cancel')%>
+                        </div>
+                      </td>
+                      <td colspan="2">
+                        <input type="hidden" name="mvp_id" id="mvp_identifier"/>
+                        <%= submit_tag t('forms.buttons.finish'), :class => "submitButton"%>
+                      </td>
+                    </tr>
                   </table>
                 </div>
               </div>
-              <input type="hidden" name="mvp_id" id="mvp_identifier"/>
-              <%= submit_tag "Finish", :class => "submitButton"%>
           <% end %>
         </div>
       </div>
@@ -112,9 +128,9 @@
   <div style="display: table">
     <div style="display: table-row; width: 100%;">
       <div style="display: table-cell;width: 50vw;">
-        <span style="font-weight: bold;font-size: 20px;">Mobile Visit</span><br/>
-        <span style="font-weight: bold">Visit Date: <%= @visit.visit_date.strftime("%d %b %Y")%></span><br/>
-        <span style="font-weight: bold">Visit Coordinator: <%= @visit.coordinator.titleize %></span>
+        <span style="font-weight: bold;font-size: 20px;"><%= t('menu.terms.mobile_vist') %></span><br/>
+        <span style="font-weight: bold"><%= t('menu.terms.visit_date') %>: <%= l(@visit.visit_date, format: "%d %b %Y")%></span><br/>
+        <span style="font-weight: bold"><%= t('menu.terms.visit_coordinator') %>: <%= @visit.coordinator.titleize %></span>
       </div>
       <div style="display: table-cell;">
           <div style="display: table-row">
@@ -134,22 +150,22 @@
   <div style="display: table; width: 100%;">
     <div style="display: table-row">
       <div style="display: table-cell; padding: 10px;border-right: 1px solid #ffffff; text-align: center;background-color: #006495; color: #FFFFFF;">
-        Product
+        <%= t('menu.terms.product') %>
       </div>
       <div style="display: table-cell; padding: 10px;border-right: 1px solid #ffffff; text-align: center;background-color: #006495; color: #FFFFFF;">
-        Bottle ID
+        <%= t('menu.terms.bottle_id') %>
       </div>
       <div style="display: table-cell; padding: 10px;border-right: 1px solid #ffffff; text-align: center;background-color: #006495; color: #FFFFFF;">
-        Amount Taken
+        <%= t('menu.terms.amount_taken') %>
       </div>
       <div style="display: table-cell; padding: 10px;border-right: 1px solid #ffffff; text-align: center;background-color: #006495; color: #FFFFFF;">
-        Amount Used
+        <%= t('menu.terms.amount_used') %>
       </div>
       <div style="display: table-cell; padding: 10px;border-right: 1px solid #ffffff; text-align: center;background-color: #006495; color: #FFFFFF;">
-        Expiry Date
+        <%= t('menu.terms.expiration_date') %>
       </div>
       <div style="display: table-cell; padding: 10px; text-align: center;background-color: #006495; color: #FFFFFF;">
-        Action
+        <%= t('menu.terms.actions') %>
       </div>
     </div>
     <% (@visit_products || []).each do |visit| %>
@@ -160,14 +176,14 @@
           <div style="display: table-cell; padding: 10px; text-align: center;">
             <%= Misc.dash_formatter(visit["bottle_id"])%>
           </div>
-          <div style="display: table-cell; padding: 10px;">
+          <div style="display: table-cell; padding: 10px;text-align: center;">
             <%= visit["amount_taken"]%>
           </div>
-          <div style="display: table-cell; padding: 10px;">
+          <div style="display: table-cell; padding: 10px;text-align: center;">
             <%= visit["amount_used"]%>
           </div>
           <div style="display: table-cell; padding: 10px; text-align: center;">
-            <%= visit["exp_date"]%>
+            <%= l(visit["exp_date"], format: '%d %b %Y')%>
           </div>
           <div style="display: table-cell; text-align: center;">
               <img style="float: left;" src="/assets/edit.png" title="Edit Item"
@@ -182,7 +198,7 @@
 </div>
 
 <div class="footer" >
-  <button onmousedown="window.location = '/mobile_visit'" class="bttn bttn-success bttn-lg gradient" style="margin-top: 1vh;height: 8vh;margin-right: 2vh;float: right;" type="button">Finish</button>
+  <button onmousedown="window.location = '/mobile_visit'" class="bttn bttn-success bttn-lg gradient" style="margin-top: 1vh;height: 8vh;margin-right: 2vh;float: right;" type="button"><%= t('forms.buttons.finish') %></button>
 </div>
 
 <script type="text/javascript">

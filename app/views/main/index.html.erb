@@ -10,7 +10,7 @@
                 <td style="text-align: right;width: 30%;" >
                   <div style="display: table-row">
                     <div style="display: table-cell;">
-                      <strong>Scan Patient Barcode</strong>
+                      <strong><%= t('menu.terms.scan_barcode')%></strong>
                     </div>
                     <div style="display: table-cell;float: right;">
                       <img style="display: block;height: 30px;" src="/assets/barcode.jpg">
@@ -26,7 +26,7 @@
                   &nbsp;
                 </td>
                 <td style="border: 0em !important;">
-                  <b>Facility</b>
+                  <b><%= t('menu.terms.facility') %></b>
                 </td>
                 <td style="border: 0em !important;">
                   <b>:</b>
@@ -35,7 +35,7 @@
                   San Jose del Negrito
                 </td>
                 <td style="border: 0em !important;">
-                  <b>User</b>
+                  <b><%= t('menu.terms.users_name')%></b>
                 </td>
                 <td style="border: 0em !important;">
                   <b>:</b>
@@ -46,15 +46,15 @@
               </tr>
             </table>
         </div>
-        <div class="header-cell" style="float: right; width: 13%;text-align: center;vertical-align: middle;">
-            <h2>eDX</h2>
-          <%= Date.today.strftime("%d %b %Y")%>
+        <div class="header-cell" style="float: right; width: 13%;text-align: center;vertical-align: middle;font-size: 16px;">
+            <h2>RxMAGIC</h2>
+          <%= l(Date.today, format: '%d %B %Y') %>
         </div>
       </div>
 
       <div style="border: 3px solid #06425C;margin-top: 3vh;height: 60vh;">
           <div style="width: 100%; background-color: #006495;height: 4vh;text-align: center;color: white;padding-top: 1vh;">
-              <span style="font-size: 20px;font-weight: bold;">Actions</span>
+              <span style="font-size: 20px;font-weight: bold;"><%= t('menu.terms.actions') %></span>
           </div>
           <div style="display: table; padding-top: 10px;padding-left: 10px;margin-left: auto;margin-right: auto;">
             <div style="display: table-row">
@@ -75,20 +75,20 @@
               </div>
             </div>
             <div style="display: table-row">
-              <div style="display: table-cell;text-align: center;" onmousedown="window.location='/general_inventory/new'">
-                Add Item
+              <div style="display: table-cell;text-align: center;padding: 2px;" onmousedown="window.location='/general_inventory/new'">
+                <%= t('menu.terms.add_item') %>
               </div>
-              <div onmousedown="window.location='/general_inventory'" style="display: table-cell;text-align: center;">
-                View Inventory
+              <div onmousedown="window.location='/general_inventory'" style="display: table-cell;text-align: center;padding: 2px;">
+                <%= t('menu.terms.view_inventory') %>
               </div>
-              <div onmousedown="window.location='/mobile_visit'" style="display: table-cell;text-align: center;">
-                Mobile Clinic
+              <div onmousedown="window.location='/mobile_visit'" style="display: table-cell;text-align: center;padding: 2px;">
+                <%= t('menu.terms.mobile_clinic') %>
               </div>
-              <div onmousedown="window.location='/select_report'" style="display: table-cell;text-align: center;">
-                Report
+              <div onmousedown="window.location='/select_report'" style="display: table-cell;text-align: center;padding: 2px;">
+                <%= t('menu.terms.report') %>
               </div>
-              <div onmousedown="window.location='/main/settings'" style="display: table-cell;text-align: center;">
-                Settings
+              <div onmousedown="window.location='/main/settings'" style="display: table-cell;text-align: center;padding: 2px;">
+                <%= t('menu.terms.settings') %>
               </div>
             </div>
           </div>
@@ -96,7 +96,7 @@
     </div>
 
     <div class="footer" >
-      <button onmousedown="window.location = '/logout'" class="bttn bttn-danger bttn-lg gradient" style="margin-top: 1vh;height: 8vh;margin-left: 2vh;" type="button">Logout</button>
+      <button onmousedown="window.location = '/logout'" class="bttn bttn-danger bttn-lg gradient" style="margin-top: 1vh;height: 8vh;margin-left: 2vh;" type="button"><%= t('forms.buttons.logout') %></button>
     </div>
   </body>
 

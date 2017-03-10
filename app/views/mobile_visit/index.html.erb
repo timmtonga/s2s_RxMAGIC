@@ -14,7 +14,18 @@
   // Styling the table with datatables library
   $(document).ready(function() {
     // $.fn.dataTable.moment( 'MMM-YYYY' );
-    $('#mobilevisits').DataTable({"bLengthChange": false, "bDestroy": true, "pageLength":5});
+    $('#mobilevisits').DataTable({"bLengthChange": false,
+      "bDestroy": true,
+      "pageLength":5,
+      "language": {
+        "search": I18n.t('forms.labels.search'),
+        "lengthMenu": "Display _MENU_ records per page",
+        "zeroRecords": "Nothing found - sorry",
+        "info": I18n.t('forms.labels.tbl_pages'),
+        "infoEmpty": "No records available",
+        "infoFiltered": "(filtered from _MAX_ total records)"
+      }
+    });
     search_box = $('#generalInventory').dataTable()
     search = document.getElementsByTagName("input")[0];
     search.setAttribute("id","search");
@@ -27,17 +38,17 @@
 </script>
 
 <div style="height: 8vh;border: 1px inset black; border-width: 0px 0px 3px 0px;">
-  <h1 style="margin-left: 2vw;">Mobile Visits</h1>
+  <h1 style="margin-left: 2vw;"><%= t('menu.terms.mobile_vist')%></h1>
 </div>
 
 <div style="height: 75vh; overflow: auto;">
   <table id="mobilevisits" class="table table-striped table-bordered" width="100%" cellspacing="0">
     <thead>
     <tr>
-      <th style="width: 10%;border-right: 1px solid #ffffff; text-align: center;background-color: #006495; color: #FFFFFF;">Visit Coordinator</th>
-      <th style="width: 15%;border-right: 1px solid #ffffff; text-align: center;background-color: #006495; color: #FFFFFF;">Visit Date</th>
-      <th style="width: 10%;border-right: 1px solid #ffffff; text-align: center;background-color: #006495; color: #FFFFFF;">Number of Items</th>
-      <th style="width: 20%;border-right: 1px solid #ffffff; text-align: center;background-color: #006495; color: #FFFFFF;">Actions</th>
+      <th style="width: 10%;border-right: 1px solid #ffffff; text-align: center;background-color: #006495; color: #FFFFFF;"><%= t('menu.terms.visit_coordinator')%></th>
+      <th style="width: 15%;border-right: 1px solid #ffffff; text-align: center;background-color: #006495; color: #FFFFFF;"><%= t('menu.terms.visit_date')%></th>
+      <th style="width: 10%;border-right: 1px solid #ffffff; text-align: center;background-color: #006495; color: #FFFFFF;"><%= t('menu.terms.number_of_items')%></th>
+      <th style="width: 20%;border-right: 1px solid #ffffff; text-align: center;background-color: #006495; color: #FFFFFF;"><%= t('menu.terms.actions')%></th>
     </tr>
     </thead>
 
@@ -45,19 +56,18 @@
     <% (@visits || []).each do |visit| %>
         <tr>
           <td><%= visit.coordinator rescue "" %></td>
-          <td><%= visit.visit_date.strftime("%d %b, %Y") %></td>
+          <td><%= l(visit.visit_date, format: "%d %b, %Y") %></td>
           <td><%= visit.products %></td>
           <td>
             <div style="display: table-row; width: 100%;">
-              <div style="display: table-cell;width: 50%;text-align: center;">
-                <a href="/mobile_visit/<%= visit.id %>/edit">
-                  <img style="margin-left: 1vw;margin-right: 1vw" src="/assets/edit.png" title="Edit Visit">
-                </a>
+          <!--    <div style="display: table-cell;width: 50%;text-align: center;">
+                  <img style="margin-left: 1vw;margin-right: 1vw" src="/assets/edit.png" title="Edit Visit"
+                       onmousedown="window.location='/mobile_visit/<%= visit.id %>/edit'">
               </div>
+           //-->
               <div style="display: table-cell;width: 50%;text-align: center;">
-                <a href="/mobile_visit/<%= visit.id %>">
-                  <img style="margin-left: 1vw;margin-right: 1vw" src="/assets/view.png"  title="View Visit">
-                </a>
+                  <img style="margin-left: 1vw;margin-right: 1vw" src="/assets/view.png" title="View Visit"
+                       onmousedown="window.location='/mobile_visit/<%= visit.id %>'">
               </div>
               <div style="display: table-cell;text-align: center;">
                 <img src="/assets/delete.png" title="Void Visit"
@@ -73,8 +83,10 @@
 </div>
 
 <div class="footer" >
-  <button onmousedown="window.location = '/'" class="bttn bttn-success bttn-lg gradient" style="margin-top: 1vh;height: 8vh;margin-right: 2vh;float: right;" type="button">Finish</button>
-  <button onmousedown="window.location = '/mobile_visit/new'" class="bttn bttn-primary bttn-lg gradient" style="margin-top: 1vh;height: 8vh;margin-right: 2vh;float: right;" type="button">Create Visit</button>
+  <button onmousedown="window.location = '/'" class="bttn bttn-success bttn-lg gradient" style="margin-top: 1vh;height: 8vh;margin-right: 2vh;float: right;"
+          type="button"><%= t("forms.buttons.finish")%></button>
+  <button onmousedown="window.location = '/mobile_visit/new'" class="bttn bttn-primary bttn-lg gradient"
+          style="margin-top: 1vh;height: 8vh;margin-right: 2vh;float: right;" type="button"><%= t("forms.buttons.create_visit")%></button>
 </div>
 
 <div id="keypad">

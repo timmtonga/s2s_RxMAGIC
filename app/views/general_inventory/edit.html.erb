@@ -1,6 +1,6 @@
 <script>
   var tt_cancel_destination = "/general_inventory";
-  tstCurrentDate = <%= Date.today.strftime("%d-%m-%Y") %>;
+  var tstCurrentDate = <%= Date.today.strftime("%d-%m-%Y") %>;
 
   function set_ajaxURL_for_suggestions(url, filter_value) {
     $('touchscreenInput'+tstCurrentPage).setAttribute('ajaxURL', url + filter_value + "&search_string=");

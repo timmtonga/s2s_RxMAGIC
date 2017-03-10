@@ -18,18 +18,18 @@
       <div style="margin-top: 10vh;margin-left: 15vw; height: 60vh;width: 70vw;background-color: #eeeeff;border: 3px outset black;">
           <table style="width: 100%; border: 2px solid black; border-width: 0px 0px 2px 0px;">
             <tr>
-              <td style="width: 20%;">Bottle ID</td>
+              <td style="width: 20%;"><%= t('menu.terms.bottle_id')%></td>
               <th id="bottle_id" style="text-align: left;width: 20%;">&nbsp;</th>
-              <td style="text-align: left;width: 20%;">Directions</td>
+              <td style="text-align: left;width: 20%;"><%= t('menu.terms.directions')%></td>
               <th style="text-align: left;" id="directionsDisp">&nbsp;</th>
               <td style="width: 5%;" rowspan="2">
                 <img style="padding-right: 2px;float: right;" src="/assets/delete.png" onmousedown="cancelDispense()">
               </td>
             </tr>
             <tr>
-              <td>Route</td>
+              <td><%= t('menu.terms.route')%></td>
               <th style="text-align: left;" id="route_type">&nbsp;</th>
-              <td>Quantity</td>
+              <td><%= t('menu.terms.quantity')%></td>
               <th style="text-align: left;" id="qtyDisp">&nbsp;</th>
             </tr>
           </table>
@@ -38,63 +38,63 @@
             <div style="display: table-cell;width: 15%;padding: 5px;vertical-align: top;">
                 <table width="100%" style="border-collapse:separate;border-spacing:0 10px;">
                   <tr>
-                    <th class="tab" onmousedown="showDispenseDiv('routesDiv')">Administration Route</th>
+                    <th class="tab" onmousedown="showDispenseDiv('routesDiv')"><%= t('forms.buttons.administration_route')%></th>
                   </tr>
                   <tr>
-                    <th class="tab" onmousedown="showDispenseDiv('doseTypeDiv')">Dose Type</th>
+                    <th class="tab" onmousedown="showDispenseDiv('doseTypeDiv')"><%= t('forms.buttons.dose_type')%></th>
                   </tr>
                   <tr>
-                    <th class="tab" onmousedown="showDispenseDiv('doseDiv')">Dose</th>
+                    <th class="tab" onmousedown="showDispenseDiv('doseDiv')"><%= t('forms.buttons.dose')%></th>
                   </tr>
                   <tr>
-                    <th class="tab" onmousedown="showDispenseDiv('directionsDiv')">Directions</th>
+                    <th class="tab" onmousedown="showDispenseDiv('directionsDiv')"><%= t('forms.buttons.directions')%></th>
                   </tr>
                   <tr>
-                    <th class="tab" onmousedown="showDispenseDiv('qtyDiv')">Duration</th>
+                    <th class="tab" onmousedown="showDispenseDiv('qtyDiv')"><%= t('forms.buttons.duration')%></th>
                   </tr>
                 </table>
             </div>
             <div style="display: table-cell;border: 2px solid black;border-width: 0px 0px 0px 2px;height: 50vh;">
               <%= form_for :prescription, :html => { :class => "form-horizontal pmap_inventory" }, :url => "/refill"  do |f| %>
               <div style="position: absolute;left: 65vw;top: 60vh;" onmousedown="showDispenseDiv('doseTypeDiv')" class="nextButton" id="dispNext">
-                Next
+                <%= t('forms.buttons.next')%>
               </div>
               <div class="mobi-div" id="routesDiv" >
-                <h2>Select Route of Administration</h2>
+                <h2><%= t('forms.labels.select_administration_route')%></h2>
                 <table width="100" style="border-collapse: collapse">
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="administration" class="radio" value="oral" id="route-oral" onchange="setRoute('Oral')" required>
-                        <label class="custom" for="route-oral">Oral</label>
+                        <input type="radio" name="administration" class="radio" value="oral" id="route-oral" onchange="setRoute('<%= t('forms.options.oral')%>')" required>
+                        <label class="custom" for="route-oral"><%= t('forms.options.oral')%></label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="administration" class="radio" value="topical" id="route-topical" onchange="setRoute('Topical')" required>
-                        <label class="custom" for="route-topical"> Topical </label>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="radioDiv">
-                        <input type="radio" name="administration" class="radio" value="respiratory" id="route-respiratory" onchange="setRoute('Respiratory')" required>
-                        <label class="custom" for="route-respiratory"> Respiratory</label>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="radioDiv">
-                        <input type="radio" name="administration" class="radio" value="injection" id="route-injection" onchange="setRoute('Injection')" required>
-                        <label class="custom" for="route-injection"> Injection</label>
+                        <input type="radio" name="administration" class="radio" value="topical" id="route-topical" onchange="setRoute('<%= t('forms.options.topical')%>')" required>
+                        <label class="custom" for="route-topical"><%= t('forms.options.topical')%></label>
                       </div>
                     </td>
                   </tr>
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="administration" class="radio" value="other" id="route-other" onchange="setRoute('Other')" required>
-                        <label class="custom" for="route-other"> Other </label>
+                        <input type="radio" name="administration" class="radio" value="respiratory" id="route-respiratory" onchange="setRoute('<%= t('forms.options.respiratory')%>')" required>
+                        <label class="custom" for="route-respiratory"><%= t('forms.options.respiratory')%></label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="radioDiv">
+                        <input type="radio" name="administration" class="radio" value="injection" id="route-injection" onchange="setRoute('<%= t('forms.options.injection')%>')" required>
+                        <label class="custom" for="route-injection"><%= t('forms.options.injection')%></label>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="radioDiv">
+                        <input type="radio" name="administration" class="radio" value="other" id="route-other" onchange="setRoute('<%= t('forms.options.other')%>')" required>
+                        <label class="custom" for="route-other"><%= t('forms.options.other')%></label>
                       </div>
                     </td>
                     <td>
@@ -106,7 +106,7 @@
               </div>
               <div class="mobi-div" id="doseDiv" style="display: none;">
                 <div style="margin-top: 5px;">
-                  <label for="dose"><span style="font-weight: bold;font-size: 20px;">Enter dose</span></label> <br/>
+                  <label for="dose"><span style="font-weight: bold;font-size: 20px;"><%= t('forms.labels.enter_dose')%></span></label> <br/>
                   <input type="text" id="dose" name="dose" style="font-size: 20px;" required>
                 </div>
                 <div style="margin-top: 5px;">
@@ -135,38 +135,38 @@
                 </div>
               </div>
               <div class="mobi-div" id="doseTypeDiv" style="display: none;">
-                <h2>Select Dose Type</h2>
+                <h2><%= t('forms.labels.select_dose_type')%></h2>
                 <table width="100" style="border-collapse: collapse">
                   <tr>
                     <td>
                       <div class="radioDiv">
                         <input type="radio" name="doseType" value="PRN" class="radio" id="typePRN" required>
-                        <label class="custom" for="typePRN">As needed</label>
+                        <label class="custom" for="typePRN" style="width: 200px !important;"><%= t('forms.options.as_needed')%></label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
                         <input type="radio" name="doseType" value="NPRN" class="radio" id="typeNPRN" required>
-                        <label class="custom" for="typeNPRN"> As prescribed </label>
+                        <label class="custom" for="typeNPRN" style="width: 200px !important;"><%= t('forms.options.as_prescribed')%></label>
                       </div>
                     </td>
                   </tr>
                 </table>
               </div>
               <div class="mobi-div" id="directionsDiv" style="display: none;">
-                <h2>Select directions</h2>
+                <h2><%= t('forms.labels.select_directions')%></h2>
                 <table width="100" style="border-collapse: collapse">
                   <tr>
                     <td>
                       <div class="radioDiv">
                         <input type="radio" name="frequency" class="radio" id="OD" value="OD" onchange="setDirections('OD')" required>
-                        <label class="custom" for="OD">Once a day</label>
+                        <label class="custom" for="OD" style="width: 200px !important;"><%= t('forms.options.once_a_day')%></label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
                         <input type="radio" name="frequency" class="radio" id="BD" value="BD" onchange="setDirections('BD')" required>
-                        <label class="custom" for="BD"> Twice a day </label>
+                        <label class="custom" for="BD" style="width: 200px !important;"><%= t('forms.options.two_times_a_day')%></label>
                       </div>
                     </td>
                   </tr>
@@ -174,13 +174,13 @@
                     <td>
                       <div class="radioDiv">
                         <input type="radio" name="frequency" class="radio" id="TDS" value="TDS" onchange="setDirections('TDS')" required>
-                        <label class="custom" for="TDS"> Three times a day</label>
+                        <label class="custom" for="TDS" style="width: 200px !important;"><%= t('forms.options.three_times_a_day')%></label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
                         <input type="radio" name="frequency" class="radio" id="QID" value="QID" onchange="setDirections('QID')" required>
-                        <label class="custom" for="QID"> Four times a day</label>
+                        <label class="custom" for="QID" style="width: 200px !important;"><%= t('forms.options.four_times_a_day')%></label>
                       </div>
                     </td>
                   </tr>
@@ -188,13 +188,13 @@
                     <td>
                       <div class="radioDiv">
                         <input type="radio" name="frequency" class="radio" id="5XD" value="5XD" onchange="setDirections('5XD')" required>
-                        <label class="custom" for="5XD">Five times a day</label>
+                        <label class="custom" for="5XD" style="width: 200px !important;"><%= t('forms.options.five_times_a_day')%></label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
                         <input type="radio" name="frequency" class="radio" id="Q4HRS" value="Q4HRS" onchange="setDirections('Q4HRS')" required>
-                        <label class="custom" for="Q4HRS"> Six times a day</label>
+                        <label class="custom" for="Q4HRS" style="width: 200px !important;"><%= t('forms.options.six_times_a_day')%></label>
                       </div>
                     </td>
                   </tr>
@@ -202,13 +202,13 @@
                     <td>
                       <div class="radioDiv">
                         <input type="radio" name="frequency" class="radio" id="QOD" value="QOD" onchange="setDirections('QOD')" required>
-                        <label class="custom" for="QOD"> Every other day</label>
+                        <label class="custom" for="QOD" style="width: 200px !important;"><%= t('forms.options.every_other_day')%></label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
                         <input type="radio" name="frequency" class="radio" id="QWK" value="QWK" onchange="setDirections('QWK')" required>
-                        <label class="custom" for="QWK"> Once a week</label>
+                        <label class="custom" for="QWK" style="width: 200px !important;"><%= t('forms.options.once_a_week')%></label>
                       </div>
                     </td>
                   </tr>
@@ -216,7 +216,7 @@
               </div>
               <div class="mobi-div" id="qtyDiv" style="display: none;">
                 <div style="margin-top: 5px;">
-                  <label for="qty"><span style="font-weight: bold;font-size: 20px;">Enter number of days</span></label> <br/>
+                  <label for="qty"><span style="font-weight: bold;font-size: 20px;"><%= t('forms.labels.enter_number_of_days')%></span></label> <br/>
                   <input type="text" id="qty" style="font-size: 20px;" name="duration" required>
                 </div>
                 <div style="margin-top: 5px;">
@@ -270,19 +270,19 @@
             </tr>
             <tr>
               <td>&nbsp;</td>
-              <th style="text-align: left;">Patient #</th>
+              <th style="text-align: left;"><%= t('menu.terms.patient_id') %></th>
               <th>:</th>
               <td><%= @patient.formatted_pnid %></td>
-              <th style="text-align: left;">Age</th>
+              <th style="text-align: left;"><%= t('menu.terms.age') %></th>
               <th>:</th>
               <td><%= @patient.age %></td>
             </tr>
             <tr>
               <td>&nbsp;</td>
-              <th style="text-align: left;">National ID</th>
+              <th style="text-align: left;"><%= t('menu.terms.national_id') %></th>
               <th>:</th>
               <td><%= @patient.nat_id %></td>
-              <th style="text-align: left;">Marital Status</th>
+              <th style="text-align: left;"><%= t('menu.terms.marital_status') %></th>
               <th>:</th>
               <td><%= @patient.marital_status %></td>
             </tr>
@@ -292,7 +292,7 @@
           <div style="display: table-row">
             <div style="display: table-cell;vertical-align: top;">
               <img style="height: 30px;" src="/assets/barcode.jpg">
-              <strong>Scan Bottle</strong>
+              <strong><%= t('menu.terms.scan_bottle')%></strong>
             </div>
           </div>
           <div style="display: table-row">
@@ -314,7 +314,7 @@
     </div>
     <div class="footer" >
       <button class="bttn bttn-success bttn-lg gradient" style="margin-top: 1vh;height: 8vh;
-          margin-right: 2vh;float: right;" type="button" onmousedown="window.location='/'">Finish</button>
+          margin-right: 2vh;float: right;" type="button" onmousedown="window.location='/'"><%= t('forms.buttons.finish')%></button>
     </div>
   </body>
 
@@ -376,12 +376,12 @@
       if (option == 'qtyDiv')
       {
         button.setAttribute("onmousedown", "validateDisp()")
-        button.innerHTML = "Finish"
+        button.innerHTML = '<%= t('forms.buttons.finish')%>'
       }
       else
       {
         button.setAttribute("onmousedown", "showDispenseDiv('"+ tabs[currentTab+1] + "')")
-        button.innerHTML = "Next"
+        button.innerHTML = '<%= t('forms.buttons.next')%>'
       }
 
     }
@@ -403,7 +403,7 @@
 
     function setDirections(frequency){
       var field = document.getElementById("directionsDisp");
-      field.innerHTML = createDirections(document.getElementById("route_type").innerHTML, document.getElementById('dose').value, frequency)
+      field.innerHTML = createDirections(document.getElementById("route_type").innerHTML, document.getElementById('dose').value, frequency,"doseType")
     }
 
     function validateDisp() {

@@ -15,6 +15,12 @@ tstRequireNextClickByDefault = true;
 tstConfirmCancel = true;
 tstEnableDateSelector = false;
 
+if(typeof tstLocaleWords == typeof tstLocaleWords) {
+
+    var tstLocaleWords = {};
+
+}
+
 //Restrospective functionality doesn't belong here
 //should be in pmis.js only
 if (typeof(tstRetrospectiveMode) == "undefined")
@@ -72,6 +78,8 @@ var tstTimerFunctionCall = "";
 var tstMultipleSelected = {};
 
 var ajaxGeneralRequestResult;
+
+var rollingBack = false;
 
 var tstInternalCurrentDate = (new Date().getFullYear()) + "-" + padZeros((new Date().getMonth() + 1), 2) + "-" +
     padZeros((new Date().getDate()), 2);
@@ -190,7 +198,7 @@ function createInputPage(pageNumber) {
     // create back button if not on first page
     if (pageNumber > 0) {
         var prevPageNo = pageNumber - 1;
-        backButton.setAttribute("onMouseDown", "gotoPage(" + prevPageNo + ", null, true)");
+        backButton.setAttribute("onMouseDown", "rollingBack = true; gotoPage(" + prevPageNo + ", null, true)");
         backButton.style.display = 'block';
     } else {
         backButton.style.display = 'none';
@@ -222,17 +230,14 @@ function createButtons() {
     buttonsDiv.innerHTML = "<button id='showDataButton' class='button blue navButton' onMouseDown='toggleShowProgress()'><span>Show Data</span></button>";
 
     // create next/finish button
-    buttonsDiv.innerHTML += "<button id='nextButton' class='button green navButton' onMouseDown='if(!this.className.match(/gray/)){gotoNextPage()}'><span>" + (typeof(tstLocaleWords) != "undefined" ?
-        (tstLocaleWords["next"] ? tstLocaleWords["next"] : "Next") : "Next") + "</span></button>";
+    buttonsDiv.innerHTML += "<button id='nextButton' class='button green navButton' onMouseDown='if(!this.className.match(/gray/)){gotoNextPage()}'><span>" + I18n.t('forms.buttons.next') + "</span></button>";
 
     // create back button
-    buttonsDiv.innerHTML += "<button id='backButton' class='button blue navButton'><span>" + (typeof(tstLocaleWords) != "undefined" ?
-        (tstLocaleWords["back"] ? tstLocaleWords["back"] : "Back") : "Back") + "</span></button>";
+    buttonsDiv.innerHTML += "<button id='backButton' class='button blue navButton'><span>" + I18n.t('forms.buttons.back') + "</span></button>";
 
     // create clear button or new patient button if on search page
     if (!tstSearchPage) {
-        buttonsDiv.innerHTML += "<button id='clearButton' class='button blue navButton' onMouseDown='clearInput();'><span>" + (typeof(tstLocaleWords) != "undefined" ?
-            (tstLocaleWords["clear"] ? tstLocaleWords["clear"] : "Clear") : "Clear") + "</span></button>";
+        buttonsDiv.innerHTML += "<button id='clearButton' class='button blue navButton' onMouseDown='clearInput()'><span>" + I18n.t('forms.buttons.clear') + "</span></button>";
     } else {
         var buttonLabel = "New Patient";
         if (tstSearchMode && (tstSearchMode == "guardian")) {
@@ -246,8 +251,7 @@ function createButtons() {
     buttonsDiv.innerHTML += "<div id='tt_extraButtons'></div>";
 
     // create cancel button
-    buttonsDiv.innerHTML += "<button class='button navButton red' id='cancelButton' onMouseDown='confirmCancelEntry(" + (typeof(save_state) != "undefined" ? "true" : "") + ");'><span>" + (typeof(tstLocaleWords) != "undefined" ?
-        (tstLocaleWords["cancel"] ? tstLocaleWords["cancel"] : "Cancel") : "Cancel") + "</span></button>";
+    buttonsDiv.innerHTML += "<button class='button navButton red' id='cancelButton' onMouseDown='confirmCancelEntry(" + (typeof(save_state) != "undefined" ? "true" : "") + ");'><span>" + I18n.t('forms.buttons.cancel') + "</span></button>";
 
     return buttonsDiv
 }
@@ -504,7 +508,7 @@ function assignSelectOptionsFromSuggestions(formElement, options) {
         var value = li.getAttribute("value") || li.getAttribute("tstValue") || li.innerHTML;
         var option = document.createElement("option");
         option.setAttribute("value", value);
-        option.innerHTML = li.innerHTML;
+        option.innerHTML = (typeof tstLocaleWords != typeof undefined ? tstLocaleWords[li.innerHTML] : li.innerHTML);
         formElement.appendChild(option);
     }
 }
@@ -570,19 +574,31 @@ function getHelpText(inputElement, aPageNum) {
     helpText.setAttribute('class', helpTextClass);
     helpText.setAttribute('refersToTouchscreenInputID', aPageNum);
     helpText.setAttribute('for', 'touchscreenInput' + aPageNum);
+
     if (inputElement.getAttribute("helpText") != null) {
-        helpText.innerHTML = inputElement.getAttribute("helpText");
+
+        var word = inputElement.getAttribute("helpText");
+
+        word = word.toLowerCase();
+
+        word = word.trim();
+
+        helpText.innerHTML = (typeof tstLocaleWords != typeof undefined && tstLocaleWords[word] ?
+            tstLocaleWords[word] : inputElement.getAttribute("helpText"));
+
     }
     else {
         var labels = inputElement.form.getElementsByTagName("label");
         for (var i = 0; i < labels.length; i++) {
             if (labels[i].getAttribute("for") == inputElement.id) {
-                helpText.innerHTML = labels[i].innerHTML;
+                helpText.innerHTML = (tstLocaleWords && tstLocaleWords[labels[i].innerHTML.trim().toLowerCase()] ?
+                    tstLocaleWords[labels[i].innerHTML.trim().toLowerCase()] : labels[i].innerHTML.trim()); // labels[i].innerHTML;
                 break;
             } else if (isDateElement(inputElement)) {
                 var re = new RegExp(labels[i].getAttribute("for"));
                 if (inputElement.name.search(re) != -1) {
-                    helpText.innerHTML = labels[i].innerHTML;
+                    helpText.innerHTML = (tstLocaleWords && tstLocaleWords[labels[i].innerHTML.trim().toLowerCase()] ?
+                        tstLocaleWords[labels[i].innerHTML.trim().toLowerCase()] : labels[i].innerHTML);  // labels[i].innerHTML;
                     break;
                 }
 
@@ -709,11 +725,11 @@ function getOptions() {
                     }
                 ], options);
                 if (tstFormElements[i].checked) tstInputTarget.value = "" + (typeof(tstLocaleWords) != "undefined" ?
-                    (tstLocaleWords["yes"] ?
-                        tstLocaleWords["yes"] :
-                        "Yes") : "Yes") + "";
+                        (tstLocaleWords["yes"] ?
+                            tstLocaleWords["yes"] :
+                            "Yes") : "Yes") + "";
                 else tstInputTarget.value = "" + (typeof(tstLocaleWords) != "undefined" ?
-                    (tstLocaleWords["no"] ? tstLocaleWords["no"] : "No") : "No") + "";
+                        (tstLocaleWords["no"] ? tstLocaleWords["no"] : "No") : "No") + "";
             } else {
                 viewPort.setAttribute('style', 'display:none');
             }
@@ -844,7 +860,7 @@ function loadSelectOptions(selectOptions, options, dualViewOptions) {
 
         optionsList += (j % 2 == 0 ? " class='odd' tag='odd' " : " class='even' tag='even'") +
             ' onmousedown="' + (tstFormElements[tstCurrentPage].getAttribute("tt_requirenextclick") != null ?
-            (tstFormElements[tstCurrentPage].getAttribute("tt_requirenextclick") == "false" ? "checkRequireNextClick();" : "") : "") + '"';
+                (tstFormElements[tstCurrentPage].getAttribute("tt_requirenextclick") == "false" ? "checkRequireNextClick();" : "") : "") + '"';
 
         optionsList += (j % 2 == 0 ? " class='odd' tag='odd' " : " class='even' tag='even'") +
             ' onclick="' + mouseDownAction + '" ';
@@ -856,7 +872,9 @@ function loadSelectOptions(selectOptions, options, dualViewOptions) {
             "' src='/assets/unticked.jpg' alt='[ ]' />" +
             "</div><div style='display: table-cell; vertical-align: middle; " +
             "text-align: left; padding-left: 15px;' id='optionValue" + (j - 1) + "'>" : "") +
-            selectOptions[j].text + "</div></div></div></li>\n";
+            (typeof tstLocaleWords != typeof undefined && tstLocaleWords[selectOptions[j].text.toLowerCase().trim()] ?
+                tstLocaleWords[selectOptions[j].text.toLowerCase().trim()] :
+                selectOptions[j].text) + "</div></div></div></li>\n";
     }
     optionsList += "</ul>";
     options.innerHTML = optionsList;
@@ -954,7 +972,8 @@ function loadOptions(selectOptions, options) {
     var optionsList = "<ul>";
     var selectOptionCount = selectOptions.length;
     for (var j = 0; j < selectOptionCount; j++) {
-        optionsList += "<li onmousedown='updateTouchscreenInputForSelect(this);'>" + selectOptions[j].value + "</li>\n";
+        optionsList += "<li onmousedown='updateTouchscreenInputForSelect(this)'>" + (typeof tstLocaleWords != typeof undefined && tstLocaleWords[selectOptions[j].value.toLowerCase().trim()] ?
+                tstLocaleWords[selectOptions[j].value.toLowerCase().trim()] : selectOptions[j].value) + "</li>\n";
     }
     optionsList += "</ul>";
     options.innerHTML = optionsList;
@@ -1049,7 +1068,8 @@ function checkRequireNextClick() {
 
 function valueIncludedInOptions(val, options) {
     for (var i = 0; i < options.length; i++) {
-        if (val == options[i].value) return true;
+        if (val == (typeof tstLocaleWords != typeof undefined && tstLocaleWords[options[i].value.trim().toLowerCase()] ?
+                tstLocaleWords[options[i].value.trim().toLowerCase()] : options[i].value)) return true;
         if (val == options[i].text) return true;
     }
     return false;
@@ -1196,7 +1216,8 @@ function tt_update(sourceElement, navback) {
         // switch (targetElement.tagName){
         case "INPUT":
             if (targetElement.type == "text" || targetElement.type == "password") {
-                targetElement.value = sourceValue;
+                if (targetElement.getAttribute("field_type") != "date")
+                    targetElement.value = sourceValue;
             } else if (targetElement.type == "radio") {
                 var radioElements = document.getElementsByName(targetElement.name);
                 for (var i = 0; i < radioElements.length; i++) {
@@ -1348,9 +1369,9 @@ function gotoPage(destPage, validate, navback) {
 
     var navback = (navback ? navback : false);
 
-    if(navback) {
+    if (navback) {
 
-        if(__$("nextButton")) {
+        if (__$("nextButton")) {
 
             var currentClass = __$("nextButton").className;
 
@@ -1403,14 +1424,17 @@ function navigateToPage(destPage, validate, navback) {
     if (currentInput) {
         // if (__$('dateselector') != null && typeof ds != 'undefined')
         // ds.update(currentInput);
+
         if (validate) {
+
             if (!inputIsValid()) return;
             // if (!inputIsAcceptable()) return;
 
             if (dispatchFlag()) return;
         }
 
-        tstPageValues[currentPage] = currentInput.value;
+        if (tstFormElements[currentPage].getAttribute("field_type") != "date")
+            tstPageValues[currentPage] = currentInput.value;
 
         tt_update(currentInput, navback);
 
@@ -1498,11 +1522,9 @@ function navigateToPage(destPage, validate, navback) {
 
         var nextButton = tstNextButton;
         if (destPage + 1 == tstPages.length) {
-            nextButton.innerHTML = "<span>" + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["finish"] ? tstLocaleWords["finish"] : "Finish") : "Finish") + "</span>";
+            nextButton.innerHTML = "<span>" + I18n.t('forms.buttons.finish') + "</span>";
         } else {
-            nextButton.innerHTML = "<span>" + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["next"] ? tstLocaleWords["next"] : "Next") : "Next") + "</span>";
+            nextButton.innerHTML = "<span>" + I18n.t('forms.buttons.next') + "</span>";
         }
         showBestKeyboard(destPage);
 
@@ -1514,13 +1536,13 @@ function navigateToPage(destPage, validate, navback) {
         nextButton.setAttribute("onMouseDown", "if(!this.className.match(/gray/)) {gotoNextPage()}");
         // if in fast mode and not retrospective mode and missing is not disabled
         if (requireNextClick == "false") {
-            if (tstRetrospectiveMode != "true"){
-                nextButton.innerHTML=""
+            if (tstRetrospectiveMode != "true") {
+                nextButton.innerHTML = ""
                 nextButton.setAttribute("onMouseDown", "return false");
                 nextButton.style.display = "none";
             }
-            else if (missingDisabled != true){
-                nextButton.innerHTML="<span>Skip</span>"
+            else if (missingDisabled != true) {
+                nextButton.innerHTML = "<span>Skip</span>"
             }
         } else {
             nextButton.style.display = "block";
@@ -1528,9 +1550,9 @@ function navigateToPage(destPage, validate, navback) {
 
         // execute JS code when a field's page has just been loaded
         if (tstInputTarget.getAttribute("tt_onLoad")) {
-            if((tstInputTarget.getAttribute("tt_requireNextClick") && eval(tstInputTarget.getAttribute("tt_requireNextClick")) == false)) {
+            if ((tstInputTarget.getAttribute("tt_requireNextClick") && eval(tstInputTarget.getAttribute("tt_requireNextClick")) == false)) {
 
-                if(__$('nextButton')) {
+                if (__$('nextButton')) {
 
                     __$('nextButton').style.display = "none";
 
@@ -1538,7 +1560,7 @@ function navigateToPage(destPage, validate, navback) {
 
             } else {
 
-                if(__$('nextButton')) {
+                if (__$('nextButton')) {
 
                     __$('nextButton').style.display = "block";
 
@@ -1593,12 +1615,12 @@ function inputIsValid() {
                 "<button class='button' style='float: none;' onclick='this.offsetParent.style.display=\"none\"; " +
                 "gotoPage(tstCurrentPage+1, false);' onmousedown='this.offsetParent.style.display=\"none\"; " +
                 "gotoPage(tstCurrentPage+1, false);'><span>" + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["yes"] ?
-                    tstLocaleWords["yes"] :
-                    "Yes") : "Yes") + "</span></button><button class='button' " +
+                    (tstLocaleWords["yes"] ?
+                        tstLocaleWords["yes"] :
+                        "Yes") : "Yes") + "</span></button><button class='button' " +
                 "style='float: none; right: 3px;' onmousedown='this.offsetParent.style.display=\"none\"; '>" +
                 "<span>" + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["no"] ? tstLocaleWords["no"] : "No") : "No") + "</span></button>";
+                    (tstLocaleWords["no"] ? tstLocaleWords["no"] : "No") : "No") + "</span></button>";
 
             messageBar.style.display = "block";
 
@@ -1623,9 +1645,9 @@ function confirmValue() {
 
     confirmationBar.innerHTML += "<div style='display: block; margin-top: 15px;'><input type='submit'" +
         " value='" + (typeof(tstLocaleWords) != "undefined" ?
-        (tstLocaleWords["ok"] ? tstLocaleWords["ok"] : "OK") : "OK") + "' class='btn' style='float: left;' onclick='validateConfirmUsername()'" +
+            (tstLocaleWords["ok"] ? tstLocaleWords["ok"] : "OK") : "OK") + "' class='btn' style='float: left;' onclick='validateConfirmUsername()'" +
         " onmousedown='validateConfirmUsername()'/><input type='submit' value='" + (typeof(tstLocaleWords) != "undefined" ?
-        (tstLocaleWords["cancel"] ? tstLocaleWords["cancel"] : "Cancel") : "Cancel") + "' " +
+            (tstLocaleWords["cancel"] ? tstLocaleWords["cancel"] : "Cancel") : "Cancel") + "' " +
         " class='btn' style='float: right; right: 3px;' onmousedown='cancelConfirmValue()' />";
 
     confirmationBar.style.display = "block";
@@ -1685,7 +1707,7 @@ function clearInput() {
                     if (__$(i)) {
                         var image = __$(i).getElementsByTagName("img")[0];
 
-                        image.setAttribute("src", "lib/images/unchecked.png");
+                        image.setAttribute("src", "/assets/unchecked.png");
                         __$(i).setAttribute("class", __$(i).getAttribute("group"));
                     }
                 }
@@ -1744,14 +1766,14 @@ function showMessage(aMessage, withCancel, timed) {
     }
 
     var messageBar = tstMessageBar;
-    messageBar.innerHTML = aMessage +
+    messageBar.innerHTML = (tstLocaleWords[aMessage.toLowerCase()] ? tstLocaleWords[aMessage.toLowerCase()] : aMessage) +
         "<br />" + (typeof(withCancel) != "undefined" ? (withCancel == true ?
         "<button onmousedown='tstMessageBar.style.display = \"none\"; " +
         "clearTimeout(tstTimerHandle);'><span>" + (typeof(tstLocaleWords) != "undefined" ?
-        (tstLocaleWords["cancel"] ? tstLocaleWords["cancel"] : "Cancel") : "Cancel") + "</span></button>" : "") : "") +
+            (tstLocaleWords["cancel"] ? tstLocaleWords["cancel"] : "Cancel") : "Cancel") + "</span></button>" : "") : "") +
         "<button style='' onmousedown='tstMessageBar.style.display = \"none\"; " +
         "clearTimeout(tstTimerHandle); eval(tstTimerFunctionCall);'><span>" + (typeof(tstLocaleWords) != "undefined" ?
-        (tstLocaleWords["ok"] ? tstLocaleWords["ok"] : "OK") : "OK") + "</span></button>";
+            (tstLocaleWords["ok"] ? tstLocaleWords["ok"] : "OK") : "OK") + "</span></button>";
     if (aMessage.length > 0) {
         messageBar.style.display = 'block'
         if ((typeof(timed) == "undefined" ? true : timed) == true) {
@@ -1780,19 +1802,19 @@ function confirmCancelEntry(save) {     // If you want to save state set save =
     // true
     if (tstConfirmCancel) {
         tstMessageBar.innerHTML = "" + (typeof(tstLocaleWords) != "undefined" ?
-            (tstLocaleWords["are you sure you want to cancel"] ?
-                tstLocaleWords["are you sure you want to cancel"] :
-                "Are you sure you want to Cancel") : "Are you sure you want to Cancel") + "?<br/>" +
+                (tstLocaleWords["are you sure you want to cancel"] ?
+                    tstLocaleWords["are you sure you want to cancel"] :
+                    "Are you sure you want to Cancel") : "Are you sure you want to Cancel") + "?<br/>" +
             "<button onmousedown='hideMessage(); cancelEntry();'><span>" + (typeof(tstLocaleWords) != "undefined" ?
-            (tstLocaleWords["yes"] ?
-                tstLocaleWords["yes"] :
-                "Yes") : "Yes") + "</span></button>" +
+                (tstLocaleWords["yes"] ?
+                    tstLocaleWords["yes"] :
+                    "Yes") : "Yes") + "</span></button>" +
             (save ? "<button onmousedown='var completeField = document.createElement(\"input\"); \n\
 				completeField.type = \"hidden\"; completeField.value = \"false\"; completeField.name = \"complete\"; \n\
 				document.forms[0].appendChild(completeField); document.forms[0].submit(); hideMessage();'><span>" + (typeof(tstLocaleWords) != "undefined" ?
                 (tstLocaleWords["save"] ? tstLocaleWords["save"] : "Save") : "Save") + "</span></button>" : "") +
             "<button onmousedown='hideMessage();'><span>" + (typeof(tstLocaleWords) != "undefined" ?
-            (tstLocaleWords["no"] ? tstLocaleWords["no"] : "No") : "No") + "</span></button>";
+                (tstLocaleWords["no"] ? tstLocaleWords["no"] : "No") : "No") + "</span></button>";
         tstMessageBar.style.display = "block";
     } else {
         cancelEntry();
@@ -1854,7 +1876,7 @@ function showBestKeyboard(aPageNum) {
         case "password":
         case "full_keyboard":
             showKeyboard(true, (typeof(tstUserKeyboardPref) != 'undefined' &&
-                tstUserKeyboardPref.toLowerCase() == "qwerty" ? true : false));
+            tstUserKeyboardPref.toLowerCase() == "qwerty" ? true : false));
             break;
         case "alpha":
             __$("keyboard").innerHTML = getPreferredKeyboard();
@@ -1975,7 +1997,7 @@ function gotoNextPage() {
         document.body.removeChild(__$("category"));
     }
 
-    if(__$("nextButton")) {
+    if (__$("nextButton")) {
 
         var currentClass = __$("nextButton").className;
 
@@ -2035,7 +2057,7 @@ function getQwertyKeyboard() {
         "<span class='buttonLine'>" +
         getButtons("QWERTYUIOP") +
         getButtonString('backspace', "" + (typeof(tstLocaleWords) != "undefined" ? (tstLocaleWords["delete"] ? tstLocaleWords["delete"] : "Delete") : "Delete") + "") +
-        // getButtonString('date','Date') +
+            // getButtonString('date','Date') +
         "</span><span style='padding-left:0px' class='buttonLine'>" +
         getButtons("ASDFGHJKL") +
         getButtonString('apostrophe', "'") +
@@ -2049,7 +2071,7 @@ function getQwertyKeyboard() {
     keyboard = keyboard +
         "</span><span style='padding-left:0px' class='buttonLine'>" +
         getButtons("ZXCVBNM,.") + (tstFormElements[tstCurrentPage].tagName == "TEXTAREA" ? "" :
-        getButtonString('whitespace', "" + (typeof(tstLocaleWords) != "undefined" ? (tstLocaleWords["space"] ? tstLocaleWords["space"] : "Space") : "Space") + "", '')) +
+            getButtonString('whitespace', "" + (typeof(tstLocaleWords) != "undefined" ? (tstLocaleWords["space"] ? tstLocaleWords["space"] : "Space") : "Space") + "", '')) +
         getButtonString('abc', 'A-Z') +
         getButtonString('SHIFT', 'aA') +
         "</span>";
@@ -2091,7 +2113,7 @@ function getABCKeyboard() {
         getButtonString('na', 'N/A') +
         "</span><span class='buttonLine'>" +
         getButtons("QRSTUVWXYZ") + (tstFormElements[tstCurrentPage].tagName == "TEXTAREA" ? "" :
-        getButtonString('whitespace', "" + (typeof(tstLocaleWords) != "undefined" ? (tstLocaleWords["space"] ? tstLocaleWords["space"] : "Space") : "Space") + "", '')) +
+            getButtonString('whitespace', "" + (typeof(tstLocaleWords) != "undefined" ? (tstLocaleWords["space"] ? tstLocaleWords["space"] : "Space") : "Space") + "", '')) +
         "</span>";
 
     if (tstFormElements[tstCurrentPage].tagName == "TEXTAREA") {
@@ -2128,7 +2150,7 @@ function getNumericKeyboard() {
         getButtonString('qwerty', 'qwerty') +
         "</span><span id='buttonLine3' class='buttonLine'>" +
         getButtons("789") +
-        // getCharButtonSetID("0","zero") +
+            // getCharButtonSetID("0","zero") +
         getCharButtonSetID(".", "decimal") +
         getCharButtonSetID(",", "comma") +
         getButtonString('backspace', "" + (typeof(tstLocaleWords) != "undefined" ? (tstLocaleWords["delete"] ? tstLocaleWords["delete"] : "Delete") : "Delete") + "") +
@@ -2201,7 +2223,7 @@ function getDatePicker() {
 
     defaultDate = defaultDate.replace("/", "-", "g");
     var arrDate = defaultDate.split('-');
-    __$("touchscreenInput"+tstCurrentPage).value = defaultDate;
+    __$("touchscreenInput" + tstCurrentPage).value = defaultDate;
 
     var maximumDate = (tstInputTarget.getAttribute("maxDate") != null ? tstInputTarget.getAttribute("maxDate") : "");
     var maxDate = null;
@@ -2212,7 +2234,7 @@ function getDatePicker() {
     if(maximumDate != ""){
         var tmpDate = maximumDate.split("-");
 
-        if(tmpDate.length == 3){
+        if (tmpDate.length == 3) {
             maxDate = new Date(tmpDate[0], tmpDate[1] - 1, tmpDate[2]);
         }
     }
@@ -2305,7 +2327,7 @@ function getButtons(chars) {
 }
 
 function getCharButtonSetID(character, id) {
-    return '<button onMouseDown="press(\''+character+'\');" class="keyboardButton" id="' + id + '"><span>' + character + '</span></button>';
+    return '<button onMouseDown="press(\'' + character + '\');" class="keyboardButton" id="' + id + '"><span>' + character + '</span></button>';
 }
 
 function getButtonString(id, string) {
@@ -2587,18 +2609,51 @@ function checkKey(anEvent) {
 }
 
 
-function validateRule(aNumber) {
-    var aRule = aNumber.getAttribute("validationRule")
-    if (aRule == null) return ""
+/*function validateRule(aNumber) {
+ var aRule = aNumber.getAttribute("validationRule")
+ if (aRule == null) return ""
 
-    var re = new RegExp(aRule)
-    if (aNumber.value.search(re) == -1) {
-        var aMsg = aNumber.getAttribute("validationMessage")
-        if (aMsg == null || aMsg == "")
-            return "" + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["please enter a valid value"] ? tstLocaleWords["please enter a valid value"] : "Please enter a valid value") : "Please enter a valid value") + ""
-        else
-            return aMsg
+ var re = new RegExp(aRule)
+ if (aNumber.value.search(re) == -1) {
+ var aMsg = aNumber.getAttribute("validationMessage")
+ if (aMsg == null || aMsg == "")
+ return "" + (typeof(tstLocaleWords) != "undefined" ?
+ (tstLocaleWords["please enter a valid value"] ? tstLocaleWords["please enter a valid value"] : "Please enter a valid value") : "Please enter a valid value") + ""
+ else
+ return aMsg
+ }
+ return ""
+ }*/
+
+function validateRule(aNumber) {
+    var aRule = aNumber.getAttribute("validationRule");
+    var aCustomRule = aNumber.getAttribute("validationCustomRule");
+
+    if (aRule == null && aCustomRule == null) return ""
+
+    if (aRule) {
+
+        var re = new RegExp(aRule)
+        if (aNumber.value.search(re) == -1) {
+            var aMsg = aNumber.getAttribute("validationMessage")
+            if (aMsg == null || aMsg == "")
+                return "" + (typeof(tstLocaleWords) != "undefined" ?
+                        (tstLocaleWords["please enter a valid value"] ? tstLocaleWords["please enter a valid value"] : "Please enter a valid value") : "Please enter a valid value") + "";
+            else
+                return aMsg
+        }
+
+    } else if (aCustomRule) {
+
+        if (!eval(aCustomRule)) {
+            var aMsg = aNumber.getAttribute("validationMessage")
+            if (aMsg == null || aMsg == "")
+                return "" + (typeof(tstLocaleWords) != "undefined" ?
+                        (tstLocaleWords["please enter a valid value"] ? tstLocaleWords["please enter a valid value"] : "Please enter a valid value") : "Please enter a valid value") + "";
+            else
+                return aMsg
+        }
+
     }
     return ""
 }
@@ -2610,13 +2665,13 @@ var TTInput = function (aPageNum) {
     this.formElement = tstFormElements[tstPages[aPageNum]]
     this.value = this.element.value;
 
-    if (isDateElement(this.formElement)) {
-        this.formElement.value = this.element.value; // update date value before
-        // validation so we can use
-        // RailsDate
-        var rDate = new RailsDate(this.formElement);
-        this.value = rDate.getDayOfMonthElement().value + "/" + rDate.getMonthElement().value + "/" + rDate.getYearElement().value;
-    }
+    /*if (isDateElement(this.formElement)) {
+     this.formElement.value = this.element.value; // update date value before
+     // validation so we can use
+     // RailsDate
+     var rDate = new RailsDate(this.formElement);
+     this.value = rDate.getDayOfMonthElement().value + "/" + rDate.getMonthElement().value + "/" + rDate.getYearElement().value;
+     }*/
     this.shouldConfirm = false;
 };
 TTInput.prototype = {
@@ -2664,7 +2719,7 @@ TTInput.prototype = {
         this.value = this.element.value
         if (this.value.length < 1 && this.element.getAttribute("optional") == null) {
             return "" + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["you must enter a value to continue"] ? tstLocaleWords["you must enter a value to continue"] : "You must enter a value to continue") : "You must enter a value to continue") + "";
+                    (tstLocaleWords["you must enter a value to continue"] ? tstLocaleWords["you must enter a value to continue"] : "You must enter a value to continue") : "You must enter a value to continue") + "";
         }
         return "";
     },
@@ -2678,9 +2733,9 @@ TTInput.prototype = {
     validateCode: function () {
         var code = this.element.getAttribute('validationCode');
         var msg = this.element.getAttribute('validationMessage') || "" + (typeof(tstLocaleWords) != "undefined" ?
-            (tstLocaleWords["please enter a valid value"] ? tstLocaleWords["please enter a valid value"] : "Please enter a valid value") : "Please enter a valid value") + "";
+                (tstLocaleWords["please enter a valid value"] ? tstLocaleWords["please enter a valid value"] : "Please enter a valid value") : "Please enter a valid value") + "";
         msg += "<br> <a onmousedown='javascript:confirmValue()' href='javascript:;'>" + (typeof(tstLocaleWords) != "undefined" ?
-            (tstLocaleWords["authorise"] ? tstLocaleWords["authorise"] : "Authorise") : "Authorise") + "</a> </br>";
+                (tstLocaleWords["authorise"] ? tstLocaleWords["authorise"] : "Authorise") : "Authorise") + "</a> </br>";
 
         if (!code || eval(code)) {
             return "";
@@ -2793,11 +2848,11 @@ TTInput.prototype = {
         if (tooSmall || tooBig) {
             if (!isNaN(minValue) && !isNaN(maxValue))
                 return "" + (typeof(tstLocaleWords) != "undefined" ?
-                    (tstLocaleWords["value out of range"] ? tstLocaleWords["value out of range"] : "Value out of Range") : "Value out of Range") + ": " + minValue + " - " + maxValue;
+                        (tstLocaleWords["value out of range"] ? tstLocaleWords["value out of range"] : "Value out of Range") : "Value out of Range") + ": " + minValue + " - " + maxValue;
             if (tooSmall) return "" + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["value smaller than minimum"] ? tstLocaleWords["value smaller than minimum"] : "Value smaller than minimum") : "Value smaller than minimum") + ": " + minValue;
+                    (tstLocaleWords["value smaller than minimum"] ? tstLocaleWords["value smaller than minimum"] : "Value smaller than minimum") : "Value smaller than minimum") + ": " + minValue;
             if (tooBig) return "" + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["value bigger than maximum"] ? tstLocaleWords["value bigger than maximum"] : "Value bigger than maximum") : "Value bigger than maximum") + ": " + maxValue;
+                    (tstLocaleWords["value bigger than maximum"] ? tstLocaleWords["value bigger than maximum"] : "Value bigger than maximum") : "Value bigger than maximum") + ": " + maxValue;
         }
         return "";
     },
@@ -2832,6 +2887,7 @@ TTInput.prototype = {
                     }
                     break;
                 }
+
             } else {
                 selectOptions = document.getElementById("options").getElementsByTagName("LI");
                 for (var i = 0; i < selectOptions.length; i++) {
@@ -2847,9 +2903,9 @@ TTInput.prototype = {
 
             if (!isAValidEntry)
                 return "" + (typeof(tstLocaleWords) != "undefined" ?
-                    (tstLocaleWords["please select value from list (not"] ?
-                        tstLocaleWords["please select value from list (not"] :
-                        "Please select value from list (not") : "Please select value from list (not") +
+                        (tstLocaleWords["please select value from list (not"] ?
+                            tstLocaleWords["please select value from list (not"] :
+                            "Please select value from list (not") : "Please select value from list (not") +
                     ": " + this.element.value + ")";
 
         }
@@ -3214,41 +3270,41 @@ function dispatchMessage(message, messageBoxType) {
     switch (messageBoxType) {
         case tstMessageBoxType.OKOnly:
             buttons = "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\"; gotoPage(tstCurrentPage+1, false);'> <span> " + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["ok"] ? tstLocaleWords["ok"] : "OK") : "OK") + " </span> </button>"
+                    (tstLocaleWords["ok"] ? tstLocaleWords["ok"] : "OK") : "OK") + " </span> </button>"
             break;
 
         case tstMessageBoxType.OKCancel:
             buttons = "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\"; gotoPage(tstCurrentPage+1, false);'> <span> " + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["ok"] ? tstLocaleWords["ok"] : "OK") : "OK") + " </span> </button>" +
+                    (tstLocaleWords["ok"] ? tstLocaleWords["ok"] : "OK") : "OK") + " </span> </button>" +
                 "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\";'> <span> " + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["cancel"] ? tstLocaleWords["cancel"] : "Cancel") : "Cancel") + " </span> </button>"
+                    (tstLocaleWords["cancel"] ? tstLocaleWords["cancel"] : "Cancel") : "Cancel") + " </span> </button>"
             break;
 
         case tstMessageBoxType.YesNo:
             buttons = "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\"; gotoPage(tstCurrentPage+1, false);'> <span> " + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["yes"] ?
-                    tstLocaleWords["yes"] :
-                    "Yes") : "Yes") + " </span> </button>" +
+                    (tstLocaleWords["yes"] ?
+                        tstLocaleWords["yes"] :
+                        "Yes") : "Yes") + " </span> </button>" +
                 "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\";'> <span>" + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["no"] ? tstLocaleWords["no"] : "No") : "No") + "</span> </button>"
+                    (tstLocaleWords["no"] ? tstLocaleWords["no"] : "No") : "No") + "</span> </button>"
             break;
 
         case tstMessageBoxType.YesNoCancel:
             buttons = "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\"; gotoPage(tstCurrentPage+1, false);'> <span> " + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["yes"] ?
-                    tstLocaleWords["yes"] :
-                    "Yes") : "Yes") + " </span> </button>" +
+                    (tstLocaleWords["yes"] ?
+                        tstLocaleWords["yes"] :
+                        "Yes") : "Yes") + " </span> </button>" +
                 "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\";'> <span> " + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["no"] ? tstLocaleWords["no"] : "No") : "No") + " </span> </button>" +
+                    (tstLocaleWords["no"] ? tstLocaleWords["no"] : "No") : "No") + " </span> </button>" +
                 "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\";'> <span> " + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["cancel"] ? tstLocaleWords["cancel"] : "Cancel") : "Cancel") + " </span> </button>"
+                    (tstLocaleWords["cancel"] ? tstLocaleWords["cancel"] : "Cancel") : "Cancel") + " </span> </button>"
             break;
 
         default:
             buttons = "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\"; gotoPage(tstCurrentPage+1, false);'> <span> " + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["ok"] ? tstLocaleWords["ok"] : "OK") : "OK") + " </span> </button>" +
+                    (tstLocaleWords["ok"] ? tstLocaleWords["ok"] : "OK") : "OK") + " </span> </button>" +
                 "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\";'> <span> " + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["cancel"] ? tstLocaleWords["cancel"] : "Cancel") : "Cancel") + " </span> </button>"
+                    (tstLocaleWords["cancel"] ? tstLocaleWords["cancel"] : "Cancel") : "Cancel") + " </span> </button>"
             break;
 
     }
@@ -3280,10 +3336,10 @@ function confirmRecordDeletion(message, form) {
 
         tstMessageBar.innerHTML = message + "<br/>" + "<button onmousedown=\"document.getElementById('content').removeChild(document.getElementById('messageBar')); if(document.getElementById('" + form + "')) document.getElementById('"
             + form + "').submit(); showStatus();\"><span>" + (typeof(tstLocaleWords) != "undefined" ?
-            (tstLocaleWords["yes"] ?
-                tstLocaleWords["yes"] :
-                "Yes") : "Yes") + "</span></button><button onmousedown=\"document.getElementById('content').removeChild(document.getElementById('messageBar'));\"><span>" + (typeof(tstLocaleWords) != "undefined" ?
-            (tstLocaleWords["no"] ? tstLocaleWords["no"] : "No") : "No") + "</span></button>";
+                (tstLocaleWords["yes"] ?
+                    tstLocaleWords["yes"] :
+                    "Yes") : "Yes") + "</span></button><button onmousedown=\"document.getElementById('content').removeChild(document.getElementById('messageBar'));\"><span>" + (typeof(tstLocaleWords) != "undefined" ?
+                (tstLocaleWords["no"] ? tstLocaleWords["no"] : "No") : "No") + "</span></button>";
 
         tstMessageBar.style.display = "block";
         document.getElementById("content").appendChild(tstMessageBar);
@@ -3314,9 +3370,9 @@ function updateKeyColor(element) {
     element.style.backgroundColor = "lightblue"
 }
 
-var DateSelector = function() {
+var DateSelector = function () {
     this.date = new Date();
-    if (! arguments[0])
+    if (!arguments[0])
         arguments[0] = {};
 
     this.options = {
@@ -3326,35 +3382,34 @@ var DateSelector = function() {
         format: arguments[0].format || "dd/MMM/yyyy",  // "yyyy-MM-dd",
         element: arguments[0].element || document.body,
         target: arguments[0].target,
-        maxDate: arguments[0].max || this.date,
-        minDate: arguments[0].min || this.date
+        maxDate: arguments[0].max || this.date
     };
 
-    if (!isNaN(Date.parse(new Date(this.options.year, (stripZero(this.options.month) -1), stripZero(this.options.date))))){
-        
-        this.date = new Date(this.options.year, (stripZero(this.options.month) -1), stripZero(this.options.date));
+    if (!isNaN(Date.parse(new Date(this.options.year, (stripZero(this.options.month) - 1), stripZero(this.options.date))))) {
+
+        this.date = new Date(this.options.year, (stripZero(this.options.month) - 1), stripZero(this.options.date));
 
     } else if (typeof(tstCurrentDate) != "undefined" && tstCurrentDate) {
 
         var splitDate = tstCurrentDate.split("-");
 
         if (splitDate.length == 3) {
-            this.date = new Date(splitDate[0], splitDate[1]-1, splitDate[2]);
+            this.date = new Date(splitDate[0], splitDate[1] - 1, splitDate[2]);
         } else {
             var splitDate2 = tstCurrentDate.split("/");
 
             if (splitDate2.length == 3) {
-                this.date = new Date(splitDate2[0], splitDate2[1]-1, splitDate2[2]);
+                this.date = new Date(splitDate2[0], splitDate2[1] - 1, splitDate2[2]);
             }
         }
-    }	else {
+    } else {
         this.date = new Date();
     }
 
     this.element = this.options.element;
     this.format = this.options.format;
 
-    this.formatDate = this.format.length>0 ? DateUtil.simpleFormat(this.format) : DateUtil.toLocaleDateString;
+    this.formatDate = this.format.length > 0 ? DateUtil.simpleFormat(this.format) : DateUtil.toLocaleDateString;
 
     this.target = this.options.target;
 
@@ -3369,11 +3424,14 @@ var DateSelector = function() {
     this.currentMonth.value = this.getMonth();
     this.currentDay.value = this.date.getDate();
 
+    if (this.target.value.trim().length > 0)
+        this.update(this.target);
+
 };
 
 DateSelector.prototype = {
-    build: function() {
-        
+    build: function () {
+
         var node = document.createElement('div');
         // TODO: move style stuff to a css file
         node.innerHTML = ' \
@@ -3398,49 +3456,48 @@ DateSelector.prototype = {
 				<button id="dateselector_preYear" onmousedown="ds.decrementYear();"><span>-</span></button> \
 			</div> \
 			</td><td> \
-                        <button id="today" ' + (tstCurrentDate ? (tstCurrentDate == tstInternalCurrentDate ? 
-            'class="blue" ' : 'class="red" ') : 'class="blue" ') + 
-        ' onmousedown="setToday()" style="width: 150px;"><span>Today</span></button> \
-			<!--button id="num" onmousedown="updateKeyColor(this);press(this.id);" style="width: 150px;"><span>Num</span></button--> \
-			<!--button id="Unknown" onmousedown="updateKeyColor(this);press(this.id);" style="width: 150px;"><span>Unknown</span></button--> \
-			</tr></table> \
-			</div> \
-		';
+                        <button id="today" ' + (tstCurrentDate ? (tstCurrentDate == tstInternalCurrentDate ?
+                'class="blue" ' : 'class="red" ') : 'class="blue" ') +
+            ' onmousedown="setToday()" style="width: 170px;"><span>' + I18n.t("forms.buttons.today") +'</span></button> \
+                <!--button id="num" onmousedown="updateKeyColor(this);press(this.id);" style="width: 150px;"><span>Num</span></button--> \
+                <button id="Unknown" onmousedown="updateKeyColor(this);press(this.id);" style="width: 170px;"><span>' + I18n.t("forms.buttons.unknown") +'</span></button> \
+                </tr></table> \
+                </div> \
+            ';
 
         return node;
     },
 
-    getMonth: function() {
-        return  DateUtil.months[this.date.getMonth()];
+    getMonth: function () {
+        return DateUtil.months[this.date.getMonth()];
     },
 
-    init: function() {
+    init: function () {
         this.update(this.target);
     },
 
 
-    incrementYear: function() {
+    incrementYear: function () {
         // Only increment if year is less than this year
-        if(this.currentYear.value < (this.options.maxDate.getFullYear())) this.currentYear.value++;
+        if (this.currentYear.value < (this.options.maxDate.getFullYear())) this.currentYear.value++;
 
         this.date.setFullYear(this.currentYear.value);
         this.update(this.target);
     },
 
-    decrementYear: function() {
-        console.log(this.options.minDate.getFullYear())
-        if (this.currentYear.value >  (this.options.minDate.getFullYear()))	{	// > minimum Year
+    decrementYear: function () {
+        if (this.currentYear.value > 1) {	// > minimum Year
             this.currentYear.value--;
             this.date.setFullYear(this.currentYear.value);
             this.update(this.target);
         }
     },
 
-    incrementMonth: function() {
+    incrementMonth: function () {
         var currentDate = new Date(this.date.getFullYear(), this.date.getMonth() + 1,
             this.date.getDate());
 
-        if(this.options.maxDate > currentDate){
+        if (this.options.maxDate > currentDate) {
 
             if (this.date.getMonth() >= 11) {
                 ds.incrementYear();
@@ -3449,20 +3506,20 @@ DateSelector.prototype = {
                 this.date.setDate(1);
                 this.currentDay.value = 1;
             } else {
-                var lastDate = DateUtil.getLastDate(this.date.getFullYear(), this.date.getMonth()+1).getDate();
+                var lastDate = DateUtil.getLastDate(this.date.getFullYear(), this.date.getMonth() + 1).getDate();
                 if (lastDate < this.date.getDate()) {
                     this.currentDay.value = lastDate;
                     this.date.setDate(lastDate);
                 }
 
-                this.date.setMonth(this.date.getMonth()+1);
+                this.date.setMonth(this.date.getMonth() + 1);
                 this.currentMonth.value = this.getMonth();
             }
         }
         this.update(this.target);
     },
 
-    decrementMonth: function() {
+    decrementMonth: function () {
         var thisMonth = this.date.getMonth();
         if (thisMonth <= 0) {
             ds.decrementYear();
@@ -3475,25 +3532,25 @@ DateSelector.prototype = {
             this.date.setDate(lastDate);
 
         } else {
-            var lastDate = DateUtil.getLastDate(this.date.getFullYear(), this.date.getMonth()-1).getDate();
+            var lastDate = DateUtil.getLastDate(this.date.getFullYear(), this.date.getMonth() - 1).getDate();
             if (lastDate < this.date.getDate()) {
                 this.currentDay.value = lastDate;
                 this.date.setDate(lastDate);
             }
 
-            this.date.setMonth(thisMonth-1)
+            this.date.setMonth(thisMonth - 1)
             this.currentMonth.value = this.getMonth();
         }
         this.update(this.target);
     },
 
-    incrementDay: function() {
+    incrementDay: function () {
         var currentDate = new Date(this.date.getFullYear(), this.date.getMonth(),
             this.date.getDate() + 1);
 
-        if(this.options.maxDate >= currentDate){
+        if (this.options.maxDate >= currentDate) {
             if (currentDate.getMonth() == this.date.getMonth())
-                this.date.setDate(this.date.getDate()+1);
+                this.date.setDate(this.date.getDate() + 1);
             else {
                 this.date.setDate(1);
                 ds.incrementMonth();
@@ -3506,7 +3563,7 @@ DateSelector.prototype = {
         this.update(this.target);
     },
 
-    decrementDay: function() {
+    decrementDay: function () {
         if (this.currentDay.value > 1)
             this.currentDay.value--;
         else {
@@ -3519,15 +3576,17 @@ DateSelector.prototype = {
         this.update(this.target);
     },
 
-    update: function(aDateElement) {
-        
+    update: function (aDateElement) {
+
         var aTargetElement = aDateElement || this.target;
 
         if (!aTargetElement)
             return;
 
         aTargetElement.value = (new Date(this.date)).format(this.options.format);
-        
+
+        tstFormElements[tstCurrentPage].value = (new Date(this.date)).format("YYYY-mm-dd");
+
     }
 
 };
@@ -3543,21 +3602,21 @@ var DateUtil = {
 
     daysOfMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
 
-    isLeapYear: function(year) {
+    isLeapYear: function (year) {
         if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0))
             return true;
         return false;
     },
 
-    nextDate: function(date) {
+    nextDate: function (date) {
         return new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
     },
 
-    previousDate: function(date) {
+    previousDate: function (date) {
         return new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1);
     },
 
-    getLastDate: function(year, month) {
+    getLastDate: function (year, month) {
         var last = this.daysOfMonth[month];
         if ((month == 1) && this.isLeapYear(year)) {
             return new Date(year, month, last + 1);
@@ -3565,14 +3624,14 @@ var DateUtil = {
         return new Date(year, month, last);
     },
 
-    getFirstDate: function(year, month) {
+    getFirstDate: function (year, month) {
         if (year.constructor == Date) {
             return new Date(year.getFullYear(), year.getMonth(), 1);
         }
         return new Date(year, month, 1);
     },
 
-    getWeekTurn: function(date, firstDWeek) {
+    getWeekTurn: function (date, firstDWeek) {
         var limit = 6 - firstDWeek + 1;
         var turn = 0;
         while (limit < date) {
@@ -3582,16 +3641,16 @@ var DateUtil = {
         return turn;
     },
 
-    toDateString: function(date) {
+    toDateString: function (date) {
         return date.toDateString();
     },
 
-    toLocaleDateString: function(date) {
+    toLocaleDateString: function (date) {
         return date.toLocaleDateString();
     },
 
-    simpleFormat: function(formatStr) {
-        return function(date) {
+    simpleFormat: function (formatStr) {
+        return function (date) {
             var formated = formatStr.replace(/M+/g, DateUtil.zerofill((date.getMonth() + 1).toString(), 2));
             formated = formated.replace(/d+/g, DateUtil.zerofill(date.getDate().toString(), 2));
             formated = formated.replace(/y{4}/g, date.getFullYear());
@@ -3602,11 +3661,11 @@ var DateUtil = {
         }
     },
 
-    zerofill: function(date,digit){
+    zerofill: function (date, digit) {
         var result = date;
-        if(date.length < digit){
+        if (date.length < digit) {
             var tmp = digit - date.length;
-            for(i=0; i < tmp; i++){
+            for (i = 0; i < tmp; i++) {
                 result = "0" + result;
             }
         }
@@ -3614,19 +3673,19 @@ var DateUtil = {
     }
 }
 
-function setToday(){
+function setToday() {
     var d = new Date();
     if (tstCurrentDate) {
-        if(tstCurrentDate.toString().match(/\d{4}\-\d{2}\-\d{2}/)){
+        if (tstCurrentDate.match(/\d{4}\-\d{2}\-\d{2}/)) {
             d = new Date(tstCurrentDate);
         }
     }
-    
+
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
     /*document.getElementById("touchscreenInput" + tstCurrentPage).value =
-    d.getFullYear() + "-" + ((d.getMonth() + 1) < 10 ? "0" : "") + (d.getMonth() + 1) +
-    "-" + ((d.getDate()) < 10 ? "0" : "") + (d.getDate());*/
+     d.getFullYear() + "-" + ((d.getMonth() + 1) < 10 ? "0" : "") + (d.getMonth() + 1) +
+     "-" + ((d.getDate()) < 10 ? "0" : "") + (d.getDate());*/
 
     document.getElementById("dateselector_year").value = d.getFullYear();
     document.getElementById("dateselector_month").value = months[d.getMonth()];
@@ -3635,9 +3694,9 @@ function setToday(){
     ds.date.setFullYear(d.getFullYear());
     ds.date.setMonth(d.getMonth());
     ds.date.setDate(d.getDate());
-    
+
     ds.update(document.getElementById("touchscreenInput" + tstCurrentPage));
-    
+
 }
 
 var TimeSelector = function () {
@@ -3864,8 +3923,8 @@ function showKeyboard(full_keyboard, qwerty) {
     var row3 = (qwerty ? ["z", "x", "c", "v", "b", "n", "m", ",", ".", "?"] : ["t", "u", "v", "w", "x", "y", "z", ",", ".", "?"]);
     var row4 = ["" + (typeof(tstLocaleWords) != "undefined" ? (tstLocaleWords["cap"] ?
         tstLocaleWords["cap"] : "CAP") : "CAP").toUpperCase() + "", "" +
-        (typeof(tstLocaleWords) != "undefined" ? (tstLocaleWords["space"] ?
-            tstLocaleWords["space"] : "space") : "space").toLowerCase() + "", "" + (typeof(tstLocaleWords) != "undefined" ?
+    (typeof(tstLocaleWords) != "undefined" ? (tstLocaleWords["space"] ?
+        tstLocaleWords["space"] : "space") : "space").toLowerCase() + "", "" + (typeof(tstLocaleWords) != "undefined" ?
         (tstLocaleWords["delete"] ? tstLocaleWords["delete"] : "delete") : "delete").toLowerCase() + ""];
     var row5 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
     var row6 = ["_", "-", "@", "(", ")", "+", ";", "=", "\\", "/"];
@@ -4211,7 +4270,7 @@ function showStatus() {
         popupBox.style.display = "none";
 
         popupBox.innerHTML = "<p>" + (typeof(tstLocaleWords) != "undefined" ?
-            (tstLocaleWords["processing. please wait"] ? tstLocaleWords["processing. please wait"] : "Processing. Please Wait") : "Processing. Please Wait") + " ...</p>"
+                (tstLocaleWords["processing. please wait"] ? tstLocaleWords["processing. please wait"] : "Processing. Please Wait") : "Processing. Please Wait") + " ...</p>"
 
         __$("content").appendChild(popupBox);
     }
@@ -4244,17 +4303,17 @@ function showCategory(category) {
     var cat = document.createElement("div");
     cat.id = "category";
     cat.style.position = "absolute";
-    cat.style.left = (pos[3] + (pos[0] - 378)) + "px";
-    cat.style.top = (pos[2] + 5) + "px";
-    cat.style.width = "350px";
-    cat.style.minHeight = "45px";
-    cat.style.fontSize = "36px";
+    cat.style.right = "10px";
+    cat.style.top = (pos[2] + 2) + "px";
+    cat.style.fontSize = "26px";
     cat.style.padding = "10px";
     cat.style.backgroundColor = "#9e9";
+    cat.style.borderColor = "#7c7";
     cat.style.color = "#000";
     cat.style.opacity = "0.95";
     cat.style.zIndex = 100;
     cat.style.textAlign = "center";
+    cat.style.borderRadius = "30px";
     cat.innerHTML = category;
 
     document.body.appendChild(cat);
@@ -5180,6 +5239,7 @@ function createMultipleSelectControl() {
 function createSingleSelectControl() {
     if (__$("keyboard")) {
         setTimeout("__$('keyboard').style.display = 'none'", 10);
+        __$("inputFrame" + tstCurrentPage).style.height = "calc(100% - 200px)"
     }
 
     if (__$("viewport")) {
@@ -5193,7 +5253,7 @@ function createSingleSelectControl() {
 
     var parent = document.createElement("div");
     parent.style.width = "100%";
-    parent.style.height = "80%";
+    parent.style.height = "90%";
     parent.style.marginTop = "10px";
     parent.style.overflow = "auto";
 
@@ -5243,7 +5303,7 @@ function createSingleSelectControl() {
 
     var j = 0;
 
-    for (var i = 0; i < options.length; i++) {
+    for (var i = 1; i < options.length; i++) {
         var li = document.createElement("li");
         li.id = i;
         li.setAttribute("pos", i);
@@ -5255,7 +5315,7 @@ function createSingleSelectControl() {
             if (__$(this.getAttribute("source_id"))) {
                 var opts = __$(this.getAttribute("source_id")).options;
 
-                for (var k = 0; k < opts.length; k++) {
+                for (var k = 1; k < opts.length; k++) {
                     var image = __$(k).getElementsByTagName("img")[0];
 
                     image.setAttribute("src", "/assets/unchecked.png");
@@ -5362,7 +5422,7 @@ function getCookie(cname) {
     return "";
 
 }
-  
+
 if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
     Object.defineProperty(Date.prototype, "format", {
@@ -5526,6 +5586,9 @@ function showSummary() {
             if (tstFormElements[i].value.trim().length <= 0)
                 continue;
 
+            if (tstFormElements[i].getAttribute("ignore"))
+                continue;
+
             if (tstFormElements[i].type == "password")
                 continue;
 
@@ -5552,13 +5615,13 @@ function showSummary() {
             td.style.borderBottom = "1px dotted #ccc";
             td.style.verticalAlign = "top";
 
-            if(tstFormElements[i].tagName.toLowerCase() == "select") {
+            if (tstFormElements[i].tagName.toLowerCase() == "select") {
 
                 var opts = tstFormElements[i].selectedOptions;
 
                 var arr = [];
 
-                for(var j = 0; j < opts.length; j++) {
+                for (var j = 0; j < opts.length; j++) {
 
                     arr.push(opts[j].innerHTML);
 
@@ -5579,6 +5642,32 @@ function showSummary() {
         }
 
     }
+
+}
+
+function showPageAlert(msg) {
+
+    var pos = checkCtrl(__$('page' + tstCurrentPage));
+
+    var div = document.createElement("div");
+    div.style.position = "absolute";
+    div.style.left = pos[3] + "px";
+    div.style.top = pos[2] + "px";
+    div.style.width = pos[0] + "px";
+    div.style.height = pos[1] + "px";
+    div.style.backgroundColor = "white";
+    div.style.zIndex = "999";
+
+    __$('page' + tstCurrentPage).appendChild(div);
+
+    var childDiv = document.createElement("div");
+    childDiv.style.fontSize = "2.2em";
+    childDiv.style.textAlign = "center";
+    childDiv.style.marginTop = "30vh";
+
+    childDiv.innerHTML = msg;
+
+    div.appendChild(childDiv);
 
 }
 

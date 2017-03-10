@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
     #Function handles redirects when printing labels
     @print_url = print_url
     @redirect_url = redirect_url
-    @message = message
+    @message = t('messages.printing_wait')
     @show_next_button = show_next_button
     render :layout => false
   end
@@ -28,6 +28,7 @@ class ApplicationController < ActionController::Base
       end
     elsif not session[:user_id].blank?
       User.current = User.find(session[:user_id])
+      I18n.locale = (User.current.language == "ESP" ? "es" : "en") || I18n.default_locale
     end
   end
 end

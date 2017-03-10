@@ -1,5 +1,4 @@
 #This module includes all functions that may come in handy to do avoid code repetitions
-
 module Misc
 
   def calculate_check_digit(number)
@@ -29,26 +28,27 @@ module Misc
     label.font_vertical_multiplier = 1
     label.left_margin = 50
     label.draw_barcode(610,30,1,1,3,6,80,false,"#{bottle_id}")
-    label.draw_multi_text("#{item}", {:column_width => 570})
-    label.draw_multi_text("Bottle #:#{Misc.dash_formatter(bottle_id)}",{:column_width => 570})
-    label.draw_multi_text("Exp:#{expiration_date.strftime('%m/%y')}", {:column_width => 570})
+    label.draw_multi_text("#{item}", {:column_width => 520})
+    label.draw_multi_text("Bottle #:#{Misc.dash_formatter(bottle_id)}",{:column_width => 520})
+    label.draw_multi_text("Exp:#{expiration_date.strftime('%m/%y')}", {:column_width => 520})
     label.print(1)
 
   end
 
-  def self.create_dispensation_label(item,quantity,directions,patient_name,rx_id)
+  def self.create_dispensation_label(item,quantity,directions,patient_name,date)
 
     label = ZebraPrinter::StandardLabel.new
     label.font_size = 4
     label.font_horizontal_multiplier = 1
     label.font_vertical_multiplier = 1
     label.left_margin = 50
-    label.draw_text("Rx:#{rx_id}",450,10,0,4,1,1,true)
-    label.draw_multi_text("#{get_facility_name}")
-    label.draw_multi_text("Patient: #{patient_name}")
-    label.draw_multi_text("#{item}")
-    label.draw_multi_text("Dir : #{directions}")
-    label.draw_multi_text("QTY : #{quantity}")
+    #label.draw_text("Rx:#{rx_id}",450,10,0,4,1,1,true)
+    #label.draw_multi_text("#{Misc.get_facility_name}",{:column_width => 570})
+    label.draw_multi_text("Patient: #{patient_name}",{:column_width => 570})
+    label.draw_multi_text("#{item}",{:column_width => 570})
+    label.draw_multi_text("Dir : #{directions}",{:column_width => 570})
+    label.draw_multi_text("QTY : #{quantity}",{:column_width => 570})
+    label.draw_multi_text("#{date}",{:column_width => 570})
     label.print(1)
 
   end
@@ -127,15 +127,15 @@ module Misc
     frequencies = {"OD"=> "Once a day", "BD"=>"Twice a day", "TDS"=>"Three times a day", "QID"=>"Four times a day",
                    "5XD"=>"Five times a day", "Q4HRS"=>"Six times a day","QOD"=>"Every other day",
                    "QWK"=>"Once a week"}
-    prn = (prn == "PRN" ? "(Take as required)" : "")
+    prn = (prn == "PRN" ? "(Take as need)" : "")
     return routes[route.downcase] + " "+ dose + " " + frequencies[frequency] + prn;
   end
-
-  private
 
   def get_facility_name
     YAML.load_file("#{Rails.root}/config/application.yml")['facility_name']
   end
+
+  private
 
   def get_facility_phone
     YAML.load_file("#{Rails.root}/config/application.yml")['facility_phone_number']

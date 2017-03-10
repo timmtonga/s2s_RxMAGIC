@@ -34,7 +34,7 @@ class UserController < ApplicationController
     if request.post?
       user = User.find(params[:user_id])
       case params[:section]
-        when "language preference"
+        when "language_preference"
           user.update_attributes(:language => params[:language_preference])
           if user.save
             flash[:message] = "User language preference successfully updated"

@@ -1,5 +1,5 @@
 <div style="height: 8vh;border: 1px inset black; border-width: 0px 0px 3px 0px;">
-  <h1 style="margin-left: 2vw;">Settings</h1>
+  <h1 style="margin-left: 2vw;"><%= t('menu.terms.settings') %></h1>
 </div>
 
 <div style="height: 60vh;">
@@ -24,25 +24,25 @@
     </div>
     <div style="display: table-row">
       <div style="display: table-cell;text-align: center;" onmousedown="window.location='/user/<%= User.current.id%>/edit?section=password'">
-        Change User Password
+        <%= t('forms.buttons.change_password')%>
       </div>
       <div style="display: table-cell;text-align: center;"
            onmousedown="window.location='/user/<%= User.current.id%>/edit?section=language_preference'">
-        Change Language Preference
+        <%= t('menu.terms.change_language')%>
       </div>
       <% if ["administrator","pharmacist"].include? User.current.role.downcase %>
         <div style="display: table-cell;text-align: center;" onmousedown="window.location='/drug'">
-          Manage Drug List
+          <%= t('menu.terms.manage_drugs')%>
         </div>
       <% end %>
       <% if User.current.role.downcase == "administrator"%>
         <div style="display: table-cell;text-align: center;" onmousedown="window.location='/user'">
-          Manage Users
+          <%= t('forms.buttons.user_management')%>
         </div>
       <% end %>
     </div>
   </div>
 </div>
 <div class="footer" >
-  <button onmousedown="window.location = '/'" class="bttn bttn-success bttn-lg gradient" style="margin-top: 1vh;height: 8vh;margin-right: 2vh;float: right;" type="button">Finish</button>
+  <button onmousedown="window.location = '/'" class="bttn bttn-success bttn-lg gradient" style="margin-top: 1vh;height: 8vh;margin-right: 2vh;float: right;" type="button"><%= t('forms.buttons.finish')%></button>
 </div>

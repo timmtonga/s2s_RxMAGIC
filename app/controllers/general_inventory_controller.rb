@@ -14,8 +14,7 @@ class GeneralInventoryController < ApplicationController
       @new_stock_entry = GeneralInventory.find_by_gn_identifier(params[:bottle_id])
 
       if @new_stock_entry.blank?
-        flash[:errors] = {} if flash[:errors].blank?
-        flash[:errors][:missing] = ["Item could not be found"]
+        flash[:errors] = "Item could not be found"
       else
         @new_stock_entry.expiration_date = params[:expiry_date].to_date rescue nil
         @new_stock_entry.received_quantity = params[:amount_received].to_i + (@new_stock_entry.received_quantity - @new_stock_entry.current_quantity)
@@ -106,4 +105,5 @@ class GeneralInventoryController < ApplicationController
     1.upto(7) { |i| rand_str << chars[rand(chars.size-1)] }
     send_data(print_string,:type=>"application/label; charset=utf-8", :stream=> false, :filename=>"#{rand_str}.lbl", :disposition => "inline")
   end
+
 end

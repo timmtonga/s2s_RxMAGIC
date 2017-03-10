@@ -85,14 +85,26 @@ function showDispenseForm()
   showLayer('shadow', 'dispenseForm')
 }
 
-function createDirections(route, dose, frequency)
+function createDirections(route, dose, frequency,doseType)
 {
-    routes = {"oral":"Take", "topical":"Apply", "injection":"Inject","respiratory":"Inhale","other":""}
-    frequencies = {"OD": "Once a day", "BD":"Twice a day", "TDS":"Three times a day", "QID":"Four times a day",
-                    "5XD":"Five times a day", "Q4HRS":"Six times a day","QOD":"Every other day",
-                    "QWK":"Once a week"}
+    routes = {"oral":I18n.t('menu.terms.take'), "topical":I18n.t('menu.terms.apply'),
+            "injection":I18n.t('menu.terms.inject'),"respiratory":I18n.t('menu.terms.inhale'),"other":""}
+    frequencies = {"OD": I18n.t('forms.options.once_a_day'), "BD":I18n.t('forms.options.two_times_a_day'),
+                    "TDS":I18n.t('forms.options.three_times_a_day'), "QID":I18n.t('forms.options.four_times_a_day'),
+                    "5XD":I18n.t('forms.options.five_times_a_day'), "Q4HRS":I18n.t('forms.options.six_times_a_day'),
+                    "QOD":I18n.t('forms.options.every_other_day'), "QWK":I18n.t('forms.options.once_a_week')}
+    type = document.getElementsByName(doseType)
+    var prn = "";
+    for(i=0; i < type.length; i++){
+        if(type[i].checked)
+        {
+            prn = type[i].value;
+            break;
+        }
+    }
 
-    return routes[route.toLowerCase()] + " "+ dose + " " + frequencies[frequency];
+    dir = (routes[route.toLowerCase()] == undefined ? "" : routes[route.toLowerCase()])
+    return dir + " "+ dose + " " + frequencies[frequency] + (prn == "PRN" ? "(As Needed)" : "");
 }
 
 function calcQuantity(dose, frequency,duration) {

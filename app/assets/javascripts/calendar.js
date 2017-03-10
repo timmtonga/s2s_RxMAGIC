@@ -11,11 +11,14 @@ var initial_date = null;
 var start_week_date = null;
 var end_week_date = null;
             
-var monthNames = ["January", "February", "March", "April", "May", "June", 
-"July", "August", "September", "October", "November", "December"];
+var monthNames = [I18n.t('forms.options.january'), I18n.t('forms.options.february'),
+    I18n.t('forms.options.march'), I18n.t('forms.options.april'), I18n.t('forms.options.may'),
+    I18n.t('forms.options.june'),I18n.t('forms.options.july'),I18n.t('forms.options.august'),
+    I18n.t('forms.options.september'), I18n.t('forms.options.october'),I18n.t('forms.options.november'),
+    I18n.t('forms.options.december')];
             
 var current_month = monthNames[(new Date()).getMonth()];
-var current_year = 2012;
+var current_year = (new Date()).getYear();
 var months = {
     "January":[0, 31],
     "February":[1, 28],

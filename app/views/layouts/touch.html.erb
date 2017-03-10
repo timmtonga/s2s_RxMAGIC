@@ -7,8 +7,15 @@
     <script type="text/javascript" language="javascript" src="/assets/touchScreenToolkit.js" defer="true"></script>
     <script language="javascript">
       tstUserKeyboardPref = "qwerty"
-      tstCurrentDate = <%= Date.today.strftime("%d-%m-%Y") %>;
+      tstCurrentDate = '<%= Date.today.strftime("%d-%m-%Y") %>';
     </script>
+    <%= javascript_include_tag "i18n" %>
+    <%= javascript_include_tag "translations" %>
+    <%= javascript_tag do %>
+        I18n.defaultLocale = "<%= (User.current.language == "ESP" ? "es" : "en") rescue I18n.default_locale %>";
+        I18n.locale = "<%= (User.current.language == "ESP" ? "es" : "en") rescue I18n.default_locale %>";
+    <% end %>
+
     <style type="text/css">
       ::-webkit-scrollbar {
         height: 3vh;
@@ -31,7 +38,7 @@
       ::-webkit-scrollbar-corner {
         background: #000;
       }
-
+      #Unknown {display: none;}
     </style>
   </head>
   <body id="container">

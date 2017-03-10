@@ -12,24 +12,24 @@ class MainController < ApplicationController
   def report
     case params[:report_duration]
       when "daily"
-        @report_type = "Daily Inventory and Dispensation Report for #{params[:start_date].to_date.strftime('%d %B, %Y')}"
+        @report_type = "#{t('menu.terms.daily_report')} #{l(params[:start_date].to_date, format:'%d %B, %Y')}"
         start_date = params[:start_date].to_date.strftime('%Y-%m-%d 00:00:00')
         end_date = params[:start_date].to_date.strftime('%Y-%m-%d 23:59:59')
 
       when "weekly"
-        @report_type = "Weekly Inventory and Dispensation Report from #{params[:start_date].to_date.beginning_of_week.strftime('%d %B, %Y')}
-                        to #{params[:start_date].to_date.end_of_week.strftime('%d %B, %Y')}"
+        @report_type = "#{t('menu.terms.weekly_report')} #{l(params[:start_date].to_date.beginning_of_week, format:'%d %B, %Y')}
+                        #{t('menu.terms.to')} #{l(params[:start_date].to_date.end_of_week, format: '%d %B, %Y')}"
 
         start_date = params[:start_date].to_date.beginning_of_week.strftime('%Y-%m-%d 00:00:00')
         end_date = params[:start_date].to_date.end_of_week.strftime('%Y-%m-%d 23:59:59')
 
       when "monthly"
-        @report_type = "Monthly Inventory and Dispensation Report for #{params[:start_date].to_date.strftime('%B %Y')}"
+        @report_type = "#{t('menu.terms.monthly_report')} #{l(params[:start_date].to_date, format: '%B %Y')}"
         start_date = params[:start_date].to_date.beginning_of_month.strftime('%Y-%m-%d 00:00:00')
         end_date = params[:start_date].to_date.end_of_month.strftime('%Y-%m-%d 23:59:59')
       when "range"
-        @report_type = "Inventory and Dispensation report from #{params[:start_date].to_date.strftime('%d %B, %Y')}
-                        to #{params[:end_date].to_date.strftime('%d %B, %Y')}"
+        @report_type = "#{t('menu.terms.custom_report')} #{l(params[:start_date].to_date, format: '%d %B, %Y')}
+                        #{t('menu.terms.to')} #{l(params[:end_date].to_date, format: '%d %B, %Y')}"
         start_date = params[:start_date].to_date.strftime('%Y-%m-%d 00:00:00')
         end_date = params[:end_date].to_date.strftime('%Y-%m-%d 23:59:59')
     end

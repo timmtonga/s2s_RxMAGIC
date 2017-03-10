@@ -7,7 +7,7 @@
       <tr>
         <td>Visit Coordinator</td>
         <td>
-          <select style='width: 100%' name='visit_coordinator' id='visitCoordinator' helptext='Visit Coordinator'
+          <select style='width: 100%' name='visit_coordinator' id='visitCoordinator' helptext='<%= t("forms.labels.select_visit_coordinator")%>'
                   >
             <% (@coordinators || []).each do |person| %>
                 <option value="<%= person[0]%>"><%= person[1].titleize %></option>
@@ -23,7 +23,7 @@
           <%= text_field_tag 'visit_date', Date.today.strftime("%d-%m-%Y"),
                              {:id => 'visit_date',
                               :field_type => 'date',
-                              :helpText => "Visit date",
+                              :helpText => t("menu.terms.visit_date"),
                               :maxDate => (Date.today + 20.year).to_date,
                               :minDate => Date.today.to_date,
                               :tt_pageStyleClass => "Date DatesOnly"} %>

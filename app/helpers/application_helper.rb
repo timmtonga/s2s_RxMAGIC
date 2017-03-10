@@ -25,6 +25,7 @@ module ApplicationHelper
     return ["Administrator", "Pharmacist"]
   end
   def report_options
-    return [["daily", "Daily"],["weekly","Weekly"],["monthly", "Monthly"], ["range", "Range"]]
+    return [["daily", t('forms.options.daily')],["weekly",t('forms.options.weekly')],
+            ["monthly", t('forms.options.monthly')], ["range", t('forms.options.range')]]
   end
 end
