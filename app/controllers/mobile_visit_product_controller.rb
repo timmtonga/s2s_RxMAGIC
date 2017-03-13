@@ -18,10 +18,15 @@ class MobileVisitProductController < ApplicationController
         item.current_quantity = item.current_quantity.to_i - params[:amount].to_i
         item.save
 
-        new_mobile_visit_product = MobileVisitProduct.create({:mobile_visit_id => params[:visit_id],
-                                                              :amount_used => params[:amount].to_i,
-                                                              :amount_taken => params[:amount].to_i,
-                                                              :gn_identifier => params[:bottle_id] })
+        if item.errors.blank?
+          new_mobile_visit_product = MobileVisitProduct.create({:mobile_visit_id => params[:visit_id],
+                                                                :amount_used => params[:amount].to_i,
+                                                                :amount_taken => params[:amount].to_i,
+                                                                :gn_identifier => params[:bottle_id] })
+        else
+          flash[:errors] = "Insufficient stock on hand"
+        end
+
       end
     redirect_to "/mobile_visit/#{params[:visit_id]}" and return
   end

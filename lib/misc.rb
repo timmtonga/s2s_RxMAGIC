@@ -29,8 +29,8 @@ module Misc
     label.left_margin = 50
     label.draw_barcode(610,30,1,1,3,6,80,false,"#{bottle_id}")
     label.draw_multi_text("#{item}", {:column_width => 520})
-    label.draw_multi_text("Bottle #:#{Misc.dash_formatter(bottle_id)}",{:column_width => 520})
-    label.draw_multi_text("Exp:#{expiration_date.strftime('%m/%y')}", {:column_width => 520})
+    label.draw_multi_text("Inventory #:#{Misc.dash_formatter(bottle_id)}",{:column_width => 520})
+    label.draw_multi_text("Exp:#{expiration_date.strftime('%m/%Y')}", {:column_width => 520})
     label.print(1)
 
   end
@@ -127,7 +127,7 @@ module Misc
     frequencies = {"OD"=> "Once a day", "BD"=>"Twice a day", "TDS"=>"Three times a day", "QID"=>"Four times a day",
                    "5XD"=>"Five times a day", "Q4HRS"=>"Six times a day","QOD"=>"Every other day",
                    "QWK"=>"Once a week"}
-    prn = (prn == "PRN" ? "(Take as need)" : "")
+    prn = (prn == "PRN" ? "(Take as needed)" : "")
     return routes[route.downcase] + " "+ dose + " " + frequencies[frequency] + prn;
   end
 

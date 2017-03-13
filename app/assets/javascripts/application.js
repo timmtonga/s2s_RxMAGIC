@@ -78,6 +78,7 @@ function confirmAction(actionUrl, message)
 {
     showLayer('shadow', 'question')
     document.getElementById("bttnYes").setAttribute("onmousedown", "window.location='"+actionUrl + "'")
+    document.getElementById("message").innerHTML = message;
 }
 
 function showDispenseForm()

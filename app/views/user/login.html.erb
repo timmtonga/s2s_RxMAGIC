@@ -12,7 +12,7 @@
                      :tt_onLoad => "inform(); barcodeId = 'touchscreenInput0';") %><br>
 
   <label for="password">Password</label>
-  <%= password_field_tag(:password, nil, :helpText => "Enter password",
+  <%= password_field_tag(:password, nil, :helpText => t('forms.labels.password'),
                          :textCase => "lower", :field_type => "password",
                          :tt_onLoad => "inform(); barcodeId = 'touchscreenInput1';") %><br>
 

@@ -20,7 +20,8 @@
           Visit Date:
         </td>
         <td>
-          <%= text_field_tag 'visit_date', Date.today.strftime("%d-%m-%Y"),
+          <input type="text" field_type="date" id="day" name="day" value="" helpText="Select Day"/>
+          <%#= text_field_tag 'visit_date', Date.today.strftime("%d-%m-%Y"),
                              {:id => 'visit_date',
                               :field_type => 'date',
                               :helpText => t("menu.terms.visit_date"),

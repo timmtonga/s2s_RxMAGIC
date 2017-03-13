@@ -3456,9 +3456,7 @@ DateSelector.prototype = {
 				<button id="dateselector_preYear" onmousedown="ds.decrementYear();"><span>-</span></button> \
 			</div> \
 			</td><td> \
-                        <button id="today" ' + (tstCurrentDate ? (tstCurrentDate == tstInternalCurrentDate ?
-                'class="blue" ' : 'class="red" ') : 'class="blue" ') +
-            ' onmousedown="setToday()" style="width: 170px;"><span>' + I18n.t("forms.buttons.today") +'</span></button> \
+                        <button id="today" class="blue"   onmousedown="setToday()" style="width: 170px;"><span>' + I18n.t("forms.buttons.today") +'</span></button> \
                 <!--button id="num" onmousedown="updateKeyColor(this);press(this.id);" style="width: 150px;"><span>Num</span></button--> \
                 <button id="Unknown" onmousedown="updateKeyColor(this);press(this.id);" style="width: 170px;"><span>' + I18n.t("forms.buttons.unknown") +'</span></button> \
                 </tr></table> \
@@ -5239,7 +5237,7 @@ function createMultipleSelectControl() {
 function createSingleSelectControl() {
     if (__$("keyboard")) {
         setTimeout("__$('keyboard').style.display = 'none'", 10);
-        __$("inputFrame" + tstCurrentPage).style.height = "calc(100% - 200px)"
+        __$("inputFrame" + tstCurrentPage).style.height = "calc(100% - 130px)"
     }
 
     if (__$("viewport")) {

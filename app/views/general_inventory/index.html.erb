@@ -46,7 +46,7 @@
         <thead>
         <tr>
           <th><%= t('menu.terms.item') %></th>
-          <th style="width: 10%;"><%= t('menu.terms.identifier') %></th>
+          <th style="width: 10%;"><%= t('menu.terms.inventory_number') %></th>
           <th style="width: 10%;"><%= t('menu.terms.category') %></th>
           <th style="width: 10%;"><%= t('menu.terms.current_quantity') %></th>
           <th style="width: 7%;"><%= t('menu.terms.expiration_date') %></th>
@@ -68,7 +68,7 @@
                 <img style="padding-right: 5px;padding-left: 5px;" src="/assets/print.png"  title="Print Barcode"
                      onmousedown="window.location='/print_bottle_barcode/<%= item.id %>'">
                 <img style="float: right;" src="/assets/delete.png" title="Void Item"
-                     onmousedown="confirmAction('/void_general_inventory/<%= item.id %>', 'Are you Sure?')">
+                     onmousedown="confirmAction('/void_general_inventory/<%= item.id %>', 'Are you sure you want to void item <%= Misc.dash_formatter(item.gn_identifier) %>?')">
               </td>
             </tr>
         <% end %>

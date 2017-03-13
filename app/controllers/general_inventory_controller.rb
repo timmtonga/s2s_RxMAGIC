@@ -31,7 +31,7 @@ class GeneralInventoryController < ApplicationController
         end
       end
 
-      redirect_to "/general_inventory" and return
+      redirect_to "/" and return
 
     else
       @item = GeneralInventory.find(params[:id])
@@ -51,7 +51,7 @@ class GeneralInventoryController < ApplicationController
     if @new_stock_entry.drug_id.blank?
       flash[:errors] = {} if flash[:errors].blank?
       flash[:errors][:missing] = ["Item #{params[:drug_name]} was not found"]
-      redirect_to "/general_inventory"
+      redirect_to "/"
     else
       GeneralInventory.transaction do
         @new_stock_entry.save
@@ -60,10 +60,10 @@ class GeneralInventoryController < ApplicationController
       if @new_stock_entry.errors.blank?
         #print barcode for new bottles
         flash[:success] = "#{params[:drug_name]} was successfully added to inventory."
-        print_and_redirect("/print_bottle_barcode/#{@new_stock_entry.id}", "/general_inventory")
+        print_and_redirect("/print_bottle_barcode/#{@new_stock_entry.id}", "/")
       else
         flash[:errors] = @new_stock_entry.errors
-        redirect_to "/general_inventory"
+        redirect_to "/"
       end
     end
   end

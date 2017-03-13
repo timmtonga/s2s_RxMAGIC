@@ -209,10 +209,11 @@
     var barcodeTxt = document.getElementById("barcode");
     if (barcodeTxt.value.trim().match(/[A-Z0-9]+\$/)) {
 
-      if ((barcodeTxt.value.trim().replace(/\$/, "")).replace(/\-/,"").toUpperCase().length >= 7)
+      barcodeTxt.value = barcodeTxt.value.trim().replace(/\$/, "").replace(/\-/,"")
+      if (barcodeTxt.value.toUpperCase().length >= 7)
       {
         showDispenseForm()
-        document.getElementById("bottle_id").value= barcodeTxt.value.trim().replace(/\$/, "").replace(/\-/,"").toUpperCase();
+        document.getElementById("bottle_id").value= barcodeTxt.value.trim().toUpperCase();
       }
       else
       {

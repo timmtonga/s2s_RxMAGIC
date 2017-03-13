@@ -192,9 +192,10 @@ div.radioDiv {
 }
 
 label.custom {
-    width: 170px;
+    min-width: 250px;
     border-radius: 3px;
-    border: 1px solid #D1D3D4
+    border: 1px solid #D1D3D4;
+    font-size: 1.3em;
 }
 
 /* hide input */
@@ -207,7 +208,7 @@ input.radio:empty {
 input.radio:empty ~ label {
     position: relative;
     float: left;
-    line-height: 2.5em;
+    line-height: 3em;
     text-indent: 3.25em;
     margin-top: 1em;
     cursor: pointer;
@@ -227,6 +228,7 @@ input.radio:empty ~ label:before {
     width: 2.5em;
     background: #D1D3D4;
     border-radius: 3px 0 0 3px;
+
 }
 
 

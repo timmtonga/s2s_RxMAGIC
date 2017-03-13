@@ -80,10 +80,10 @@ class UserController < ApplicationController
         user = User.find_by_username(params['login'])
         session[:user_id] = user.id
         User.current = user
-        flash[:message] = nil
+        flash[:error] = nil
         redirect_to root_path and return
       else
-        flash[:message] = t("messages.invalid_credentials")
+        flash[:error] = t("messages.invalid_credentials")
       end
 
     else

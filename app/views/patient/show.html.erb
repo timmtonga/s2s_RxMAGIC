@@ -5,6 +5,10 @@
           border: 1px outset silver;
           background-color: #39bf87;
           padding: 15px;
+          line-height: 1.5em;
+          margin-top: 5px;
+          margin-bottom: 5px;
+          font-size: 1.3em;
         }
         div.mobi-div{
           padding-left: 10px;
@@ -15,7 +19,7 @@
   <body style="margin: 0px; padding: 0px;">
 
     <div id="dispenseForm" class="questionLayer" style="font-size: 0.9em;">
-      <div style="margin-top: 10vh;margin-left: 15vw; height: 60vh;width: 70vw;background-color: #eeeeff;border: 3px outset black;">
+      <div style="margin-top: 10vh;margin-left: 10vw; height: 75vh;width: 80vw;background-color: #eeeeff;border: 3px outset black;">
           <table style="width: 100%; border: 2px solid black; border-width: 0px 0px 2px 0px;">
             <tr>
               <td style="width: 20%;"><%= t('menu.terms.bottle_id')%></td>
@@ -35,7 +39,7 @@
           </table>
         <div style="display: table;width: 100%;">
           <div style="display: table-row">
-            <div style="display: table-cell;width: 15%;padding: 5px;vertical-align: top;">
+            <div style="display: table-cell;width: 20%;padding: 5px;vertical-align: top;">
                 <table width="100%" style="border-collapse:separate;border-spacing:0 10px;">
                   <tr>
                     <th class="tab" onmousedown="showDispenseDiv('routesDiv')"><%= t('forms.buttons.administration_route')%></th>
@@ -54,9 +58,9 @@
                   </tr>
                 </table>
             </div>
-            <div style="display: table-cell;border: 2px solid black;border-width: 0px 0px 0px 2px;height: 50vh;">
+            <div style="display: table-cell;border: 2px solid black;border-width: 0px 0px 0px 2px;height: 65vh;">
               <%= form_for :prescription, :html => { :class => "form-horizontal pmap_inventory" }, :url => "/refill"  do |f| %>
-              <div style="position: absolute;left: 65vw;top: 60vh;" onmousedown="showDispenseDiv('doseTypeDiv')" class="nextButton" id="dispNext">
+              <div style="position: absolute;left: 75vw;top: 75vh;" onmousedown="showDispenseDiv('doseTypeDiv')" class="nextButton" id="dispNext">
                 <%= t('forms.buttons.next')%>
               </div>
               <div class="mobi-div" id="routesDiv" >
@@ -326,11 +330,13 @@
       var barcodeTxt = document.getElementById("barcode");
       if (barcodeTxt.value.trim().match(/[A-Z0-9]+\$/)) {
 
-        if ((barcodeTxt.value.trim().replace(/\$/, "")).replace(/\-/,"").toUpperCase().length >= 7)
+        barcodeTxt.value = barcodeTxt.value.trim().replace(/\$/, "").replace(/\-/,"")
+
+        if (barcodeTxt.value.toUpperCase().length >= 7)
         {
               showDispenseForm()
-              document.getElementById("bottle_id").innerHTML= barcodeTxt.value.trim().replace(/\$/, "").replace(/\-/,"").toUpperCase();
-              document.getElementById("btl_field").value= barcodeTxt.value.trim().replace(/\$/, "").replace(/\-/,"").toUpperCase();
+              document.getElementById("bottle_id").innerHTML= barcodeTxt.value.trim().toUpperCase();
+              document.getElementById("btl_field").value= barcodeTxt.value.trim().toUpperCase();
         }
         else
         {
