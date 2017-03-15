@@ -106,4 +106,13 @@ class GeneralInventoryController < ApplicationController
     send_data(print_string,:type=>"application/label; charset=utf-8", :stream=> false, :filename=>"#{rand_str}.lbl", :disposition => "inline")
   end
 
+  def ajax_bottle
+    entry = GeneralInventory.find_by_gn_identifier(params[:id])
+    if entry.blank?
+      render :text => ''
+    else
+      render :text => {"name" => entry.drug_name, "currentQty"=> entry.current_quantity}.to_json
+    end
+
+  end
 end

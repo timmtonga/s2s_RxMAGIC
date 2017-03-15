@@ -13,5 +13,7 @@ class CreateGeneralInventories < ActiveRecord::Migration
       t.integer :voided_by
       t.timestamps null: false
     end
+
+    add_index :general_inventories, :gn_identifier
   end
 end

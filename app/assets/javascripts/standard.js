@@ -832,7 +832,7 @@ function loadSelectOptions(selectOptions, options, dualViewOptions) {
 
     options.innerHTML = "";
 
-    for (var j = 0; j < selectOptionCount; j++) {
+    for (var j = 1; j < selectOptionCount; j++) {
         // njih
         if (selectOptions[j].text.length < 1) {
             continue;
@@ -845,7 +845,7 @@ function loadSelectOptions(selectOptions, options, dualViewOptions) {
             '); ' +
             (dualViewOptions ? 'changeSummary(this.id);' : '');
 
-        optionsList += '<li id=\'' + (j - 1) + '\' ';
+        optionsList += '<li id=\'' + j + '\' ';
         if (selectOptions[j].value) {
             optionsList += " id=\"option" + selectOptions[j].value + "\" tstValue=\"" + selectOptions[j].value + "\"";
             selected = j;
@@ -853,13 +853,13 @@ function loadSelectOptions(selectOptions, options, dualViewOptions) {
 
         if (selectOptions[j].selected) {
             try {
-                setTimeout("__$(" + (j - 1) + ").click();", 0);
+                setTimeout("__$(" + (j) + ").click();", 0);
             } catch (e) {
             }
         }
 
         optionsList += (j % 2 == 0 ? " class='odd' tag='odd' " : " class='even' tag='even'") +
-            ' onmousedown="' + (tstFormElements[tstCurrentPage].getAttribute("tt_requirenextclick") != null ?
+            ' onmousedown="tstValue=null;' + (tstFormElements[tstCurrentPage].getAttribute("tt_requirenextclick") != null ?
                 (tstFormElements[tstCurrentPage].getAttribute("tt_requirenextclick") == "false" ? "checkRequireNextClick();" : "") : "") + '"';
 
         optionsList += (j % 2 == 0 ? " class='odd' tag='odd' " : " class='even' tag='even'") +
@@ -868,10 +868,10 @@ function loadSelectOptions(selectOptions, options, dualViewOptions) {
         // njih
         optionsList += ">" + (tstFormElements[tstCurrentPage].getAttribute("multiple") ?
             "<div style='display: table; border-spacing: 0px;'><div style='display: table-row'>" +
-            "<div style='display: table-cell;'><img id='img" + (j - 1) +
+            "<div style='display: table-cell;'><img id='img" + (j ) +
             "' src='/assets/unticked.jpg' alt='[ ]' />" +
             "</div><div style='display: table-cell; vertical-align: middle; " +
-            "text-align: left; padding-left: 15px;' id='optionValue" + (j - 1) + "'>" : "") +
+            "text-align: left; padding-left: 15px;' id='optionValue" + (j) + "'>" : "") +
             (typeof tstLocaleWords != typeof undefined && tstLocaleWords[selectOptions[j].text.toLowerCase().trim()] ?
                 tstLocaleWords[selectOptions[j].text.toLowerCase().trim()] :
                 selectOptions[j].text) + "</div></div></div></li>\n";
@@ -1198,7 +1198,7 @@ function tt_update(sourceElement, navback) {
         if (condition && navback == true) {
             sourceValue = "";
         } else {
-            sourceValue = sourceElement.getAttribute("tstValue");
+            sourceValue = sourceElement.value //getAttribute("tstValue");
         }
     }
     else {
@@ -1211,7 +1211,7 @@ function tt_update(sourceElement, navback) {
 
     var targetElement = returnElementWithAttributeValue("touchscreenInputID", sourceElement.getAttribute("refersToTouchscreenInputID"), tstFormElements);
     targetElement.focus();
-
+    
     switch (sourceElement.tagName) {
         // switch (targetElement.tagName){
         case "INPUT":
@@ -2005,7 +2005,7 @@ function gotoNextPage() {
 
     }
 
-    gotoPage(tstCurrentPage + 1, true);
+   gotoPage(tstCurrentPage + 1, true);
 }
 
 function disableTextSelection() {
@@ -5266,6 +5266,7 @@ function createSingleSelectControl() {
 
     var row = document.createElement("div");
     row.style.display = "table-row";
+    row.id = "options"
 
     table.appendChild(row);
 

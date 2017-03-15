@@ -20,7 +20,7 @@ var path = window.location.href.match(/assets/i);
 var fromIframe = window.location.href.match(/^data/i);
 
 var ext = (path && !fromIframe ? "" : "assets/");
-var timerout = 500;   // 150;
+var timerout = 10;   // 150;
 var calledMethod = null;
 var numberOfTrials = 0;
     
