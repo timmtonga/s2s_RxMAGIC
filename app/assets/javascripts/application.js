@@ -95,17 +95,11 @@ function createDirections(route, dose, frequency,doseType)
                     "5XD":I18n.t('forms.options.five_times_a_day'), "Q4HRS":I18n.t('forms.options.six_times_a_day'),
                     "QOD":I18n.t('forms.options.every_other_day'), "QWK":I18n.t('forms.options.once_a_week')}
     type = document.getElementsByName(doseType)
-    var prn = "";
-    for(i=0; i < type.length; i++){
-        if(type[i].checked)
-        {
-            prn = type[i].value;
-            break;
-        }
-    }
+    var prn = document.forms[0].elements["doseType"].value;
 
     dir = (routes[route.toLowerCase()] == undefined ? "" : routes[route.toLowerCase()])
-    return dir + " "+ dose + " " + frequencies[frequency] + (prn == "PRN" ? "(As Needed)" : "");
+    return dir + " "+ dose + " " + (frequencies[frequency] == undefined ? "" : frequencies[frequency]) + " " +
+        (prn == "PRN" ? "(As Needed)" : "");
 }
 
 function calcQuantity(dose, frequency,duration) {
@@ -144,19 +138,7 @@ function showAlphaKeypad(){
     keyboard.innerHTML+= getButtonString('backspace','<span>Bksp</span>')
     keyboard.innerHTML+= getButtonString('Space','<span>Space</span>')
     keyboard.innerHTML+= getButtonString('clear','<span>Clear</span>')
-}
-
-function showNumericKeypad(){
-    document.getElementById("keypad").style.height = "145";
-    keyboard.innerHTML = getButtons("123")
-    keyboard.innerHTML+= getButtons("456")
-    keyboard.innerHTML+= getButtons("7890")
-    keyboard.innerHTML+= getButtonString('space','<span>Space</span>')
-    keyboard.innerHTML+= getButtonString('clear','<span>Clear</span>')
-    keyboard.innerHTML+= getButtonString('backspace','<span>Bksp</span>')
-    keyboard.innerHTML+= getButtonString('abc','<span>abc</span>')
-    keyboard.innerHTML+= getButtonString('dash','<span>-</span>')
-    keyboard.innerHTML+= getButtonString('slash','<span>/</span>')
+    keyboard.innerHTML+= getButtonString('cancel','<span>Cancel</span>')
 }
 
 function showKeyboard(){
@@ -183,8 +165,9 @@ function press(pressedChar){
             search.value = ""
             search_box.fnFilter(search.value)
             return
-        case 'num':
-            showNumericKeypad();
+        case 'cancel':
+            search.value = ""
+            showKeyboard();
             return
         case 'slash':
             search.value+= "/"

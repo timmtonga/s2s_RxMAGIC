@@ -2,14 +2,14 @@
   <header>
   </header>
   <body style="margin: 0px; padding: 0px;">
-    <div style="display: table; width: 97%;margin-top: 1vh;margin-left: auto;margin-right: auto">
+    <div style="display: table; width: 99vw;margin-top: 1vh;margin-left: auto;margin-right: auto">
       <div style="display: table-row;">
-        <div style="width: 80%;float: left;" class="header-cell">
+        <div style="width: 80vw;float: left;" class="header-cell">
           <table style="width: 100%;">
             <tr>
-              <td style="text-align: right;width: 30%;" >
+              <td style="width: 40%;" >
                 <div style="display: table-row">
-                  <div style="display: table-cell;">
+                  <div style="display: table-cell;vertical-align: top;">
                     <strong><%= t('menu.terms.scan_barcode')%></strong>
                   </div>
                   <div style="display: table-cell;float: right;">
@@ -45,15 +45,15 @@
             </tr>
           </table>
         </div>
-        <div class="header-cell" style="float: right; width: 13%;text-align: center;vertical-align: middle;font-size: 16px;">
+        <div class="header-cell" style="float: right; width: 15vw;text-align: center;vertical-align: middle;">
             <h2>RxMAGIC</h2>
           <%= l(Date.today, format: '%d %B %Y') %>
         </div>
       </div>
 
-      <div style="border: 3px solid #06425C;margin-top: 3vh;height: 60vh;">
+      <div style="border: 3px solid #06425C;margin-top: 3vh;height: 55vh;">
           <div style="width: 100%; background-color: #006495;height: 4vh;text-align: center;color: white;padding-top: 1vh;">
-              <span style="font-size: 20px;font-weight: bold;"><%= t('menu.terms.actions') %></span>
+              <span style="font-size: 1.2em;"><%= t('menu.terms.actions') %></span>
           </div>
           <div style="display: table; padding-top: 2%;padding-left: 10px;width:75%; margin-left: auto;margin-right: auto;">
             <div style="display: table-row">
@@ -95,7 +95,7 @@
     </div>
 
     <div class="footer" >
-      <button onmousedown="window.location = '/logout'" class="bttn bttn-danger bttn-lg gradient" style="margin-top: 1vh;height: 8vh;margin-left: 2vh;" type="button"><%= t('forms.buttons.logout') %></button>
+      <div onmousedown="window.location = '/logout'" class="bttn bttn-danger bttn-lg gradient"  type="button"><%= t('forms.buttons.logout') %></div>
     </div>
   </body>
 

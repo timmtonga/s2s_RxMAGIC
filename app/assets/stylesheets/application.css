@@ -23,10 +23,12 @@ body{
     -moz-user-select: none;      /* Firefox */
     -ms-user-select: none;       /* Internet Explorer/Edge */
     user-select: none;
+    font-size: 12px;
 }
 
 table.th{
     text-align: left;
+
 }
 div.footer{
     position: absolute;
@@ -34,8 +36,7 @@ div.footer{
     height: 10vh;
     width: 100%;
     background-color: #666;
-    margin: 0px;
-    margin-bottom: 0px;
+    padding: 1%;
 }
 
 .bttn {
@@ -44,9 +45,12 @@ div.footer{
     font-weight: 700;
     font-size: inherit !important;
     font-family: "Nimbus Sans L", "Arial Narrow", sans-serif !important;
-    letter-spacing: 1px;
     line-height: inherit !important;
     text-transform: uppercase;
+    min-width: 15vw;
+    max-width: 20vw;
+    height: 4vh;
+    text-align: center;
 }
 
 .bttn:focus, .bttn:active:focus, .bttn.active:focus {
@@ -118,10 +122,10 @@ div.footer{
 div.header-cell{
     border: 3px outset blue;
     box-shadow: 4px 4px grey;
-    height: 15vh;
+    height: 20vh;
     display: table-cell;
-    padding: 10px;
-    font-size: 18px;
+
+
 }
 .scanner{
     border: 0px;
@@ -159,6 +163,12 @@ div.header-cell{
 .table-bordered td {
     border: 1px solid #ddd !important;
 }
+.table-bordered th{
+    font-size: 1em;
+    font-weight: 100 !important;
+    background: slategray;
+
+}
 div.male{
     height: 45px;
     background-color: rgb(201, 212, 236);
@@ -180,11 +190,12 @@ div.female{
     display: table;
     background-color: #F9F6F4;
     height: 30vh;
-    width: 30vw;
+    width: 50vw;
     margin-top: 20vh;
     margin-left: 30vw;
     border: 5px outset #003366;
     border-radius: 15px;
+    padding: 1%;
 }
 div.radioDiv {
     clear: both;
@@ -195,7 +206,7 @@ label.custom {
     min-width: 250px;
     border-radius: 3px;
     border: 1px solid #D1D3D4;
-    font-size: 1.3em;
+    font-size: 1.3em !important;
 }
 
 /* hide input */
@@ -276,29 +287,30 @@ input.radio:focus ~ label:before {
 }
 #backspace{
     position:absolute;
-    left:100px;
+    left:1vw;
     bottom:2px;
 }
 
 #Space{
     position:absolute;
-    left:220px;
+    left:10vw;
     bottom:2px;
-    width:200px;
+    width:200px !important;
 }
 
 #clear{
     position:absolute;
-    left:470px;
-    width: 100px;
+    left:43vw;
+    width: 100px !important;
     bottom:2px;
 }
-#num{
+#cancel{
     position:absolute;
-    left:470px;
+    left:60vw;
+    width: 100px !important;
     bottom:2px;
-    width:200px;
 }
+
 #keypad{
     background-color: #FFFFFF;
     border: 2px solid #9999FF;
@@ -312,22 +324,21 @@ input.radio:focus ~ label:before {
     width: 85vw;
 }
 .keyboardButton {
-    font-size: 22px !important;
-    min-width: 60px;
+    font-size: 1.3em !important;
+    width: 1vw !important;
     cursor: pointer;
-    min-height: 55px;
+    min-height: 3vh;
     border-radius: 5px !important;
-    margin: 3px;
+    margin: 2px;
     border: 1px solid #7eb9d0;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     font-family: arial, helvetica, sans-serif;
-    padding: 10px 10px 10px 10px;
     text-decoration: none;
+    font-weight: 200 !important;
     display: inline-block;
     text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
-    font-weight: bold;
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     background-color: #a7cfdf;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#a7cfdf), to(#23538a));
     background-image: -webkit-linear-gradient(top, #a7cfdf, #23538a);

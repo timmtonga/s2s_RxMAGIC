@@ -187,7 +187,7 @@ form{
 }
 
 .helpText {
-  height: 2em;
+  height: 1.3em;
   width: 500px;
   position: absolute;
   top: 5px;
@@ -197,7 +197,7 @@ form{
 }
 
 .helpTextClass {
-  font-size: 2em;
+  font-size: 1.3em;
   padding-top: 5px;
   padding-left: 25px;
   width: 620px;

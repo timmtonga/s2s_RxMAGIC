@@ -32,10 +32,11 @@ class UserController < ApplicationController
   def edit
 
     if request.post?
+
       user = User.find(params[:user_id])
       case params[:section]
         when "language_preference"
-          user.update_attributes(:language => params[:language_preference])
+          user.language = params[:user][:language_preference]
           if user.save
             flash[:message] = "User language preference successfully updated"
           else
@@ -50,7 +51,7 @@ class UserController < ApplicationController
             flash[:message] = t("messages.invalid_credentials")
           end
         when "role"
-          user.update_attributes(:role => params[:role])
+          user.update_attributes(:role => params[:user][:user_role])
           if user.save
             flash[:message] = "User role preference successfully updated"
           else

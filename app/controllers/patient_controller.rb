@@ -1,16 +1,21 @@
 class PatientController < ApplicationController
   def show
     if params[:id].match(/p/i)
-      @patient = Patient.find_by_patient_identifier(params[:id])
+      @patient = Patient.find_by_patient_identifier(params[:id]) rescue nil
     else
-      @patient = Patient.find(params[:id])
+      @patient = Patient.find(params[:id]) rescue nil
+    end
+    if @patient.blank?
+      flash[:error] = "Patient with ID #{params[:id]} not found"
+      redirect_to "/" and return
+    else
+      @history = Dispensation.where("patient_id = ? and voided = ?",@patient.id,false).order(dispensation_date: :desc).limit(10)
+
+      if YAML.load_file("#{Rails.root}/config/application.yml")['has_prescribing']
+        @prescriptions = Prescription.where("patient_id = ? and voided = ?",@patient.id,false).order(date_prescribed: :desc).limit(10)
+      end
     end
 
-    @history = Dispensation.where("patient_id = ? and voided = ?",@patient.id,false).order(dispensation_date: :desc).limit(10)
-
-    if YAML.load_file("#{Rails.root}/config/application.yml")['has_prescribing']
-      @prescriptions = Prescription.where("patient_id = ? and voided = ?",@patient.id,false).order(date_prescribed: :desc).limit(10)
-    end
   end
 
   def ajax_patient

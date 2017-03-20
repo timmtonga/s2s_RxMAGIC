@@ -5,16 +5,36 @@
     background-color: #CCCCCC !important;
   }
   input,label{
-    margin-top: 5px;
-    font-size: 25px;
+    margin-top: 3px;
+    font-size: 1.3em;
   }
-
+  img{
+    height: 30px;
+    width: 25px;
+  }
 </style>
 <script type="text/javascript">
   // Styling the table with datatables library
   $(document).ready(function() {
     // $.fn.dataTable.moment( 'MMM-YYYY' );
-    $('#generalInventory').DataTable({"bLengthChange": false, "bDestroy": true, "pageLength":5});
+    $('#generalInventory').DataTable({"bLengthChange": false,
+      "bDestroy": true,
+      "pageLength":5,
+      "language": {
+        "search": I18n.t('forms.labels.search'),
+        "lengthMenu": "Display _MENU_ records per page",
+        "zeroRecords": "Nothing found - sorry",
+        "info": I18n.t('forms.labels.tbl_pages'),
+        "infoEmpty": "No records available",
+        "infoFiltered": "(filtered from _MAX_ total records)"
+      }
+    });
+    search_box = $('#generalInventory').dataTable()
+    search = document.getElementsByTagName("input")[0];
+    search.setAttribute("id","search");
+    document.getElementById('search').setAttribute("onclick","showKeyboard();");
+    keyboard = document.getElementsByClassName("keypad")[0]
+    showAlphaKeypad();
   } );
 </script>
 <div style="height: 8vh;border: 1px inset black; border-width: 0px 0px 3px 0px;">
@@ -52,6 +72,18 @@
 </div>
 
 <div class="footer" >
-  <button onmousedown="window.location = '/main/settings'" class="bttn bttn-success bttn-lg gradient" style="margin-top: 1vh;height: 8vh;margin-right: 2vh;float: right;" type="button">Finish</button>
-  <button onmousedown="window.location = '/drug/new'" class="bttn bttn-primary bttn-lg gradient" style="margin-top: 1vh;height: 8vh;margin-right: 2vh;float: right;" type="button">Add Drug</button>
+  <div onmousedown="window.location = '/main/settings'" class="bttn bttn-success bttn-lg gradient"
+       style="margin-right: 2vw;float: right;" type="button">
+    <%= t('forms.buttons.finish')%>
+  </div>
+  <div onmousedown="window.location = '/drug/new'" class="bttn bttn-primary bttn-lg gradient"
+       style="margin-right: 2vh;float: right;"
+       type="button">Add Drug
+  </div>
+</div>
+
+<div id="keypad">
+          <span class="keypad">
+          </span>
+
 </div>

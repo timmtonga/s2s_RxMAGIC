@@ -1869,11 +1869,14 @@ function showBestKeyboard(aPageNum) {
     var optionCount = __$('options').getElementsByTagName("li").length;
     if ((optionCount > 0 && optionCount < 6 && inputElement.tagName == "SELECT") || (inputElement.getAttribute("multiple") == "multiple")) {
         __$("keyboard").innerHTML = "";
+        document.getElementsByClassName("inputFrameClass")[0].style.height = "calc(100% - 100px)"
         return;
     }
 
     switch (inputElement.getAttribute("field_type")) {
         case "password":
+            __$("keyboard").innerHTML = getPreferredKeyboard();
+            break;
         case "full_keyboard":
             showKeyboard(true, (typeof(tstUserKeyboardPref) != 'undefined' &&
             tstUserKeyboardPref.toLowerCase() == "qwerty" ? true : false));
@@ -2139,7 +2142,7 @@ function getNumericKeyboard() {
         getCharButtonSetID("/", "slash") +
         getCharButtonSetID("*", "star") +
         getButtonString('char', 'A-Z') +
-        getButtonString('date', 'Date') +
+        // getButtonString('date', 'Date') +
         getButtonString('na', 'N/A') +
         "</span><span id='buttonLine2' class='buttonLine'>" +
         getButtons("456") +
@@ -3596,7 +3599,10 @@ var DateUtil = {
 
     dayOfWeek: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 
-    months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    months: [I18n.t("forms.options.january_short"),I18n.t("forms.options.february_short"),I18n.t("forms.options.march_short"),
+        I18n.t("forms.options.april_short"),I18n.t("forms.options.may_short"),I18n.t("forms.options.june_short"),
+        I18n.t("forms.options.july_short"),I18n.t("forms.options.august_short"),I18n.t("forms.options.september_short"),
+        I18n.t("forms.options.october_short"),I18n.t("forms.options.november_short"),I18n.t("forms.options.december_short")],
 
     daysOfMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
 
@@ -3679,7 +3685,10 @@ function setToday() {
         }
     }
 
-    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    var months = [I18n.t("forms.options.january_short"),I18n.t("forms.options.february_short"),I18n.t("forms.options.march_short"),
+        I18n.t("forms.options.april_short"),I18n.t("forms.options.may_short"),I18n.t("forms.options.june_short"),
+        I18n.t("forms.options.july_short"),I18n.t("forms.options.august_short"),I18n.t("forms.options.september_short"),
+        I18n.t("forms.options.october_short"),I18n.t("forms.options.november_short"),I18n.t("forms.options.december_short")];
 
     /*document.getElementById("touchscreenInput" + tstCurrentPage).value =
      d.getFullYear() + "-" + ((d.getMonth() + 1) < 10 ? "0" : "") + (d.getMonth() + 1) +
@@ -5208,7 +5217,7 @@ function createMultipleSelectControl() {
             innerCell1.style.display = "table-cell";
             innerCell1.style.width = "30px";
 
-            innerCell1.innerHTML = "<img src='/assets/unticked.jpg' height='45' />";
+            innerCell1.innerHTML = "<img src='/assets/unticked.jpg' height='30' />";
 
             innerRow.appendChild(innerCell1);
 
@@ -5222,7 +5231,7 @@ function createMultipleSelectControl() {
             innerRow.appendChild(innerCell2);
 
             if (options[i].selected) {
-                innerCell1.innerHTML = "<img src='/assets/ticked.jpg' height='45' />";
+                innerCell1.innerHTML = "<img src='/assets/ticked.jpg' height='30' />";
                 li.setAttribute("class", "highlighted");
             }
         }
@@ -5237,7 +5246,7 @@ function createMultipleSelectControl() {
 function createSingleSelectControl() {
     if (__$("keyboard")) {
         setTimeout("__$('keyboard').style.display = 'none'", 10);
-        __$("inputFrame" + tstCurrentPage).style.height = "calc(100% - 130px)"
+        __$("inputFrame" + tstCurrentPage).style.height = "calc(100% - 50px)"
     }
 
     if (__$("viewport")) {
@@ -5375,7 +5384,7 @@ function createSingleSelectControl() {
         innerCell1.style.display = "table-cell";
         innerCell1.style.width = "30px";
 
-        innerCell1.innerHTML = "<img src='/assets/unchecked.png' height='45' />";
+        innerCell1.innerHTML = "<img src='/assets/unchecked.png' height='30' />";
 
         innerRow.appendChild(innerCell1);
 
@@ -5389,7 +5398,7 @@ function createSingleSelectControl() {
         innerRow.appendChild(innerCell2);
 
         if (options[i].selected) {
-            innerCell1.innerHTML = "<img src='/assets/checked.png' height='45' />";
+            innerCell1.innerHTML = "<img src='/assets/checked.png' height='30' />";
             li.setAttribute("class", "highlighted");
         }
     }

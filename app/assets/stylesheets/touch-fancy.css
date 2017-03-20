@@ -100,11 +100,11 @@ form{
 .buttonsDiv {
     background-color: #333333;
     display: block;
-    height: 80px;
+    height: 10vh;
     position: absolute;
-    top: calc(100vh - 80px);
-    width:  99%;
-    padding-right: 20px;
+    bottom:0px;
+    width:  100%;
+    padding: 1%;
     /*  z-index:10;*/
 }
 
@@ -161,7 +161,7 @@ form{
     position:absolute;
     display: block;
     z-index: 10;
-    bottom: 85px;
+    bottom: 15vh;
     left: 1%;
     border: 1px solid #333;
     border-radius: 15px;
@@ -173,7 +173,7 @@ form{
 .buttonLine{
     display: block;
     /*  height: 3.2em;*/
-    height: 70px;
+    height: 12vh;
     /*	margin-top: 10px; */
     width: 100%;
 }
@@ -209,19 +209,18 @@ form{
 }
 
 .helpText {
-    height: 2em;
+    height: 1.3em;
     width: 500px;
     position: absolute;
     top: 5px;
-    left: 25px;
     font-size: 2em;
     overflow: hidden;
 }
 
 .helpTextClass {
-    font-size: 2em;
+    font-size: 1.3em;
     padding-top: 5px;
-    padding-left: 25px;
+    padding-left: 10px;
     width: 620px;
     -moz-user-select: none;
 }
@@ -234,7 +233,7 @@ form{
     width:96.5%;
     border-radius: 10px;
     padding: 5px;
-    height: calc(100% - 300px);
+    height: calc(100vh - 65vh);
     min-height: 60px;
 }
 
@@ -295,11 +294,11 @@ form{
 
 .messageBar {
     /*  height: 1em;*/
-    left: calc(50vh - 225px);
-    width: 450px;
+    left: 20vw;
+    width: 50vw;
     position: absolute;
     top: 100px;
-    font-size: 2em;
+    font-size: 1.3em;
     text-align: center;
     background-color: tomato;
     padding: 10px;
@@ -350,7 +349,8 @@ form{
 
 button.navButton {
     float:right;
-    margin-top:20px;
+    margin-right:2vw;
+    margin-top: 0.5vh;
 }
 
 /*
@@ -727,9 +727,10 @@ button:hover.dark span {
     -moz-user-select:none;
     color:gray;
     font-size:1.3em;
-    margin-left:25px;
+    margin-left:auto;
+    margin-right:auto;
     padding-top:5px;
-    width:99%;
+    width:96.5%;
     border-bottom:2px dotted;
 }  
 
@@ -749,8 +750,8 @@ button:hover.dark span {
 .NoKeyboard .options { height: 552px !important }
 
 #footer button, div.buttonsDiv button {
-    margin-top: 10px;
-    min-width: 140px;
+    margin-top: 0.5vh;
+    min-width: 3vw;
 }
 
 textarea {
@@ -761,7 +762,7 @@ textarea {
 }
 
 #apostrophe {
-    margin-left: 25px;
+    margin-left: 2px;
 }
 
 #backspace {
@@ -769,11 +770,11 @@ textarea {
 }
 
 .qwertyKeyboard #backspace, #apostrophe {
-    margin-left: 20px;
+    margin-left: 2px;
 }
 
 .qwertyKeyboard #apostrophe {
-    margin-left: 5px;
+    margin-left: 2px;
 }
 
 .abcKeyboard #backspace {
@@ -781,18 +782,14 @@ textarea {
 }
 
 .abcKeyboard #qwerty, #backspace, #num, #apostrophe {
-    margin-left: 5px;
-    min-width: 80px;
+    margin-left: 2px;
+    min-width: 8vw;
 }
 
 #zero {
     margin-left: 85px;
 }
 
-button {
-    min-width:75px;
-    margin: 3px;
-}
 
 .NumbersWithUnknown #star,
 .NumbersWithUnknown #abc,
@@ -1031,11 +1028,11 @@ ul li {
 
 #popupBox {
     height: 130px;
-    width: 510px;
+    width: 50vw;
     position: absolute;
-    top: 150px;
-    left: 260px;
-    font-size: 2.35em;
+    top: 20vh;
+    left: 20vw;
+    font-size: 1.5em;
     float: right;
     text-align: left;
     z-index: 842;
@@ -1110,12 +1107,12 @@ li {
 
 
 button {
-    font-size: 22px !important;
-    min-width: 60px;
+    font-size: 1.3em !important;
+    min-width: 7vw;
     cursor: pointer;
-    min-height: 55px;
+    min-height: 3vh;
     border-radius: 5px !important;
-    margin: 3px;
+    margin: 2px;
     border: 1px solid #7eb9d0;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -1124,7 +1121,6 @@ button {
     text-decoration: none;
     display: inline-block;
     text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
-    font-weight: bold;
     color: #FFFFFF;
     background-color: #a7cfdf;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#a7cfdf), to(#23538a));
@@ -1148,11 +1144,11 @@ button:active {
 }
 
 .button {
-    font-size: 22px !important;
+    font-size: 1.2em !important;
     padding: 15px;
     min-width: 120px;
     cursor: pointer;
-    min-height: 55px;
+    min-height: 3vh;
     border-radius: 5px !important;
     margin: 3px;
 }

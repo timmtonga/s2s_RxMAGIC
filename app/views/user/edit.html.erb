@@ -8,12 +8,10 @@
 <%= form_for :user, :url => edit_user_path  do |f| %>
 
     <% if @edit_section == "language_preference"%>
-      <select id="language_preference" name="language_preference" helpText="Language Preference">
-        <option></option>
-        <% (languages).each do |w| %>
-            <option value="<%= w[0] %>"><%= w[1] %></option>
-        <% end %>
-      </select>
+
+        <%= select_tag "user[language_preference]", options_for_select(['English', 'Spanish'], (@user.language rescue nil)),
+                       :class => 'input_cell', :helpText => "Language Preference", :required => true  %>
+
 
     <% elsif @edit_section == "password"%>
         <p><label for="user_plain_password">Password</label><br/>
@@ -23,14 +21,10 @@
 
         <p><label for="user_confirm_password">Re-enter Password</label><br/>
           <%= password_field 'user_confirm', 'password', :xhelpText => 'Password',:textCase =>"lower",
-                             :validationRule =>"\\w{4}\\w*", :validationMessage =>"Password less than FOUR characters." %></p>
+                             :validationRule =>"\\w{6}\\w*", :validationMessage =>"Password less than FOUR characters." %></p>
     <% elsif @edit_section == "role" %>
-        <select id="role" name="role" helpText="User Role">
-          <option></option>
-          <% (user_roles).each do |w| %>
-              <option value="<%= w %>"><%= w %></option>
-          <% end %>
-        </select>
+        <%= select_tag "user[user_role]", options_for_select(user_roles, (@user.role rescue nil)),
+                       :class => 'input_cell', :placeholder => "Select user role", :required => true  %>
     <% end %>
 
     <%= hidden_field_tag 'section', @edit_section%>

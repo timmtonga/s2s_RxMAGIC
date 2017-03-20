@@ -128,7 +128,7 @@ module Misc
                    "5XD"=>"Five times a day", "Q4HRS"=>"Six times a day","QOD"=>"Every other day",
                    "QWK"=>"Once a week"}
     prn = (prn == "PRN" ? "(Take as needed)" : "")
-    return routes[route.downcase] + " "+ dose + " " + frequencies[frequency] + prn;
+    return routes[route.downcase] + " "+ dose + " " + frequencies[frequency] +" " + prn;
   end
 
   def get_facility_name

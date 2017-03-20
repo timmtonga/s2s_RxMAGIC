@@ -8,35 +8,35 @@
           line-height: 1.5em;
           margin-top: 5px;
           margin-bottom: 5px;
-          font-size: 1.3em;
+          font-size: 1.3em !important;
         }
         div.mobi-div{
           padding-left: 10px;
           padding-top: 5px;
         }
         td.heading{
-          font-size: 1.1em;
+          font-size: 1.2em;
         }
       </style>
   </header>
   <body style="margin: 0px; padding: 0px;">
 
-    <div id="dispenseForm" class="questionLayer" style="font-size: 0.9em;">
+    <div id="dispenseForm" class="questionLayer" >
       <div style="margin-top: 10vh;margin-left: 10vw; height: 75vh;width: 80vw;background-color: #eeeeff;border: 3px outset black;">
           <table style="width: 100%; border: 2px solid black; border-width: 0px 0px 2px 0px;">
             <tr>
-              <td class='heading' style="width: 20%;"><%= t('menu.terms.item')%></td>
-              <th id="item" style="text-align: left;width: 20%;">&nbsp;</th>
-              <td class='heading' style="text-align: left;width: 20%;"><%= t('menu.terms.route')%></td>
-              <th style="text-align: left;" id="route_type">&nbsp;</th>
+              <td class='heading'><%= t('menu.terms.item')%></td>
+              <th id="item" style="text-align: left;width: 30%;">&nbsp;</th>
+              <td class='heading' style="text-align: left;"><%= t('menu.terms.route')%></td>
+              <th style="text-align: left;width: 30%;" id="route_type">&nbsp;</th>
               <td style="width: 5%;" rowspan="3">
                 <img style="padding-right: 2px;float: right;" src="/assets/delete.png" onmousedown="cancelDispense()">
               </td>
             </tr>
             <tr>
-              <td class='heading' style="width: 20%;"><%= t('menu.terms.bottle_id')%></td>
+              <td class='heading'><%= t('menu.terms.bottle_id')%></td>
               <th id="bottle_id" style="text-align: left;width: 20%;">&nbsp;</th>
-              <td class='heading' style="text-align: left;width: 20%;"><%= t('menu.terms.directions')%></td>
+              <td class='heading' style="text-align: left;"><%= t('menu.terms.directions')%></td>
               <th style="text-align: left;" id="directionsDisp">&nbsp;</th>
 
             </tr>
@@ -79,13 +79,13 @@
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="administration" class="radio" value="oral" id="route-oral" onchange="setRoute('<%= t('forms.options.oral')%>')" required>
+                        <input type="radio" name="administration" class="radio" value="oral" id="route-oral" onchange="setRoute('<%= t('forms.options.oral')%>');setDirections();" required>
                         <label class="custom" for="route-oral"><%= t('forms.options.oral')%></label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="administration" class="radio" value="topical" id="route-topical" onchange="setRoute('<%= t('forms.options.topical')%>')" required>
+                        <input type="radio" name="administration" class="radio" value="topical" id="route-topical" onchange="setRoute('<%= t('forms.options.topical')%>');setDirections();" required>
                         <label class="custom" for="route-topical"><%= t('forms.options.topical')%></label>
                       </div>
                     </td>
@@ -93,13 +93,13 @@
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="administration" class="radio" value="respiratory" id="route-respiratory" onchange="setRoute('<%= t('forms.options.respiratory')%>')" required>
+                        <input type="radio" name="administration" class="radio" value="respiratory" id="route-respiratory" onchange="setRoute('<%= t('forms.options.respiratory')%>');setDirections();" required>
                         <label class="custom" for="route-respiratory"><%= t('forms.options.respiratory')%></label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="administration" class="radio" value="injection" id="route-injection" onchange="setRoute('<%= t('forms.options.injection')%>')" required>
+                        <input type="radio" name="administration" class="radio" value="injection" id="route-injection" onchange="setRoute('<%= t('forms.options.injection')%>');setDirections();" required>
                         <label class="custom" for="route-injection"><%= t('forms.options.injection')%></label>
                       </div>
                     </td>
@@ -107,7 +107,7 @@
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="administration" class="radio" value="other" id="route-other" onchange="setRoute('<%= t('forms.options.other')%>')" required>
+                        <input type="radio" name="administration" class="radio" value="other" id="route-other" onchange="setRoute('<%= t('forms.options.other')%>');setDirections();" required>
                         <label class="custom" for="route-other"><%= t('forms.options.other')%></label>
                       </div>
                     </td>
@@ -126,24 +126,24 @@
                 <div style="margin-top: 5px;">
                   <table width="100" cellspacing="15" >
                     <tr>
-                      <td class="customButton" onmousedown="append(1,'dose')"><span>1</span></td>
-                      <td class="customButton" onmousedown="append(2,'dose')"><span>2</span></td>
-                      <td class="customButton" onmousedown="append(3,'dose')"><span>3</span></td>
+                      <td class="customButton" onmousedown="append(1,'dose');setDirections();"><span>1</span></td>
+                      <td class="customButton" onmousedown="append(2,'dose');setDirections();"><span>2</span></td>
+                      <td class="customButton" onmousedown="append(3,'dose');setDirections();"><span>3</span></td>
                     </tr>
                     <tr>
-                      <td class="customButton" onmousedown="append(4,'dose')"><span>4</span></td>
-                      <td class="customButton" onmousedown="append(5,'dose')"><span>5</span></td>
-                      <td class="customButton" onmousedown="append(6,'dose')"><span>6</span></td>
+                      <td class="customButton" onmousedown="append(4,'dose');setDirections();"><span>4</span></td>
+                      <td class="customButton" onmousedown="append(5,'dose');setDirections();"><span>5</span></td>
+                      <td class="customButton" onmousedown="append(6,'dose');setDirections();"><span>6</span></td>
                     </tr>
                     <tr>
-                      <td class="customButton" onmousedown="append(7,'dose')"><span>7</span></td>
-                      <td class="customButton" onmousedown="append(8,'dose')"><span>8</span></td>
-                      <td class="customButton" onmousedown="append(9,'dose')"><span>9</span></td>
+                      <td class="customButton" onmousedown="append(7,'dose');setDirections();"><span>7</span></td>
+                      <td class="customButton" onmousedown="append(8,'dose');setDirections();"><span>8</span></td>
+                      <td class="customButton" onmousedown="append(9,'dose');setDirections();"><span>9</span></td>
                     </tr>
                     <tr>
-                      <td class="customButton" onmousedown="append(0,'dose')"><span>0</span></td>
-                      <td class="customButton" onmousedown="append('.','dose')"><span>.</span></td>
-                      <td class="customButton" onmousedown="append('del','dose')"><span>del</span></td>
+                      <td class="customButton" onmousedown="append(0,'dose');setDirections();"><span>0</span></td>
+                      <td class="customButton" onmousedown="append('.','dose');setDirections();"><span>.</span></td>
+                      <td class="customButton" onmousedown="append('del','dose');setDirections();"><span>del</span></td>
                     </tr>
                   </table>
                 </div>
@@ -154,13 +154,13 @@
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="doseType" value="PRN" class="radio" id="typePRN" required>
+                        <input type="radio" name="doseType" value="PRN" class="radio" id="typePRN" onchange="setDirections();" required>
                         <label class="custom" for="typePRN" style="width: 200px !important;"><%= t('forms.options.as_needed')%></label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="doseType" value="NPRN" class="radio" id="typeNPRN" required>
+                        <input type="radio" name="doseType" value="NPRN" class="radio" id="typeNPRN" onchange="setDirections();" required>
                         <label class="custom" for="typeNPRN" style="width: 200px !important;"><%= t('forms.options.as_prescribed')%></label>
                       </div>
                     </td>
@@ -173,13 +173,13 @@
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="OD" value="OD" onchange="setDirections('OD')" required>
+                        <input type="radio" name="frequency" class="radio" id="OD" value="OD" onchange="setDirections()" required>
                         <label class="custom" for="OD" style="width: 200px !important;"><%= t('forms.options.once_a_day')%></label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="BD" value="BD" onchange="setDirections('BD')" required>
+                        <input type="radio" name="frequency" class="radio" id="BD" value="BD" onchange="setDirections()" required>
                         <label class="custom" for="BD" style="width: 200px !important;"><%= t('forms.options.two_times_a_day')%></label>
                       </div>
                     </td>
@@ -187,13 +187,13 @@
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="TDS" value="TDS" onchange="setDirections('TDS')" required>
+                        <input type="radio" name="frequency" class="radio" id="TDS" value="TDS" onchange="setDirections()" required>
                         <label class="custom" for="TDS" style="width: 200px !important;"><%= t('forms.options.three_times_a_day')%></label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="QID" value="QID" onchange="setDirections('QID')" required>
+                        <input type="radio" name="frequency" class="radio" id="QID" value="QID" onchange="setDirections()" required>
                         <label class="custom" for="QID" style="width: 200px !important;"><%= t('forms.options.four_times_a_day')%></label>
                       </div>
                     </td>
@@ -201,13 +201,13 @@
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="5XD" value="5XD" onchange="setDirections('5XD')" required>
+                        <input type="radio" name="frequency" class="radio" id="5XD" value="5XD" onchange="setDirections()" required>
                         <label class="custom" for="5XD" style="width: 200px !important;"><%= t('forms.options.five_times_a_day')%></label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="Q4HRS" value="Q4HRS" onchange="setDirections('Q4HRS')" required>
+                        <input type="radio" name="frequency" class="radio" id="Q4HRS" value="Q4HRS" onchange="setDirections()" required>
                         <label class="custom" for="Q4HRS" style="width: 200px !important;"><%= t('forms.options.six_times_a_day')%></label>
                       </div>
                     </td>
@@ -215,13 +215,13 @@
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="QOD" value="QOD" onchange="setDirections('QOD')" required>
+                        <input type="radio" name="frequency" class="radio" id="QOD" value="QOD" onchange="setDirections()" required>
                         <label class="custom" for="QOD" style="width: 200px !important;"><%= t('forms.options.every_other_day')%></label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="QWK" value="QWK" onchange="setDirections('QWK')" required>
+                        <input type="radio" name="frequency" class="radio" id="QWK" value="QWK" onchange="setDirections()" required>
                         <label class="custom" for="QWK" style="width: 200px !important;"><%= t('forms.options.once_a_week')%></label>
                       </div>
                     </td>
@@ -268,9 +268,9 @@
       </div>
     </div>
 
-    <div style="display: table; width: 97%;margin-top: 1vh;margin-left: auto;margin-right: auto">
+    <div style="display: table; width: 99vw;margin-top: 1vh;margin-left: auto;margin-right: auto">
       <div style="display: table-row;">
-        <div style="width: 70%;float: left;" class="header-cell">
+        <div style="width: 75vw;float: left;" class="header-cell">
           <table style="width: 100%;">
             <tr>
               <td rowspan="3">
@@ -279,7 +279,7 @@
                   </div>
               </td>
               <td colspan="6">
-                <span style="font-weight: bold;font-size: 25px;"><%= @patient.fullname %></span>
+                <span style="font-weight: bold;font-size: 1.5em;"><%= @patient.fullname %></span>
               </td>
             </tr>
             <tr>
@@ -298,26 +298,25 @@
               <td><%= @patient.nat_id %></td>
               <th style="text-align: left;"><%= t('menu.terms.marital_status') %></th>
               <th>:</th>
-              <td><%= @patient.marital_status %></td>
+              <td><%= t('forms.options.' +@patient.marital_status.downcase).titleize %></td>
             </tr>
           </table>
         </div>
-        <div class="header-cell" style="float: right; width: 23%;">
+        <div class="header-cell" style="float: right; width: 20vw;margin-right: 4px;">
           <div style="display: table-row">
-            <div style="display: table-cell;vertical-align: top;">
-              <img style="height: 30px;" src="/assets/barcode.jpg">
+            <div style="display: table-cell;vertical-align: top;margin-top: 5px;text-align: center;">
               <strong><%= t('menu.terms.scan_bottle')%></strong>
             </div>
           </div>
           <div style="display: table-row">
-            <div style="display: table-cell;">
-              <input type="text" id="barcode" class="scanner" style="width: 95%;" autofocus>
+            <div style="display: table-cell;text-align: center;">
+              <input type="text" id="barcode" class="scanner" style="width: 90%;margin-top: 5px;" autofocus>
             </div>
           </div>
         </div>
       </div>
       <div style="display: table-row;">
-        <div style="border: 1px solid blue;margin-top: 15px; height: 65vh; ">
+        <div style="border: 1px solid blue;margin-top: 10px;">
             <% if has_prescribe %>
               <%= render '/patient/prescribe_view' %>
             <% else %>
@@ -327,8 +326,8 @@
       </div>
     </div>
     <div class="footer" >
-      <button class="bttn bttn-success bttn-lg gradient" style="margin-top: 1vh;height: 8vh;
-          margin-right: 2vh;float: right;" type="button" onmousedown="window.location='/'"><%= t('forms.buttons.finish')%></button>
+      <div class="bttn bttn-success bttn-lg gradient" style="margin-right: 2vw;float: right;" type="button"
+           onmousedown="window.location='/'"><%= t('forms.buttons.finish')%></div>
     </div>
   </body>
 
@@ -418,8 +417,9 @@
       document.getElementById("route_type").innerHTML = route;
     }
 
-    function setDirections(frequency){
+    function setDirections(){
       var field = document.getElementById("directionsDisp");
+      var frequency = document.forms[0].elements["frequency"].value
       field.innerHTML = createDirections(document.getElementById("route_type").innerHTML, document.getElementById('dose').value, frequency,"doseType")
     }
 

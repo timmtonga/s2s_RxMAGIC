@@ -5,20 +5,20 @@
 <div style="height: 60vh;">
   <div style="display: table; padding-top: 10px;padding-left: 10px;margin-left: auto;margin-right: auto;">
     <div style="display: table-row">
-      <div style="display: table-cell;width: 10vw;" onmousedown="window.location='/user/<%= User.current.id%>/edit?section=password'">
-        <img style="padding-left: 4vw;" src="/assets/change_password.png">
+      <div style="display: table-cell;width: 10vw;text-align: center;" onmousedown="window.location='/user/<%= User.current.id%>/edit?section=password'">
+        <img src="/assets/change_password.png">
       </div>
-      <div style="display: table-cell;width: 10vw;" onmousedown="window.location='/user/<%= User.current.id%>/edit?section=language_preference'">
-        <img style="padding-left: 4vw;" src="/assets/change_language.png">
+      <div style="display: table-cell;width: 10vw;text-align: center;" onmousedown="window.location='/user/<%= User.current.id%>/edit?section=language_preference'">
+        <img src="/assets/change_language.png">
       </div>
       <% if ["administrator","pharmacist"].include? User.current.role.downcase %>
-        <div style="display: table-cell;width: 10vw;" onmousedown="window.location='/drug'">
-          <img style="padding-left: 4vw;" src="/assets/drugs_list.png">
+        <div style="display: table-cell;width: 10vw;text-align: center;" onmousedown="window.location='/drug'">
+          <img src="/assets/drugs_list.png">
         </div>
       <% end %>
       <% if User.current.role.downcase == "administrator"%>
-        <div style="display: table-cell;width: 10vw;" onmousedown="window.location='/user'">
-          <img style="padding-left: 4vw;" src="/assets/user_edit.png">
+        <div style="display: table-cell;width: 10vw;text-align: center;" onmousedown="window.location='/user'">
+          <img src="/assets/user_edit.png">
         </div>
       <% end %>
     </div>
@@ -44,5 +44,5 @@
   </div>
 </div>
 <div class="footer" >
-  <button onmousedown="window.location = '/'" class="bttn bttn-success bttn-lg gradient" style="margin-top: 1vh;height: 8vh;margin-right: 2vh;float: right;" type="button"><%= t('forms.buttons.finish')%></button>
+  <div onmousedown="window.location = '/'" class="bttn bttn-success bttn-lg gradient" style="margin-right: 2vw;float: right;" type="button"><%= t('forms.buttons.finish')%></div>
 </div>

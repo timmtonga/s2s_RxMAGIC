@@ -20,13 +20,16 @@ class User < ActiveRecord::Base
   end
 
   def display_name
-    (self.first_name.blank? ? '' : self.first_name) + " " + (self.middle_name.blank? ? '' : self.middle_name) + " " +
+    name = (self.first_name.blank? ? '' : self.first_name) + " " + (self.middle_name.blank? ? '' : self.middle_name) + " " +
         (self.fathers_name.blank? ? '' : self.fathers_name)
+
+    return name.titleize
   end
 
   def fullname
-    (self.first_name.blank? ? '' : self.first_name) + " " + (self.middle_name.blank? ? '' : self.middle_name) + " " +
+    name = (self.first_name.blank? ? '' : self.first_name) + " " + (self.middle_name.blank? ? '' : self.middle_name) + " " +
         (self.fathers_name.blank? ? '' : self.fathers_name) + " " + (self.mothers_name.blank? ? '' : self.mothers_name)
+    return name.titleize
   end
 
   def self.random_string(len)
@@ -42,6 +45,8 @@ class User < ActiveRecord::Base
       self.salt = User.random_string(10)
       self.password = encrypt(self.password, self.salt)
     end
+
+    self.language = (self.language.downcase == "spanish" ? "ESP" : "ENG")
   end
 
   def encrypt(password,salt)

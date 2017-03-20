@@ -3,6 +3,7 @@ class GeneralInventory < ActiveRecord::Base
   before_create :complete_record
 
   validates :expiration_date, :presence => true
+  validates :date_received, :presence => true
   validates :received_quantity, :presence => true
   validates :current_quantity, :presence => true
   validates :received_quantity, :numericality => { :only_integer => true }
