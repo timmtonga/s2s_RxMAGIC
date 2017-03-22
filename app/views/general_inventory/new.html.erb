@@ -57,6 +57,30 @@
                  helpText="<%= t('forms.labels.amount_received') %>" tt_pageStyleClass="NumbersOnly" />
         </td>
       </tr>
+      <tr>
+        <td>
+          More Items
+        </td>
+        <td>
+          <%= select_tag "more_items", options_for_select(['Yes', 'No'],  nil),
+                         :class => 'input_cell', :helpText => t('forms.labels.more_items_of_type') , :required => true  %>
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Number of items:
+        </td>
+        <td>
+          <%= text_field_tag "number_of_items", nil,
+                             {:id => 'number_of_items',
+                              :field_type => 'number',
+                              :helpText => t('forms.labels.number_of_items'),
+                              :condition => '$("more_items").value == "Yes"',
+                              :tt_pageStyleClass=> "NumbersOnly"} %>
+
+        </td>
+      </tr>
     </table>
 
 

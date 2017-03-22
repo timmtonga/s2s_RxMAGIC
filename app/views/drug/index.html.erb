@@ -46,8 +46,8 @@
     <thead>
     <tr>
       <th >Drug Name</th>
-      <th style="width: 20%;">Dose Strength</th>
       <th style="width: 20%;">Dose Form</th>
+      <th style="width: 20%;">Drug Category</th>
       <th style="width: 15%;">Actions</th>
     </tr>
     </thead>
@@ -56,8 +56,8 @@
     <% (@drugs || []).each do |drug| %>
         <tr>
           <td><%= drug.name.titleize rescue "" %></td>
-          <td><%= drug.dose_strength %></td>
           <td><%= drug.dose_form %></td>
+          <td><%= drug.category %></td>
           <td>
 
             <img style="float: left;" src="/assets/edit.png" onmousedown="window.location='/drug/<%= drug.id %>/edit'" title="Edit Drug">

@@ -92,8 +92,8 @@ function createDirections(route, dose, frequency,doseType)
             "injection":I18n.t('menu.terms.inject'),"respiratory":I18n.t('menu.terms.inhale'),"other":""}
     frequencies = {"OD": I18n.t('forms.options.once_a_day'), "BD":I18n.t('forms.options.two_times_a_day'),
                     "TDS":I18n.t('forms.options.three_times_a_day'), "QID":I18n.t('forms.options.four_times_a_day'),
-                    "5XD":I18n.t('forms.options.five_times_a_day'), "Q4HRS":I18n.t('forms.options.six_times_a_day'),
-                    "QOD":I18n.t('forms.options.every_other_day'), "QWK":I18n.t('forms.options.once_a_week')}
+                    "QHR":I18n.t('forms.options.every_hour'), "Q4HRS":I18n.t('forms.options.every_four_hours'),
+                    "Q2HRS":I18n.t('forms.options.every_two_hours'), "QWK":I18n.t('forms.options.once_a_week')}
     type = document.getElementsByName(doseType)
     var prn = document.forms[0].elements["doseType"].value;
 
@@ -103,8 +103,8 @@ function createDirections(route, dose, frequency,doseType)
 }
 
 function calcQuantity(dose, frequency,duration) {
-    frequencies = {"OD": 1, "BD":2, "TDS":3, "QID":4, "5XD":4, "Q4HRS":6,"QOD":0.5, "QWK":0.14};
-    
+    frequencies = {"OD": 1, "BD":2, "TDS":3, "QID":4, "Q4HRS":6,"QHR":24, "Q2HRS":12};
+    console.log((dose * frequencies[frequency] * duration))
     return ((dose * frequencies[frequency] * duration) == NaN ? 0 : Math.ceil(dose * frequencies[frequency] * duration))
 }
 

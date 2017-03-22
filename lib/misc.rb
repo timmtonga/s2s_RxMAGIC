@@ -1,6 +1,8 @@
 #This module includes all functions that may come in handy to do avoid code repetitions
+
 module Misc
 
+  require "i18n"
   def calculate_check_digit(number)
     # This is Luhn's algorithm for checksums
     # http://en.wikipedia.org/wiki/Luhn_algorithm
@@ -123,12 +125,17 @@ module Misc
   end
 
   def self.create_directions(dose, route, frequency, prn)
-    routes = {"oral"=>"Take", "topical"=>"Apply", "injection"=>"Inject","respiratory"=>"Inhale","other"=>""}
-    frequencies = {"OD"=> "Once a day", "BD"=>"Twice a day", "TDS"=>"Three times a day", "QID"=>"Four times a day",
-                   "5XD"=>"Five times a day", "Q4HRS"=>"Six times a day","QOD"=>"Every other day",
-                   "QWK"=>"Once a week"}
+    routes = {"oral"=>I18n.t('menu.terms.take'), "topical"=>I18n.t('menu.terms.apply'),
+              "injection"=>I18n.t('menu.terms.inject'),"respiratory"=>I18n.t('menu.terms.inhale'),"other"=>""}
+
+    frequencies = {"OD"=> I18n.t('forms.options.once_a_day'), "BD"=>I18n.t('forms.options.two_times_a_day'),
+                   "TDS"=>I18n.t('forms.options.three_times_a_day'), "QID"=>I18n.t('forms.options.four_times_a_day'),
+                   "QHR"=>I18n.t('forms.options.every_hour'), "Q4HRS"=>I18n.t('forms.options.every_four_hours'),
+                   "Q2HRS"=>I18n.t('forms.options.every_two_hours'), "QWK"=>I18n.t('forms.options.once_a_week')}
+
     prn = (prn == "PRN" ? "(Take as needed)" : "")
-    return routes[route.downcase] + " "+ dose + " " + frequencies[frequency] +" " + prn;
+
+    return routes[route.downcase] + " "+ dose.to_s + " " + frequencies[frequency] +" " + prn;
   end
 
   def get_facility_name

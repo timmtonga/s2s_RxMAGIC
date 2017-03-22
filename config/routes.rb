@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   get "view_gn_drug/:id" => "general_inventory#view_drug"
   get "/print_bottle_barcode/:id" => "general_inventory#print_bottle_barcode"
   get "/ajax_bottle/:id" => "general_inventory#ajax_bottle"
+  get "/general_inventory/print_bottle_barcode"
 
   ###################### User Controller #############################
   get "/username_availability" => "users#username_availability"

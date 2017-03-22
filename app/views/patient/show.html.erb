@@ -5,24 +5,24 @@
           border: 1px outset silver;
           background-color: #39bf87;
           padding: 15px;
-          line-height: 1.5em;
+          line-height: 1em;
           margin-top: 5px;
           margin-bottom: 5px;
-          font-size: 1.3em !important;
+          font-size: 1em !important;
         }
         div.mobi-div{
           padding-left: 10px;
           padding-top: 5px;
         }
         td.heading{
-          font-size: 1.2em;
+          font-size: 1em;
         }
       </style>
   </header>
   <body style="margin: 0px; padding: 0px;">
 
     <div id="dispenseForm" class="questionLayer" >
-      <div style="margin-top: 10vh;margin-left: 10vw; height: 75vh;width: 80vw;background-color: #eeeeff;border: 3px outset black;">
+      <div style="margin-top: 10vh;margin-left: 5vw; height: 80vh;width: 90vw;background-color: #eeeeff;border: 3px outset black;">
           <table style="width: 100%; border: 2px solid black; border-width: 0px 0px 2px 0px;">
             <tr>
               <td class='heading'><%= t('menu.terms.item')%></td>
@@ -55,9 +55,6 @@
                     <th class="tab" onmousedown="showDispenseDiv('routesDiv')"><%= t('forms.buttons.administration_route')%></th>
                   </tr>
                   <tr>
-                    <th class="tab" onmousedown="showDispenseDiv('doseTypeDiv')"><%= t('forms.buttons.dose_type')%></th>
-                  </tr>
-                  <tr>
                     <th class="tab" onmousedown="showDispenseDiv('doseDiv')"><%= t('forms.buttons.dose')%></th>
                   </tr>
                   <tr>
@@ -66,15 +63,18 @@
                   <tr>
                     <th class="tab" onmousedown="showDispenseDiv('qtyDiv')"><%= t('forms.buttons.duration')%></th>
                   </tr>
+                  <tr>
+                    <th class="tab" onmousedown="showDispenseDiv('doseTypeDiv')"><%= t('forms.buttons.dose_type')%></th>
+                  </tr>
                 </table>
             </div>
             <div style="display: table-cell;border: 2px solid black;border-width: 0px 0px 0px 2px;height: 65vh;">
               <%= form_for :prescription, :html => { :class => "form-horizontal pmap_inventory" }, :url => "/refill"  do |f| %>
-              <div style="position: absolute;left: 75vw;top: 75vh;" onmousedown="showDispenseDiv('doseTypeDiv')" class="nextButton" id="dispNext">
+              <div style="position: absolute;left: 70vw;top: 75vh;" onmousedown="showDispenseDiv('doseDiv')" class="nextButton" id="dispNext">
                 <%= t('forms.buttons.next')%>
               </div>
               <div class="mobi-div" id="routesDiv" >
-                <h2><%= t('forms.labels.select_administration_route')%></h2>
+                <h3><%= t('forms.labels.select_administration_route')%></h3>
                 <table width="100" style="border-collapse: collapse">
                   <tr>
                     <td>
@@ -120,7 +120,7 @@
               </div>
               <div class="mobi-div" id="doseDiv" style="display: none;">
                 <div style="margin-top: 5px;">
-                  <label for="dose"><span style="font-weight: bold;font-size: 20px;"><%= t('forms.labels.enter_dose')%></span></label> <br/>
+                  <label for="dose"><span style="font-weight: bold;font-size: 1.2em;"><%= t('forms.labels.enter_dose')%></span></label> <br/>
                   <input type="text" id="dose" name="dose" style="font-size: 20px;" required>
                 </div>
                 <div style="margin-top: 5px;">
@@ -149,7 +149,7 @@
                 </div>
               </div>
               <div class="mobi-div" id="doseTypeDiv" style="display: none;">
-                <h2><%= t('forms.labels.select_dose_type')%></h2>
+                <h3><%= t('forms.labels.select_dose_type')%></h3>
                 <table width="100" style="border-collapse: collapse">
                   <tr>
                     <td>
@@ -158,6 +158,8 @@
                         <label class="custom" for="typePRN" style="width: 200px !important;"><%= t('forms.options.as_needed')%></label>
                       </div>
                     </td>
+                  </tr>
+                  <tr>
                     <td>
                       <div class="radioDiv">
                         <input type="radio" name="doseType" value="NPRN" class="radio" id="typeNPRN" onchange="setDirections();" required>
@@ -168,7 +170,7 @@
                 </table>
               </div>
               <div class="mobi-div" id="directionsDiv" style="display: none;">
-                <h2><%= t('forms.labels.select_directions')%></h2>
+                <h3><%= t('forms.labels.select_directions')%></h3>
                 <table width="100" style="border-collapse: collapse">
                   <tr>
                     <td>
@@ -201,36 +203,33 @@
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="5XD" value="5XD" onchange="setDirections()" required>
-                        <label class="custom" for="5XD" style="width: 200px !important;"><%= t('forms.options.five_times_a_day')%></label>
+                        <input type="radio" name="frequency" class="radio" id="QHR" value="QHR" onchange="setDirections()" required>
+                        <label class="custom" for="QHR" style="width: 200px !important;"><%= t('forms.options.every_hour')%></label>
                       </div>
                     </td>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="Q4HRS" value="Q4HRS" onchange="setDirections()" required>
-                        <label class="custom" for="Q4HRS" style="width: 200px !important;"><%= t('forms.options.six_times_a_day')%></label>
+                        <input type="radio" name="frequency" class="radio" id="Q2HRS" value="Q2HRS" onchange="setDirections()" required>
+                        <label class="custom" for="Q2HRS" style="width: 200px !important;"><%= t('forms.options.every_two_hours')%></label>
                       </div>
                     </td>
                   </tr>
                   <tr>
                     <td>
                       <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="QOD" value="QOD" onchange="setDirections()" required>
-                        <label class="custom" for="QOD" style="width: 200px !important;"><%= t('forms.options.every_other_day')%></label>
+                        <input type="radio" name="frequency" class="radio" id="Q4HRS" value="Q4HRS" onchange="setDirections()" required>
+                        <label class="custom" for="Q4HRS" style="width: 200px !important;"><%= t('forms.options.every_four_hours')%></label>
                       </div>
                     </td>
                     <td>
-                      <div class="radioDiv">
-                        <input type="radio" name="frequency" class="radio" id="QWK" value="QWK" onchange="setDirections()" required>
-                        <label class="custom" for="QWK" style="width: 200px !important;"><%= t('forms.options.once_a_week')%></label>
-                      </div>
+                     &nbsp;
                     </td>
                   </tr>
                 </table>
               </div>
               <div class="mobi-div" id="qtyDiv" style="display: none;">
                 <div style="margin-top: 5px;">
-                  <label for="qty"><span style="font-weight: bold;font-size: 20px;"><%= t('forms.labels.enter_number_of_days')%></span></label> <br/>
+                  <label for="qty"><span style="font-weight: bold;font-size: 1.2em;"><%= t('forms.labels.enter_number_of_days')%></span></label> <br/>
                   <input type="text" id="qty" style="font-size: 20px;" name="duration" required>
                 </div>
                 <div style="margin-top: 5px;">
@@ -383,13 +382,13 @@
 
     function showDispenseDiv(option)
     {
-      var tabs = ['routesDiv','doseTypeDiv','doseDiv','directionsDiv','qtyDiv'];
+      var tabs = ['routesDiv','doseDiv','directionsDiv','qtyDiv','doseTypeDiv'];
       var currentTab = tabs.indexOf(option);
       var button = document.getElementById('dispNext');
       $(".mobi-div").css("display", "none");
       document.getElementById(option).style.display= "";
 
-      if (option == 'qtyDiv')
+      if (option == 'doseTypeDiv')
       {
         button.setAttribute("onmousedown", "validateDisp()")
         button.innerHTML = '<%= t('forms.buttons.finish')%>'

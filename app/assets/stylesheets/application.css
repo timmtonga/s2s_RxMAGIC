@@ -203,10 +203,10 @@ div.radioDiv {
 }
 
 label.custom {
-    min-width: 250px;
+    min-width: 15vw;
     border-radius: 3px;
     border: 1px solid #D1D3D4;
-    font-size: 1.3em !important;
+    font-size: 1em !important;
 }
 
 /* hide input */
@@ -263,12 +263,12 @@ input.radio:focus ~ label:before {
 
 .customButton {
     padding: 5px;
-    font-size: 20px;
+    font-size: 1.5em;
     background: silver;
     border: 2px outset grey;
     margin: 5px;
-    min-width: 50px;
-    height: 40px;
+    min-width: 4vw;
+    height: 6vh;
     text-align: center;
 }
 

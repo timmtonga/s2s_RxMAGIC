@@ -42,30 +42,45 @@ class GeneralInventoryController < ApplicationController
   def create
 
     # Create a new record for general inventory
-    @new_stock_entry = GeneralInventory.new
-    @new_stock_entry.drug_id = Drug.find_by_name(params[:drug_name]).id rescue nil
-    @new_stock_entry.current_quantity = params[:amount_received]
-    @new_stock_entry.expiration_date = params[:expiry_date].to_date rescue nil
-    @new_stock_entry.received_quantity = params[:amount_received]
+    #raise params.inspect
+    count = params['number_of_items'].to_i rescue 0
+    drug_id = Drug.find_by_name(params[:drug_name]).id rescue nil
 
-    if @new_stock_entry.drug_id.blank?
+    if drug_id.blank?
       flash[:errors] = {} if flash[:errors].blank?
-      flash[:errors][:missing] = ["Item #{params[:drug_name]} was not found"]
-      redirect_to "/"
+      flash[:errors] = ["Item #{params[:drug_name]} was not found"]
+      redirect_to "/" and return
     else
+      ids = []
+
       GeneralInventory.transaction do
-        @new_stock_entry.save
+        (0..count).each do |i|
+          @new_stock_entry = GeneralInventory.new
+          @new_stock_entry.drug_id = drug_id
+          @new_stock_entry.current_quantity = params[:amount_received]
+          @new_stock_entry.expiration_date = params[:expiry_date].to_date rescue nil
+          @new_stock_entry.received_quantity = params[:amount_received]
+          @new_stock_entry.date_received = Date.today
+          @new_stock_entry.save
+
+          if @new_stock_entry.errors.blank?
+            ids << @new_stock_entry.id
+          else
+            flash[:error] = @new_stock_entry.errors
+            redirect_to "/" and return
+          end
+        end
       end
 
-      if @new_stock_entry.errors.blank?
-        #print barcode for new bottles
-        flash[:success] = "#{params[:drug_name]} was successfully added to inventory."
-        print_and_redirect("/print_bottle_barcode/#{@new_stock_entry.id}", "/")
+      if ids.length > 1
+        flash[:success] = "#{ids.length} items of #{params[:drug_name]} were successfully added to inventory."
+        print_and_redirect("/general_inventory/print_bottle_barcode?ids=/#{ids.join(',')}", "/")
       else
-        flash[:errors] = @new_stock_entry.errors
-        redirect_to "/"
+        flash[:success] = "#{params[:drug_name]} was successfully added to inventory."
+        print_and_redirect("/print_bottle_barcode/#{ids.first}", "/")
       end
     end
+
   end
 
   def destroy
@@ -96,10 +111,18 @@ class GeneralInventoryController < ApplicationController
 
   def print_bottle_barcode
     #This function prints bottle barcode labels for both inventory types
+    id = params[:id].split(',') rescue params[:id]
+    entry = GeneralInventory.find(id)
 
-    entry = GeneralInventory.find(params[:id])
+    if entry.is_a?(Array)
+      print_string = ""
+      (entry || []).each do |bottle|
+        print_string += "#{Misc.create_bottle_label(bottle.drug_name,bottle.gn_identifier,bottle.expiration_date)}\n"
+      end
+    else
+      print_string = Misc.create_bottle_label(entry.drug_name,entry.gn_identifier,entry.expiration_date)
+    end
 
-    print_string = Misc.create_bottle_label(entry.drug_name,entry.gn_identifier,entry.expiration_date)
     chars = ("a".."z").to_a  + ("0".."9").to_a
     rand_str = ""
     1.upto(7) { |i| rand_str << chars[rand(chars.size-1)] }

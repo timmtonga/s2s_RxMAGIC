@@ -7,7 +7,7 @@ class MobileVisit < ActiveRecord::Base
   validates_presence_of :visit_supervisor
 
   def coordinator
-      self.user.fullname
+      self.user.display_name
   end
 
   def products
