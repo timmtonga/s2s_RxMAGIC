@@ -38,24 +38,24 @@ class UserController < ApplicationController
         when "language_preference"
           user.language = params[:user][:language_preference]
           if user.save
-            flash[:message] = "User language preference successfully updated"
+            flash[:success] = "User language preference successfully updated"
           else
-            flash[:message] = t("messages.invalid_credentials")
+            flash[:errors] = "Failed to update user language preference"
           end
         when "password"
           user.update_attributes(:password => params[:user][:plain_password], :salt => nil)
 
           if user.save
-            flash[:message] = "User password successfully updated"
+            flash[:success] = "User password successfully updated"
           else
-            flash[:message] = t("messages.invalid_credentials")
+            flash[:errors] = t("messages.invalid_credentials")
           end
         when "role"
           user.update_attributes(:role => params[:user][:user_role])
           if user.save
-            flash[:message] = "User role preference successfully updated"
+            flash[:success] = "User role was successfully updated"
           else
-            flash[:message] = t("messages.invalid_credentials")
+            flash[:errors] = "Failed to update user role"
           end
       end
       redirect_to "/main/settings" and return
@@ -81,10 +81,10 @@ class UserController < ApplicationController
         user = User.find_by_username(params['login'])
         session[:user_id] = user.id
         User.current = user
-        flash[:error] = nil
+        flash[:errors] = nil
         redirect_to root_path and return
       else
-        flash[:error] = t("messages.invalid_credentials")
+        flash[:errors] = t("messages.invalid_credentials")
       end
 
     else

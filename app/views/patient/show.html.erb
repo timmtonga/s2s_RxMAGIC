@@ -52,19 +52,29 @@
             <div style="display: table-cell;width: 20%;padding: 5px;vertical-align: top;">
                 <table width="100%" style="border-collapse:separate;border-spacing:0 10px;">
                   <tr>
-                    <th class="tab" onmousedown="showDispenseDiv('routesDiv')"><%= t('forms.buttons.administration_route')%></th>
+                    <th class="tab" id="routesTab" onmousedown="showDispenseDiv('routesDiv')">
+                      <%= t('forms.buttons.administration_route')%>
+                    </th>
                   </tr>
                   <tr>
-                    <th class="tab" onmousedown="showDispenseDiv('doseDiv')"><%= t('forms.buttons.dose')%></th>
+                    <th class="tab" id="doseTab" onmousedown="showDispenseDiv('doseDiv')">
+                      <%= t('forms.buttons.dose')%>
+                    </th>
                   </tr>
                   <tr>
-                    <th class="tab" onmousedown="showDispenseDiv('directionsDiv')"><%= t('forms.buttons.directions')%></th>
+                    <th class="tab" id="directionsTab" onmousedown="showDispenseDiv('directionsDiv')">
+                      <%= t('forms.buttons.directions')%>
+                    </th>
                   </tr>
                   <tr>
-                    <th class="tab" onmousedown="showDispenseDiv('qtyDiv')"><%= t('forms.buttons.duration')%></th>
+                    <th class="tab" id="qtyTab" onmousedown="showDispenseDiv('qtyDiv')">
+                      <%= t('forms.buttons.duration')%>
+                    </th>
                   </tr>
                   <tr>
-                    <th class="tab" onmousedown="showDispenseDiv('doseTypeDiv')"><%= t('forms.buttons.dose_type')%></th>
+                    <th class="tab" id="doseTypeTab" onmousedown="showDispenseDiv('doseTypeDiv')">
+                      <%= t('forms.buttons.dose_type')%>
+                    </th>
                   </tr>
                 </table>
             </div>
@@ -386,7 +396,9 @@
       var currentTab = tabs.indexOf(option);
       var button = document.getElementById('dispNext');
       $(".mobi-div").css("display", "none");
+      $(".tab").css("border", "1px outset silver");
       document.getElementById(option).style.display= "";
+      document.getElementById(option.replace("Div", "Tab")).style.border= "2px solid black";
 
       if (option == 'doseTypeDiv')
       {

@@ -7,10 +7,9 @@
       <tr>
         <td>Visit Coordinator</td>
         <td>
-          <select style='width: 100%' name='visit_coordinator' id='visitCoordinator' helptext='<%= t("forms.labels.select_visit_coordinator")%>'
-                  >
+          <select style='width: 100%' name='visit_coordinator' id='visitCoordinator' helptext='<%= t("forms.labels.select_visit_coordinator")%>'>
             <% (@coordinators || []).each do |person| %>
-                <option value="<%= person[0]%>"><%= person[1].titleize %></option>
+                <option value="<%= person%>"><%= person.titleize %></option>
             <% end %>
           </select>
         </td>

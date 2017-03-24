@@ -47,8 +47,7 @@ class GeneralInventoryController < ApplicationController
     drug_id = Drug.find_by_name(params[:drug_name]).id rescue nil
 
     if drug_id.blank?
-      flash[:errors] = {} if flash[:errors].blank?
-      flash[:errors] = ["Item #{params[:drug_name]} was not found"]
+      flash[:errors] = "Item #{params[:drug_name]} was not found"
       redirect_to "/" and return
     else
       ids = []
@@ -66,17 +65,17 @@ class GeneralInventoryController < ApplicationController
           if @new_stock_entry.errors.blank?
             ids << @new_stock_entry.id
           else
-            flash[:error] = @new_stock_entry.errors
+            flash[:errors] = @new_stock_entry.errors.join(",")
             redirect_to "/" and return
           end
         end
       end
 
       if ids.length > 1
-        flash[:success] = "#{ids.length} items of #{params[:drug_name]} were successfully added to inventory."
-        print_and_redirect("/general_inventory/print_bottle_barcode?ids=/#{ids.join(',')}", "/")
+        flash[:success] = "#{ids.length} #{t('messages.items_of')} #{params[:drug_name]} #{t('messages.add_items_success')}."
+        print_and_redirect("/general_inventory/print_bottle_barcode?ids=#{ids.join(',')}", "/")
       else
-        flash[:success] = "#{params[:drug_name]} was successfully added to inventory."
+        flash[:success] = "#{params[:drug_name]} #{t('messages.add_item_success')}."
         print_and_redirect("/print_bottle_barcode/#{ids.first}", "/")
       end
     end
@@ -88,8 +87,7 @@ class GeneralInventoryController < ApplicationController
 
     item = GeneralInventory.void_item(params[:id])
     if item.blank?
-      flash[:errors] = {} if flash[:errors].blank?
-      flash[:errors][:missing] = ["Item with bottle id #{params[:general_inventory][:gn_id]} could not be found"]
+      flash[:errors]= "Item with bottle id #{params[:general_inventory][:gn_id]} could not be found"
     elsif item.errors.blank?
       flash[:success] = "#{item.drug_name} #{item.gn_identifier} was successfully deleted."
 =begin
@@ -111,9 +109,9 @@ class GeneralInventoryController < ApplicationController
 
   def print_bottle_barcode
     #This function prints bottle barcode labels for both inventory types
-    id = params[:id].split(',') rescue params[:id]
+    id = params[:ids].split(',') rescue params[:id]
     entry = GeneralInventory.find(id)
-
+#    raise params[:id].inspect
     if entry.is_a?(Array)
       print_string = ""
       (entry || []).each do |bottle|

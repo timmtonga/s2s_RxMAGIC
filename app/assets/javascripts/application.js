@@ -99,7 +99,7 @@ function createDirections(route, dose, frequency,doseType)
 
     dir = (routes[route.toLowerCase()] == undefined ? "" : routes[route.toLowerCase()])
     return dir + " "+ dose + " " + (frequencies[frequency] == undefined ? "" : frequencies[frequency]) + " " +
-        (prn == "PRN" ? "(As Needed)" : "");
+        (prn == "PRN" ? I18n.t('forms.options.as_needed') : I18n.t('forms.options.daily'));
 }
 
 function calcQuantity(dose, frequency,duration) {

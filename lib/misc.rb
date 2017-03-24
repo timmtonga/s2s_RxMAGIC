@@ -125,6 +125,7 @@ module Misc
   end
 
   def self.create_directions(dose, route, frequency, prn)
+    I18n.locale = I18n.default_locale
     routes = {"oral"=>I18n.t('menu.terms.take'), "topical"=>I18n.t('menu.terms.apply'),
               "injection"=>I18n.t('menu.terms.inject'),"respiratory"=>I18n.t('menu.terms.inhale'),"other"=>""}
 
@@ -133,9 +134,9 @@ module Misc
                    "QHR"=>I18n.t('forms.options.every_hour'), "Q4HRS"=>I18n.t('forms.options.every_four_hours'),
                    "Q2HRS"=>I18n.t('forms.options.every_two_hours'), "QWK"=>I18n.t('forms.options.once_a_week')}
 
-    prn = (prn == "PRN" ? "(Take as needed)" : "")
+    prn = (prn == "PRN" ? I18n.t('forms.options.as_needed') : I18n.t('forms.options.daily'))
 
-    return routes[route.downcase] + " "+ dose.to_s + " " + frequencies[frequency] +" " + prn;
+    return (routes[route.downcase] + " "+ dose.to_s + " " + frequencies[frequency] +" " + prn).titleize;
   end
 
   def get_facility_name

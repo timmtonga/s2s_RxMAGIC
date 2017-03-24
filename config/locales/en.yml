@@ -38,11 +38,13 @@ en:
         enter_amount_returned: "Enter amount returned"
         select_administration_route: "Select administration route"
         select_dose_type: "Select dose type"
-        enter_dose: "Enter dose"
+        enter_dose: "Enter dose per intake"
         select_directions: "Select directions"
         enter_number_of_days: "Enter number of days"
         more_items_of_type: "Do you have more items of this type"
-        number_of_items: "Number of items"
+        number_of_items: "Number of additional items"
+        enter_username: "Enter username"
+        enter_password: "Enter password"
     place_holders:
       username: "Username"
       password: "Password"
@@ -73,6 +75,7 @@ en:
         dose: "Dose"
         directions: "Directions"
         duration: "Duration"
+        previous: "Previous"
     options:
       male: "Male"
       female: "Female"
@@ -202,8 +205,10 @@ en:
         inject: "inject"
         inhale: "inhale"
         inventory_number: "Inventory #"
+        past_dispensations: "Past Dispensations"
   messages:
        printing_wait: "Printing, please wait ...."
+       loading: "Loading. Please wait"
        social_security: "Please enter a valid social security number"
        cancel: "Are you sure you want to cancel the data entry process?"
        invalid: "Please enter a valid value in the empty field."
@@ -222,6 +227,14 @@ en:
        password_mismatch: "Passwords entered do not match. Please verify"
        empty_field: "Please enter a value in the empty field."
        are_you_sure: "Are you sure?"
+       are_you_sure_you_want_to_cancel: "Are you sure you want to cancel?"
+       processing_please_wait: "Processing. Please wait"
+       you_must_enter_a_value_to_continue: "You must enter a value to continue."
+       was_successfully_updated: "was successfully updated"
+       add_item_success: "was successfully added to inventory"
+       add_items_success: "were successfully added to inventory"
+       items_of: "items of"
+
   date:
       formats:
         default: "%d/%b/%Y"

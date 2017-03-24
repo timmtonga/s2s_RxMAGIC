@@ -714,22 +714,14 @@ function getOptions() {
             } else if (tstFormElements[i].getAttribute("type") == "checkbox") {
                 loadOptions([
                     {
-                        value: "" + (typeof(tstLocaleWords) != "undefined" ?
-                            (tstLocaleWords["yes"] ?
-                                tstLocaleWords["yes"] :
-                                "Yes") : "Yes") + ""
+                        value: "" + I18n.t('forms.buttons.yes_button') + ""
                     },
                     {
-                        value: "" + (typeof(tstLocaleWords) != "undefined" ?
-                            (tstLocaleWords["no"] ? tstLocaleWords["no"] : "No") : "No") + ""
+                        value: "" + I18n.t('forms.buttons.no_button') + ""
                     }
                 ], options);
-                if (tstFormElements[i].checked) tstInputTarget.value = "" + (typeof(tstLocaleWords) != "undefined" ?
-                        (tstLocaleWords["yes"] ?
-                            tstLocaleWords["yes"] :
-                            "Yes") : "Yes") + "";
-                else tstInputTarget.value = "" + (typeof(tstLocaleWords) != "undefined" ?
-                        (tstLocaleWords["no"] ? tstLocaleWords["no"] : "No") : "No") + "";
+                if (tstFormElements[i].checked) tstInputTarget.value = "" + I18n.t('forms.buttons.yes_button') + "";
+                else tstInputTarget.value = "" + I18n.t('forms.buttons.no_button') + "";
             } else {
                 viewPort.setAttribute('style', 'display:none');
             }
@@ -1614,13 +1606,9 @@ function inputIsValid() {
                 ". Are you sure about this value?</p><div style='display: block;'>" +
                 "<button class='button' style='float: none;' onclick='this.offsetParent.style.display=\"none\"; " +
                 "gotoPage(tstCurrentPage+1, false);' onmousedown='this.offsetParent.style.display=\"none\"; " +
-                "gotoPage(tstCurrentPage+1, false);'><span>" + (typeof(tstLocaleWords) != "undefined" ?
-                    (tstLocaleWords["yes"] ?
-                        tstLocaleWords["yes"] :
-                        "Yes") : "Yes") + "</span></button><button class='button' " +
+                "gotoPage(tstCurrentPage+1, false);'><span>" + I18n.t('forms.buttons.yes_button') + "</span></button><button class='button' " +
                 "style='float: none; right: 3px;' onmousedown='this.offsetParent.style.display=\"none\"; '>" +
-                "<span>" + (typeof(tstLocaleWords) != "undefined" ?
-                    (tstLocaleWords["no"] ? tstLocaleWords["no"] : "No") : "No") + "</span></button>";
+                "<span>" + I18n.t('forms.buttons.no_button') + "</span></button>";
 
             messageBar.style.display = "block";
 
@@ -1644,10 +1632,8 @@ function confirmValue() {
     confirmationBar.appendChild(username);
 
     confirmationBar.innerHTML += "<div style='display: block; margin-top: 15px;'><input type='submit'" +
-        " value='" + (typeof(tstLocaleWords) != "undefined" ?
-            (tstLocaleWords["ok"] ? tstLocaleWords["ok"] : "OK") : "OK") + "' class='btn' style='float: left;' onclick='validateConfirmUsername()'" +
-        " onmousedown='validateConfirmUsername()'/><input type='submit' value='" + (typeof(tstLocaleWords) != "undefined" ?
-            (tstLocaleWords["cancel"] ? tstLocaleWords["cancel"] : "Cancel") : "Cancel") + "' " +
+        " value='" + I18n.t('forms.buttons.ok_button') + "' class='btn' style='float: left;' onclick='validateConfirmUsername()'" +
+        " onmousedown='validateConfirmUsername()'/><input type='submit' value='" + I18n.t('forms.buttons.cancel') + "' " +
         " class='btn' style='float: right; right: 3px;' onmousedown='cancelConfirmValue()' />";
 
     confirmationBar.style.display = "block";
@@ -1769,11 +1755,9 @@ function showMessage(aMessage, withCancel, timed) {
     messageBar.innerHTML = (tstLocaleWords[aMessage.toLowerCase()] ? tstLocaleWords[aMessage.toLowerCase()] : aMessage) +
         "<br />" + (typeof(withCancel) != "undefined" ? (withCancel == true ?
         "<button onmousedown='tstMessageBar.style.display = \"none\"; " +
-        "clearTimeout(tstTimerHandle);'><span>" + (typeof(tstLocaleWords) != "undefined" ?
-            (tstLocaleWords["cancel"] ? tstLocaleWords["cancel"] : "Cancel") : "Cancel") + "</span></button>" : "") : "") +
+        "clearTimeout(tstTimerHandle);'><span>" + I18n.t('forms.buttons.cancel') + "</span></button>" : "") : "") +
         "<button style='' onmousedown='tstMessageBar.style.display = \"none\"; " +
-        "clearTimeout(tstTimerHandle); eval(tstTimerFunctionCall);'><span>" + (typeof(tstLocaleWords) != "undefined" ?
-            (tstLocaleWords["ok"] ? tstLocaleWords["ok"] : "OK") : "OK") + "</span></button>";
+        "clearTimeout(tstTimerHandle); eval(tstTimerFunctionCall);'><span>" + I18n.t('forms.buttons.ok_button') + "</span></button>";
     if (aMessage.length > 0) {
         messageBar.style.display = 'block'
         if ((typeof(timed) == "undefined" ? true : timed) == true) {
@@ -1801,20 +1785,13 @@ function disableTouchscreenInterface() {
 function confirmCancelEntry(save) {     // If you want to save state set save =
     // true
     if (tstConfirmCancel) {
-        tstMessageBar.innerHTML = "" + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["are you sure you want to cancel"] ?
-                    tstLocaleWords["are you sure you want to cancel"] :
-                    "Are you sure you want to Cancel") : "Are you sure you want to Cancel") + "?<br/>" +
-            "<button onmousedown='hideMessage(); cancelEntry();'><span>" + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["yes"] ?
-                    tstLocaleWords["yes"] :
-                    "Yes") : "Yes") + "</span></button>" +
+        tstMessageBar.innerHTML = "" + I18n.t('messages.are_you_sure_you_want_to_cancel') + "<br/>" +
+            "<button onmousedown='hideMessage(); cancelEntry();'><span>" + I18n.t('forms.buttons.yes_button') + "</span></button>" +
             (save ? "<button onmousedown='var completeField = document.createElement(\"input\"); \n\
 				completeField.type = \"hidden\"; completeField.value = \"false\"; completeField.name = \"complete\"; \n\
 				document.forms[0].appendChild(completeField); document.forms[0].submit(); hideMessage();'><span>" + (typeof(tstLocaleWords) != "undefined" ?
                 (tstLocaleWords["save"] ? tstLocaleWords["save"] : "Save") : "Save") + "</span></button>" : "") +
-            "<button onmousedown='hideMessage();'><span>" + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["no"] ? tstLocaleWords["no"] : "No") : "No") + "</span></button>";
+            "<button onmousedown='hideMessage();'><span>" + I18n.t('forms.buttons.no_button') + "</span></button>";
         tstMessageBar.style.display = "block";
     } else {
         cancelEntry();
@@ -2721,8 +2698,7 @@ TTInput.prototype = {
         // check for existence
         this.value = this.element.value
         if (this.value.length < 1 && this.element.getAttribute("optional") == null) {
-            return "" + (typeof(tstLocaleWords) != "undefined" ?
-                    (tstLocaleWords["you must enter a value to continue"] ? tstLocaleWords["you must enter a value to continue"] : "You must enter a value to continue") : "You must enter a value to continue") + "";
+            return "" + I18n.t('messages.you_must_enter_a_value_to_continue') + "";
         }
         return "";
     },
@@ -3272,42 +3248,31 @@ function dispatchMessage(message, messageBoxType) {
 
     switch (messageBoxType) {
         case tstMessageBoxType.OKOnly:
-            buttons = "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\"; gotoPage(tstCurrentPage+1, false);'> <span> " + (typeof(tstLocaleWords) != "undefined" ?
-                    (tstLocaleWords["ok"] ? tstLocaleWords["ok"] : "OK") : "OK") + " </span> </button>"
+            buttons = "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\"; gotoPage(tstCurrentPage+1, false);'> <span> " + I18n.t('forms.buttons.ok_button') + " </span> </button>"
             break;
 
         case tstMessageBoxType.OKCancel:
-            buttons = "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\"; gotoPage(tstCurrentPage+1, false);'> <span> " + (typeof(tstLocaleWords) != "undefined" ?
-                    (tstLocaleWords["ok"] ? tstLocaleWords["ok"] : "OK") : "OK") + " </span> </button>" +
-                "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\";'> <span> " + (typeof(tstLocaleWords) != "undefined" ?
-                    (tstLocaleWords["cancel"] ? tstLocaleWords["cancel"] : "Cancel") : "Cancel") + " </span> </button>"
+            buttons = "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\"; gotoPage(tstCurrentPage+1, false);'> <span> " + I18n.t('forms.buttons.ok_button') + " </span> </button>" +
+                "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\";'> <span> " + I18n.t('forms.buttons.cancel') + " </span> </button>"
             break;
 
         case tstMessageBoxType.YesNo:
-            buttons = "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\"; gotoPage(tstCurrentPage+1, false);'> <span> " + (typeof(tstLocaleWords) != "undefined" ?
-                    (tstLocaleWords["yes"] ?
-                        tstLocaleWords["yes"] :
-                        "Yes") : "Yes") + " </span> </button>" +
-                "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\";'> <span>" + (typeof(tstLocaleWords) != "undefined" ?
-                    (tstLocaleWords["no"] ? tstLocaleWords["no"] : "No") : "No") + "</span> </button>"
+            buttons = "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\"; gotoPage(tstCurrentPage+1, false);'> <span> " + I18n.t('forms.buttons.yes_button') + " </span> </button>" +
+                "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\";'> <span>" +
+                I18n.t('forms.buttons.no_button')+ "</span> </button>"
             break;
 
         case tstMessageBoxType.YesNoCancel:
-            buttons = "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\"; gotoPage(tstCurrentPage+1, false);'> <span> " + (typeof(tstLocaleWords) != "undefined" ?
-                    (tstLocaleWords["yes"] ?
-                        tstLocaleWords["yes"] :
-                        "Yes") : "Yes") + " </span> </button>" +
-                "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\";'> <span> " + (typeof(tstLocaleWords) != "undefined" ?
-                    (tstLocaleWords["no"] ? tstLocaleWords["no"] : "No") : "No") + " </span> </button>" +
-                "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\";'> <span> " + (typeof(tstLocaleWords) != "undefined" ?
-                    (tstLocaleWords["cancel"] ? tstLocaleWords["cancel"] : "Cancel") : "Cancel") + " </span> </button>"
+            buttons = "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\"; gotoPage(tstCurrentPage+1, false);'> <span> " +
+                I18n.t('forms.buttons.yes_button')+ " </span> </button>" +
+                "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\";'> <span> " +
+                I18n.t('forms.buttons.no_button')+ " </span> </button>" +
+                "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\";'> <span> " + I18n.t('forms.buttons.cancel') + " </span> </button>"
             break;
 
         default:
-            buttons = "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\"; gotoPage(tstCurrentPage+1, false);'> <span> " + (typeof(tstLocaleWords) != "undefined" ?
-                    (tstLocaleWords["ok"] ? tstLocaleWords["ok"] : "OK") : "OK") + " </span> </button>" +
-                "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\";'> <span> " + (typeof(tstLocaleWords) != "undefined" ?
-                    (tstLocaleWords["cancel"] ? tstLocaleWords["cancel"] : "Cancel") : "Cancel") + " </span> </button>"
+            buttons = "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\"; gotoPage(tstCurrentPage+1, false);'> <span> " + I18n.t('forms.buttons.ok_button') + " </span> </button>" +
+                "<button class = 'button' onclick = 'this.offsetParent.style.display=\"none\";'> <span> " + I18n.t('forms.buttons.cancel') + " </span> </button>"
             break;
 
     }
@@ -3338,11 +3303,8 @@ function confirmRecordDeletion(message, form) {
         tstMessageBar.className = "messageBar";
 
         tstMessageBar.innerHTML = message + "<br/>" + "<button onmousedown=\"document.getElementById('content').removeChild(document.getElementById('messageBar')); if(document.getElementById('" + form + "')) document.getElementById('"
-            + form + "').submit(); showStatus();\"><span>" + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["yes"] ?
-                    tstLocaleWords["yes"] :
-                    "Yes") : "Yes") + "</span></button><button onmousedown=\"document.getElementById('content').removeChild(document.getElementById('messageBar'));\"><span>" + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["no"] ? tstLocaleWords["no"] : "No") : "No") + "</span></button>";
+            + form + "').submit(); showStatus();\"><span>" + I18n.t('forms.buttons.yes_button') + "</span></button><button onmousedown=\"document.getElementById('content').removeChild(document.getElementById('messageBar'));\"><span>" +
+            I18n.t('forms.buttons.no_button') + "</span></button>";
 
         tstMessageBar.style.display = "block";
         document.getElementById("content").appendChild(tstMessageBar);
@@ -4276,8 +4238,7 @@ function showStatus() {
         popupBox.id = "popupBox";
         popupBox.style.display = "none";
 
-        popupBox.innerHTML = "<p>" + (typeof(tstLocaleWords) != "undefined" ?
-                (tstLocaleWords["processing. please wait"] ? tstLocaleWords["processing. please wait"] : "Processing. Please Wait") : "Processing. Please Wait") + " ...</p>"
+        popupBox.innerHTML = "<p>" + I18n.t('messages.processing_please_wait') + " ...</p>"
 
         __$("content").appendChild(popupBox);
     }

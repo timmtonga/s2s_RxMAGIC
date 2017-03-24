@@ -6,7 +6,7 @@ class PatientController < ApplicationController
       @patient = Patient.find(params[:id]) rescue nil
     end
     if @patient.blank?
-      flash[:error] = "Patient with ID #{params[:id]} not found"
+      flash[:errors] = "Patient with ID #{params[:id]} not found"
       redirect_to "/" and return
     else
       @history = Dispensation.where("patient_id = ? and voided = ?",@patient.id,false).order(dispensation_date: :desc).limit(10)

@@ -11,23 +11,23 @@ class MainController < ApplicationController
 
   def report
     case params[:report_duration]
-      when "daily"
+      when t('forms.options.daily')
         @report_type = "#{t('menu.terms.daily_report')} #{l(params[:start_date].to_date, format:'%d %B, %Y')}"
         start_date = params[:start_date].to_date.strftime('%Y-%m-%d 00:00:00')
         end_date = params[:start_date].to_date.strftime('%Y-%m-%d 23:59:59')
 
-      when "weekly"
+      when t('forms.options.weekly')
         @report_type = "#{t('menu.terms.weekly_report')} #{l(params[:start_date].to_date.beginning_of_week, format:'%d %B, %Y')}
                         #{t('menu.terms.to')} #{l(params[:start_date].to_date.end_of_week, format: '%d %B, %Y')}"
 
         start_date = params[:start_date].to_date.beginning_of_week.strftime('%Y-%m-%d 00:00:00')
         end_date = params[:start_date].to_date.end_of_week.strftime('%Y-%m-%d 23:59:59')
 
-      when "monthly"
+      when t('forms.options.monthly')
         @report_type = "#{t('menu.terms.monthly_report')} #{l(params[:start_date].to_date, format: '%B %Y')}"
         start_date = params[:start_date].to_date.beginning_of_month.strftime('%Y-%m-%d 00:00:00')
         end_date = params[:start_date].to_date.end_of_month.strftime('%Y-%m-%d 23:59:59')
-      when "range"
+      when t('forms.options.range')
         @report_type = "#{t('menu.terms.custom_report')} #{l(params[:start_date].to_date, format: '%d %B, %Y')}
                         #{t('menu.terms.to')} #{l(params[:end_date].to_date, format: '%d %B, %Y')}"
         start_date = params[:start_date].to_date.strftime('%Y-%m-%d 00:00:00')
@@ -51,5 +51,9 @@ class MainController < ApplicationController
 
     @items = view_context.compile_report(dispensations,inventory,later_dispensations)
 
+  end
+
+  def time
+    render :text => Time.now().strftime('%Y-%m-%d %H:%M').to_s
   end
 end

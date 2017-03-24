@@ -5,15 +5,15 @@
 
 <%= form_for :report,  :url => "/main/report"  do |f| %>
 
-    <select id="report_duration" name="report_duration" helpText="<%= t('forms.labels.report_duration') %>">
+    <select id="reportDuration" name="report_duration" helpText="<%= t('forms.labels.report_duration') %>">
       <option></option>
       <% (report_options).each do |w| %>
-          <option value="<%= w[0] %>"><%= w [1]%></option>
+          <option value="<%= w[1] %>"><%= w [1]%></option>
       <% end %>
     </select>
 
     <%= text_field_tag 'start_date', l(Date.today, format: "%d-%m-%Y"),
-                       {:id => 'start_date',
+                       {:id => 'startDate',
                         :field_type => 'date',
                         :helpText => t('forms.labels.start_date'),
                         :maxDate =>  Date.today.to_date,
@@ -21,11 +21,11 @@
                         :tt_pageStyleClass => "Date DatesOnly"} %>
 
     <%= text_field_tag 'end_date', Date.today.strftime("%d-%m-%Y"),
-                       {:id => 'end_date',
+                       {:id => 'endDate',
                         :field_type => 'date',
                         :helpText => t('forms.labels.end_date'),
                         :maxDate =>  Date.today.to_date,
                         :minDate => (Date.today - 20.year).to_date,
-                        :condition => "$('report_duration').value == 'range'",
+                        :condition => "$('reportDuration').value == 'range'",
                         :tt_pageStyleClass => "Date DatesOnly"} %>
 <% end %>

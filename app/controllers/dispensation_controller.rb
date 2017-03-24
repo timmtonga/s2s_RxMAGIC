@@ -51,8 +51,7 @@ class DispensationController < ApplicationController
     if dispensation.voided
       flash[:success] = "Dispensation successfully voided"
     else
-      flash[:errors] = {} if flash[:errors].blank?
-      flash[:errors][:failed] = ["Failed to void the dispensation"]
+      flash[:errors] = "Failed to void the dispensation"
     end
 
     redirect_to dispensation.patient

@@ -68,7 +68,7 @@ class MobileVisitProductController < ApplicationController
 
         next if item.blank?
 
-        item.current_quantity += product.amount_used
+        item.current_quantity =  item.current_quantity + product.amount_taken
         item.save
 
       end

@@ -77,18 +77,18 @@
 </div>
 
 <div id="updateForm" class="questionLayer" style="font-size: 0.9em;">
-  <div style="margin-top: 10vh;margin-left: 35vw; height: 65vh;width: 30vw;background-color: #eeeeff;border: 3px outset black;">
+  <div style="margin-top: 10vh;margin-left: 20vw; height: 80vh;width: 45vw;background-color: #eeeeff;border: 3px outset black;">
     <div style="display: table;width: 100%;">
       <div style="display: table-row">
-        <div style="display: table-cell;height: 60vh;">
+        <div style="display: table-cell;height: 45vh;">
           <%= form_for :mobile_visit_product, :method => :patch,:url => "/mobile_visit_product/update" do |f| %>
-              <div style="padding: 10px;" id="qtyDiv" >
-                <div style="margin-top: 5px;">
-                  <label for="qty"><span style="font-weight: bold;font-size: 20px;"><%= t('forms.labels.enter_amount_returned') %></span></label> <br/>
+              <div style="padding: 2%;" id="qtyDiv" >
+                <div style="text-align: center;">
+                  <label for="amount"><span style="font-weight: bold;font-size: 20px;"><%= t('forms.labels.enter_amount_returned') %></span></label> <br/>
                   <input type="text" id="qtyRem" style="font-size: 20px;" name="amount" required>
                 </div>
-                <div style="margin-top: 5px;">
-                  <table width="100" cellspacing="15" >
+                <div style="margin-top: 5px;text-align: center;">
+                  <table width="98%" cellspacing="15" >
                     <tr>
                       <td class="customButton" onmousedown="append(1,'qtyRem');"><span>1</span></td>
                       <td class="customButton" onmousedown="append(2,'qtyRem');"><span>2</span></td>
@@ -109,6 +109,8 @@
                       <td class="customButton" onmousedown="append('.','qtyRem');"><span>.</span></td>
                       <td class="customButton" onmousedown="append('del','qtyRem');"><span>del</span></td>
                     </tr>
+                  </table>
+                  <table width="100" cellspacing="15" >
                     <tr>
                       <td>
                         <div class="submitButton" style="background-color: tomato !important;" onmousedown="hideLayer('shadow', 'updateForm')">
@@ -116,20 +118,19 @@
                         </div>
                       </td>
                       <td colspan="2">
-                        <input type="hidden" name="mvp_id" id="mvp_identifier"/>
                         <%= submit_tag t('forms.buttons.finish'), :class => "submitButton"%>
                       </td>
                     </tr>
                   </table>
                 </div>
               </div>
+              <input type="hidden" name="mvp_id" id="mvp_identifier"/>
           <% end %>
         </div>
       </div>
     </div>
   </div>
 </div>
-
 
 <div style="height: 12.5vh;padding: 10px;">
   <div style="display: table">
@@ -195,9 +196,10 @@
           <div style="display: table-cell; text-align: center;vertical-align: middle;">
               <img style="float: left;" src="/assets/edit.png" title="Edit Item"
                    onmousedown="showLayer('shadow', 'updateForm'),document.getElementById('mvp_identifier').value = <%= visit["id"]%>">
-
+            <% if  visit["voidable"]%>
             <img style="float: right;" src="/assets/delete.png" title="Void Item"
                  onmousedown="confirmAction('/void_mobile_visit_product/<%= visit["id"] %>', 'Are you Sure?')">
+            <% end %>
           </div>
         </div>
     <% end %>

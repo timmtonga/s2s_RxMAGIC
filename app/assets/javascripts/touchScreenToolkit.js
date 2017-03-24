@@ -165,22 +165,8 @@ function changeProgressMessage(id){
     }
 
     if(obj){
-        if(obj.innerHTML.trim() == "" + (typeof(tstLocaleWords) != "undefined" ? 
-(tstLocaleWords["loading. please wait"] ? tstLocaleWords["loading. please wait"] : "Loading. Please Wait") : "Loading. Please Wait") + "..."){
-            obj.innerHTML = "" + (typeof(tstLocaleWords) != "undefined" ? 
-(tstLocaleWords["loading. please wait"] ? tstLocaleWords["loading. please wait"] : "Loading. Please Wait") : "Loading. Please Wait") + "";
-        } else if(obj.innerHTML.trim() == "" + (typeof(tstLocaleWords) != "undefined" ? 
-(tstLocaleWords["loading. please wait"] ? tstLocaleWords["loading. please wait"] : "Loading. Please Wait") : "Loading. Please Wait") + ""){
-            obj.innerHTML = "" + (typeof(tstLocaleWords) != "undefined" ? 
-(tstLocaleWords["loading. please wait"] ? tstLocaleWords["loading. please wait"] : "Loading. Please Wait") : "Loading. Please Wait") + ".";
-        } else if(obj.innerHTML.trim() == "" + (typeof(tstLocaleWords) != "undefined" ? 
-(tstLocaleWords["loading. please wait"] ? tstLocaleWords["loading. please wait"] : "Loading. Please Wait") : "Loading. Please Wait") + "."){
-            obj.innerHTML = "" + (typeof(tstLocaleWords) != "undefined" ? 
-(tstLocaleWords["loading. please wait"] ? tstLocaleWords["loading. please wait"] : "Loading. Please Wait") : "Loading. Please Wait") + "..";
-        } else if(obj.innerHTML.trim() == "" + (typeof(tstLocaleWords) != "undefined" ? 
-(tstLocaleWords["loading. please wait"] ? tstLocaleWords["loading. please wait"] : "Loading. Please Wait") : "Loading. Please Wait") + ".."){
-            obj.innerHTML = "" + (typeof(tstLocaleWords) != "undefined" ? 
-(tstLocaleWords["loading. please wait"] ? tstLocaleWords["loading. please wait"] : "Loading. Please Wait") : "Loading. Please Wait") + "...";
+        if(obj.innerHTML.trim() == "" +  I18n.t("messages.loading")){
+            obj.innerHTML = "" + I18n.t("messages.loading") + "";
         }
 
         setTimeout("changeProgressMessage('" + id + "')", timerout);

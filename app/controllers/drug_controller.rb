@@ -16,15 +16,14 @@ class DrugController < ApplicationController
   def destroy
     drug = Drug.where("drug_id = ?", params[:id]).first rescue nil
     if drug.blank?
-      flash[:errors] = {} if flash[:errors].blank?
-      flash[:errors][:missing] = ["Item was not found"]
+      flash[:errors][:missing] = "Item was not found"
     else
       drug.voided =  true
       drug.save
       if drug.errors.blank?
         flash[:success] = "#{drug.name} was successfully deleted."
       else
-        flash[:errors] = drug.errors
+        flash[:errors] = drug.errors.join(",")
       end
     end
     redirect_to "/drug" and return
@@ -47,7 +46,7 @@ class DrugController < ApplicationController
     if drug.errors.blank?
       flash[:success] = "#{drug.name} was successfully created."
     else
-      flash[:errors] = drug.errors
+      flash[:errors] = drug.errors.join(" , ")
     end
 
     redirect_to "/drug" and return
@@ -66,7 +65,7 @@ class DrugController < ApplicationController
       if drug.errors.blank?
         flash[:success] = "#{drug.name} was successfully edited."
       else
-        flash[:errors] = drug.errors
+        flash[:errors] = drug.errors.join(" , ")
       end
 
       redirect_to "/drug" and return

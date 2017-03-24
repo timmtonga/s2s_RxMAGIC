@@ -5,7 +5,8 @@ class MobileVisitController < ApplicationController
   end
 
   def new
-    @coordinators = User.where("voided = ? AND role in (?)", false, ["administrator","Pharmacist"]).collect{|x|[x.id,x.fullname]}
+    @coordinators = User.where("voided = ? AND role in (?)", false,
+                               ["administrator","Pharmacist"]).collect{|x| x.fullname}.sort_by {|e| e[1]}
     render :layout => "touch"
   end
 
@@ -15,14 +16,17 @@ class MobileVisitController < ApplicationController
   end
 
   def create
+    coordinator = User.select("user_id , CONCAT(first_name,middle_name,fathers_name,mothers_name) as
+                               username").where("voided =?", false, ).having("username = ?", params[:visit_coordinator].gsub(" ","")).first rescue nil
 
-    @new_visit = MobileVisit.where(visit_date: params[:visit_date].to_date, visit_supervisor: params[:visit_coordinator].to_i).first_or_initialize
+    @new_visit = MobileVisit.where(visit_date: params[:visit_date].to_date, visit_supervisor: coordinator.id).first_or_initialize
 
     @new_visit.save if @new_visit.id.blank?
 
     if @new_visit.errors.blank?
       redirect_to "/mobile_visit/#{@new_visit.id}" and return
     else
+      flash[:errors] = "Mobile visit could not be created"
       redirect_to "/mobile_visit" and return
     end
   end

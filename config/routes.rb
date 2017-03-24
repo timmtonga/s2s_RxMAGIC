@@ -6,10 +6,11 @@ Rails.application.routes.draw do
   root 'main#index'
 
   ###################### Main Controller ##################################
-
   get "/main/settings"
   get "/select_report" => "main#select_report"
   post "/main/report"
+  get "/time" => "main#time"
+
   ###################### Drug Controller ##################################
   get "/drug/search"
   get "/void_drug/:id" => "drug#destroy"
