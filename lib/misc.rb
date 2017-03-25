@@ -136,7 +136,7 @@ module Misc
 
     prn = (prn == "PRN" ? I18n.t('forms.options.as_needed') : I18n.t('forms.options.daily'))
 
-    return (routes[route.downcase] + " "+ dose.to_s + " " + frequencies[frequency] +" " + prn).titleize;
+    return (routes[route.downcase] + " "+ dose.to_s + " " + frequencies[frequency] +" " + prn).titleize
   end
 
   def get_facility_name
