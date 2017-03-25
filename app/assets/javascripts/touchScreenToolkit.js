@@ -165,8 +165,22 @@ function changeProgressMessage(id){
     }
 
     if(obj){
-        if(obj.innerHTML.trim() == "" +  I18n.t("messages.loading")){
-            obj.innerHTML = "" + I18n.t("messages.loading") + "";
+        if(obj.innerHTML.trim() == "" + (typeof(tstLocaleWords) != "undefined" ?
+(tstLocaleWords["loading. please wait"] ? tstLocaleWords["loading. please wait"] : I18n.t("messages.loading")) : I18n.t("messages.loading"))){
+            obj.innerHTML = "" + (typeof(tstLocaleWords) != "undefined" ?
+(tstLocaleWords["loading. please wait"] ? tstLocaleWords["loading. please wait"] : I18n.t("messages.loading")) : I18n.t("messages.loading")) + "";
+        } else if(obj.innerHTML.trim() == "" + (typeof(tstLocaleWords) != "undefined" ?
+(tstLocaleWords["loading. please wait"] ? tstLocaleWords["loading. please wait"] : I18n.t("messages.loading")) : I18n.t("messages.loading")) + ""){
+            obj.innerHTML = "" + (typeof(tstLocaleWords) != "undefined" ?
+(tstLocaleWords["loading. please wait"] ? tstLocaleWords["loading. please wait"] : I18n.t("messages.loading")) : I18n.t("messages.loading")) + ".";
+        } else if(obj.innerHTML.trim() == "" + (typeof(tstLocaleWords) != "undefined" ?
+(tstLocaleWords["loading. please wait"] ? tstLocaleWords["loading. please wait"] : I18n.t("messages.loading")) : I18n.t("messages.loading")) + "."){
+            obj.innerHTML = "" + (typeof(tstLocaleWords) != "undefined" ?
+(tstLocaleWords["loading. please wait"] ? tstLocaleWords["loading. please wait"] : I18n.t("messages.loading")) : I18n.t("messages.loading")) + "..";
+        } else if(obj.innerHTML.trim() == "" + (typeof(tstLocaleWords) != "undefined" ?
+(tstLocaleWords["loading. please wait"] ? tstLocaleWords["loading. please wait"] : I18n.t("messages.loading")) : I18n.t("messages.loading")) + ".."){
+            obj.innerHTML = "" + (typeof(tstLocaleWords) != "undefined" ?
+(tstLocaleWords["loading. please wait"] ? tstLocaleWords["loading. please wait"] : I18n.t("messages.loading")) : I18n.t("messages.loading")) + "...";
         }
 
         setTimeout("changeProgressMessage('" + id + "')", timerout);

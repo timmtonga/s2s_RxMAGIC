@@ -65,6 +65,8 @@ ActiveRecord::Schema.define(version: 20170124161205) do
     t.datetime "updated_at",                                    null: false
   end
 
+  add_index "general_inventories", ["gn_identifier"], name: "index_general_inventories_on_gn_identifier", using: :btree
+
   create_table "mobile_visit_products", primary_key: "mvp_id", force: :cascade do |t|
     t.integer  "mobile_visit_id", limit: 4
     t.string   "gn_identifier",   limit: 255

@@ -45,6 +45,7 @@ en:
         number_of_items: "Number of additional items"
         enter_username: "Enter username"
         enter_password: "Enter password"
+        nothing_found: "No records found"
     place_holders:
       username: "Username"
       password: "Password"
