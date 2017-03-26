@@ -16,12 +16,12 @@ class DispensationController < ApplicationController
         @new_prescription.quantity = params[:quantity]
         @new_prescription.amount_dispensed = params[:quantity]
         @new_prescription.provider_id = User.current.id
-        @new_prescription.date_prescribed = Time.now
+        @new_prescription.date_prescribed = Time.current
         @new_prescription.save
 
         @dispensation = Dispensation.create({:rx_id => @new_prescription.id, :inventory_id => item.bottle_id,
                                              :patient_id => @new_prescription.patient_id, :quantity => @new_prescription.amount_dispensed,
-                                             :dispensation_date => Time.now, :dispensed_by => User.current.id})
+                                             :dispensation_date => Time.current, :dispensed_by => User.current.id})
 
         if @dispensation.errors.blank?
           print_and_redirect("/print_dispensation_label/#{@new_prescription.id}", "/patient/#{@patient.id}") and return

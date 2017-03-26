@@ -29,6 +29,7 @@ en:
         drug_category: "Drug category"
         amount_received: "Amount received"
         tbl_pages: "Showing _START_ to _END_ of _TOTAL_ entries"
+        filtered: "(filtered from _MAX_ total entries)"
         search: "Search"
         report_duration: "Select duration of report"
         start_date: "Report start date"

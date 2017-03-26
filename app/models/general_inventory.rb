@@ -42,7 +42,7 @@ class GeneralInventory < ActiveRecord::Base
 
   def complete_record
     self.current_quantity = self.received_quantity
-    self.date_received = Date.today
+    self.date_received = Date.current
     self.created_by = User.current.id
     unless !self.gn_identifier.blank?
       last_id = GeneralInventory.order(gn_inventory_id: :desc).first.id rescue "0"

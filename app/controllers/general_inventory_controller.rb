@@ -59,7 +59,7 @@ class GeneralInventoryController < ApplicationController
           @new_stock_entry.current_quantity = params[:amount_received]
           @new_stock_entry.expiration_date = params[:expiry_date].to_date rescue nil
           @new_stock_entry.received_quantity = params[:amount_received]
-          @new_stock_entry.date_received = Date.today
+          @new_stock_entry.date_received = Date.current
           @new_stock_entry.save
 
           if @new_stock_entry.errors.blank?

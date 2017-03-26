@@ -29,6 +29,7 @@ es:
         drug_category: "Categoría de la droga"
         amount_received: "Cantidad Recibida"
         tbl_pages: "Mostrando entrada del _START_ al _END_ de un total de _TOTAL_"
+        filtered: "(filtrado de un total de _MAX_ registros)"
         search: "Buscar"
         report_duration: "Seleccione el rango del reporte"
         start_date: "Fecha inicial del reporte"

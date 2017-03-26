@@ -54,6 +54,6 @@ class MainController < ApplicationController
   end
 
   def time
-    render :text => Time.now().strftime('%Y-%m-%d %H:%M').to_s
+    render :text => Time.current().strftime('%Y-%m-%d %H:%M').to_s
   end
 end
