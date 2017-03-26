@@ -75,6 +75,7 @@ es:
         today: "Hoy"
         user_management: "Administración del usuario"
         add_user: "Agregar usuario"
+        add_drug: "Adicionar medicamento"
         change_password: "Cambiar contraseña"
         unknown: "Desconocido"
         create_visit: "Crear visita"
