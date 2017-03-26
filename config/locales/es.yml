@@ -43,7 +43,7 @@ es:
         select_directions: "Seleccione las indicaciones"
         enter_number_of_days: "Digite el número de días"
         more_items_of_type: "Desea ingresar más items del mismo tipo?"
-        number_of_items: "Number of items"
+        number_of_items: "Número de items adicionales"
         enter_username: "Digite el nombre de usuario"
         enter_password: "Digite contraseña"
         nothing_found: "Ningún dato disponible en esta tabla"
