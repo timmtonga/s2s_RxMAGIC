@@ -47,6 +47,9 @@ es:
         enter_username: "Digite el nombre de usuario"
         enter_password: "Digite contraseña"
         nothing_found: "Ningún dato disponible en esta tabla"
+        enter_ingredient: "Digite el ingrediente activo"
+        enter_dose_strength: "Digite la potencia"
+        enter_dose_form: "Digite presentación del medicamento "
     place_holders:
       select_marital_status: "Seleccione estado civil"
       select_patient_occupation: "Seleccione ocupación del paciente"
@@ -215,6 +218,9 @@ es:
         inhale: "inhalar"
         inventory_number: "Inventario #"
         past_dispensations: "Dispensaciones pasadas"
+        dose_form: "Presentación del medicamento"
+        drug_list: "Lista de medicamentos"
+        drug_name: "Nombre del medicamento"
   messages:
        printing_wait: "Imprimiendo, favor esperar ...."
        loading: "Cargando. Por favor esperar"

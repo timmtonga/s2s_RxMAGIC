@@ -47,6 +47,9 @@ en:
         enter_username: "Enter username"
         enter_password: "Enter password"
         nothing_found: "No records found"
+        enter_ingredient: "Enter drug ingredient"
+        enter_dose_strength: "Enter Dose Strength (include units)"
+        enter_dose_form: "Enter dose form"
     place_holders:
       username: "Username"
       password: "Password"
@@ -209,6 +212,9 @@ en:
         inhale: "inhale"
         inventory_number: "Inventory #"
         past_dispensations: "Past Dispensations"
+        dose_form: "Dose Form"
+        drug_list: "Drug List"
+        drug_name: "Drug Name"
   messages:
        printing_wait: "Printing, please wait ...."
        loading: "Loading. Please wait"
