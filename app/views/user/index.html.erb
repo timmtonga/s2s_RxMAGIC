@@ -34,6 +34,12 @@
         }
       }
     });
+    search_box = $('#generalInventory').dataTable()
+    search = document.getElementsByTagName("input")[0];
+    search.setAttribute("id","search");
+    document.getElementById('search').setAttribute("onclick","showKeyboard();");
+    keyboard = document.getElementsByClassName("keypad")[0]
+    showAlphaKeypad();
   } );
 </script>
 <div style="height: 8vh;border: 1px inset black; border-width: 0px 0px 3px 0px;">
@@ -75,4 +81,9 @@
        style="margin-right: 2vw;float: right;" type="button"><%= t('forms.buttons.finish')%></div>
   <div onmousedown="window.location = '/user/new'" class="bttn bttn-primary bttn-lg gradient"
        style="margin-right: 2vw;float: right;" type="button"><%= t('forms.buttons.add_user')%></div>
+</div>
+<div id="keypad">
+          <span class="keypad">
+          </span>
+
 </div>
