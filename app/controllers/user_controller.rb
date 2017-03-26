@@ -128,6 +128,14 @@ class UserController < ApplicationController
 
   end
 
+  def users_names
+    coordinators = User.where("voided = ? AND role in (?)", false, ["administrator","Pharmacist"]) rescue []
+    names = coordinators.map do |v|
+      "<li value='#{v.user_id}'>#{v.fullname.html_safe}</li>"
+    end
+    render :text => names.join('') and return
+  end
+
   private
 
   def user_params

@@ -30,13 +30,14 @@ Rails.application.routes.draw do
   get "/general_inventory/print_bottle_barcode"
 
   ###################### User Controller #############################
-  get "/username_availability" => "users#username_availability"
+  get "/username_availability" => "user#username_availability"
   get "/login" => "user#login"
   post "/login" => "user#login"
   get '/logout' => "user#logout"
   get "/query_users" => "user#query"
   get "/void_user/:id" => "user#destroy"
   post "/edit_user" => "user#edit"
+  get "/user/users_names"
 
   ###################### Prescription Controller ##############################
   get "/void_prescriptions/:id" => "prescription#destroy"

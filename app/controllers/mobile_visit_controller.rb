@@ -5,8 +5,6 @@ class MobileVisitController < ApplicationController
   end
 
   def new
-    @coordinators = User.where("voided = ? AND role in (?)", false,
-                               ["administrator","Pharmacist"]).collect{|x| x.fullname}.sort
     render :layout => "touch"
   end
 
@@ -16,9 +14,9 @@ class MobileVisitController < ApplicationController
   end
 
   def create
-    raise params.inspect
-    coordinator = User.select("user_id , CONCAT(first_name,middle_name,fathers_name,mothers_name) as
-                               username").where("voided =?", false, ).having("username = ?", params[:visit_coordinator].gsub(" ","")).first rescue nil
+
+    coordinator = User.select("user_id , CONCAT(COALESCE(first_name,''),COALESCE(middle_name,''),
+                                COALESCE(fathers_name,''),COALESCE(mothers_name,'')) as username").where("voided =?", false, ).having("username = ?", params[:visit_coordinator].gsub(" ","")).first rescue nil
 
     @new_visit = MobileVisit.where(visit_date: params[:visit_date].to_date, visit_supervisor: coordinator.id).first_or_initialize
 
