@@ -17,7 +17,23 @@
   // Styling the table with datatables library
   $(document).ready(function() {
     // $.fn.dataTable.moment( 'MMM-YYYY' );
-    $('#generalInventory').DataTable({"bLengthChange": false, "bDestroy": true, "pageLength":5});
+    $('#generalInventory').DataTable({
+      "bLengthChange": false,
+      "bDestroy": true,
+      "pageLength":5,
+      "language": {
+        "search": I18n.t('forms.labels.search'),
+        "lengthMenu": "Display _MENU_ records per page",
+        "zeroRecords": I18n.t('forms.labels.nothing_found'),
+        "info": I18n.t('forms.labels.tbl_pages'),
+        "infoEmpty": "No records available",
+        "infoFiltered": I18n.t('forms.labels.filtered'),
+        "oPaginate": {
+          "sNext": I18n.t('forms.buttons.next'),
+          "sPrevious": I18n.t('forms.buttons.previous')
+        }
+      }
+    });
   } );
 </script>
 <div style="height: 8vh;border: 1px inset black; border-width: 0px 0px 3px 0px;">
