@@ -35,13 +35,17 @@ class DrugController < ApplicationController
 
   def create
 
-    drug_name = ((params[:drug_ingredient].to_s rescue "") + " " + (params[:dose_strength].to_s rescue "") + " " + (params[:dose_form].to_s rescue "")).squish
-    drug = Drug.where(name: drug_name).first_or_initialize
-    drug.drug_category_id = DrugCategory.find_by_category(params[:drug_category]).id
-    drug.name = drug_name
-    drug.dose_strength = (params[:dose_strength].blank? ? nil : params[:dose_strength].squish)
-    drug.dose_form = (params[:dose_form].blank? ? nil : params[:dose_form].squish)
-    drug.save
+    begin
+      drug_name = ((params[:drug_ingredient].to_s rescue "") + " " + (params[:dose_strength].to_s rescue "") + " " + (params[:dose_form].to_s rescue "")).squish
+      drug = Drug.where(name: drug_name).first_or_initialize
+      drug.drug_category_id = DrugCategory.find_by_category(params[:drug_category]).id
+      drug.name = drug_name
+      drug.dose_strength = (params[:dose_strength].blank? ? nil : params[:dose_strength].squish)
+      drug.dose_form = (params[:dose_form].blank? ? nil : params[:dose_form].squish)
+      drug.save
+    rescue ex
+      flash[:errors] = ex.message
+    end
 
     if drug.errors.blank?
       flash[:success] = "#{drug.name} was successfully created."
@@ -54,13 +58,18 @@ class DrugController < ApplicationController
 
   def edit
     if request.post?
-      drug_name = ((params[:drug_ingredient].to_s rescue "") + " " + (params[:dose_strength].to_s rescue "") + " " + (params[:dose_form].to_s rescue "")).squish
-      drug = Drug.find(params[:drug_id])
-      drug.drug_category_id = DrugCategory.find_by_category(params[:drug_category]).id
-      drug.name = drug_name
-      drug.dose_strength = (params[:dose_strength].blank? ? nil : params[:dose_strength].squish)
-      drug.dose_form = (params[:dose_form].blank? ? nil : params[:dose_form].squish)
-      drug.save
+      begin
+        drug_name = ((params[:drug_ingredient].to_s rescue "") + " " + (params[:dose_strength].to_s rescue "") + " " + (params[:dose_form].to_s rescue "")).squish
+        drug = Drug.find(params[:drug_id])
+        drug.drug_category_id = DrugCategory.find_by_category(params[:drug_category]).id
+        drug.name = drug_name
+        drug.dose_strength = (params[:dose_strength].blank? ? nil : params[:dose_strength].squish)
+        drug.dose_form = (params[:dose_form].blank? ? nil : params[:dose_form].squish)
+        drug.save
+      rescue => ex
+        flash[:errors] = ex.message
+      end
+
 
       if drug.errors.blank?
         flash[:success] = "#{drug.name} was successfully edited."

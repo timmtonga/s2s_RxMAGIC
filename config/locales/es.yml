@@ -49,7 +49,7 @@ es:
         nothing_found: "Ningún dato disponible en esta tabla"
         enter_ingredient: "Digite el ingrediente activo"
         enter_dose_strength: "Digite la potencia"
-        enter_dose_form: "Digite presentación del medicamento "
+        enter_dose_form: "Digite presentación del medicamento"
     place_holders:
       select_marital_status: "Seleccione estado civil"
       select_patient_occupation: "Seleccione ocupación del paciente"

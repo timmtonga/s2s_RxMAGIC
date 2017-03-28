@@ -15,7 +15,7 @@
           <%= text_field_tag "drug_ingredient", @drug.ingredient,
                              {:id => 'drug_ingredient',
                               :field_type => 'alpha',
-                              :helpText => 'Enter Drug Ingredient',
+                              :helpText => t('forms.labels.enter_ingredient'),
                               :allowFreeText => false} %>
         </td>
       </tr>
@@ -25,14 +25,14 @@
           <%= text_field_tag "dose_strength", @drug.dose_strength,
                              {:id => 'dose_strength',
                               :field_type => 'password',
-                              :helpText => 'Enter Dose Strength',
+                              :helpText => t('forms.labels.enter_dose_strength'),
                               :allowFreeText => false} %>
         </td>
       </tr>
       <tr>
         <td>Dose Form</td>
         <td>
-          <select style='width: 100%' name='dose_form' id='dose_form' value="<%= @drug.dose_form.titleize %>" helptext='Select Dose Form'
+          <select style='width: 100%' name='dose_form' id='dose_form' value="<%= @drug.dose_form.titleize %>" helptext="'<%= t('forms.labels.enter_dose_form')%>'"
                   doublepane="false">
             <% (dose_forms || []).each do |option| %>
                 <option value="<%= option%>"><%= option.titleize %></option>
