@@ -10,48 +10,32 @@
 
 
 <%= form_for :drug,  :url =>  drug_index_path   do |f| %>
-    <table cellpadding=10>
-      <tr>
-        <td>
+
           <%= text_field_tag "drug_ingredient", params[:drug_name],
                              {:id => 'drug_ingredient',
                               :field_type => 'alpha',
                               :helpText => t('forms.labels.enter_ingredient'),
                               :allowFreeText => false} %>
-        </td>
-      </tr>
-      <tr>
-        <td>Dose Strength</td>
-        <td>
+
           <%= text_field_tag "dose_strength", params[:dose_strength],
                              {:id => 'dose_strength',
                               :field_type => 'password',
                               :helpText => t('forms.labels.enter_dose_strength'),
                               :allowFreeText => false} %>
-        </td>
-      </tr>
-      <tr>
-        <td>Dose Form</td>
-        <td>
-          <select style='width: 100%' name='dose_form' id='dose_form' helptext=<%= t('forms.labels.enter_dose_form')%>
+
+          <select style='width: 100%' name='dose_form' id='dose_form' helptext='<%= t('forms.labels.enter_dose_form')%>'
                   doublepane="false">
             <% (dose_forms || []).each do |option| %>
                 <option value="<%= option%>"><%= option.titleize %></option>
             <% end %>
           </select>
-        </td>
-      </tr>
-      <tr>
-        <td>Drug Category</td>
-        <td>
-          <select style='width: 100%' name='drug_category' id='drug_category' helptext=<%= t('forms.labels.drug_category')%>
+
+          <select style='width: 100%' name='drug_category' id='drug_category' helptext='<%= t('forms.labels.drug_category')%>'
                   doublepane="false">
             <% (drug_categories || []).each do |option| %>
                 <option value="<%= option%>"><%= option.titleize %></option>
             <% end %>
           </select>
-        </td>
-      </tr>
     </table>
 
 

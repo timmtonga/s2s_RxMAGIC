@@ -26,6 +26,6 @@
                         :helpText => t('forms.labels.end_date'),
                         :maxDate =>  Date.today.to_date,
                         :minDate => (Date.today - 20.year).to_date,
-                        :condition => "$('reportDuration').value == 'range'",
+                        :condition => "$('reportDuration').value == '#{t('forms.options.range')}'",
                         :tt_pageStyleClass => "Date DatesOnly"} %>
 <% end %>
