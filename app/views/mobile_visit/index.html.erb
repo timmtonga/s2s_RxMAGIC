@@ -77,10 +77,12 @@
                   <img style="margin-left: 1vw;margin-right: 1vw" src="/assets/view.png" title="View Visit"
                        onmousedown="window.location='/mobile_visit/<%= visit.id %>'">
               </div>
-              <div style="display: table-cell;text-align: center;">
-                <img src="/assets/delete.png" title="Void Visit"
-                     onmousedown="confirmAction('/void_mobile_visit/<%= visit.id %>', 'Are you Sure?')">
-              </div>
+              <% if visit.products.to_i == 0 %>
+                <div style="display: table-cell;text-align: center;">
+                  <img src="/assets/delete.png" title="Void Visit"
+                       onmousedown="confirmAction('/void_mobile_visit/<%= visit.id %>', 'Are you Sure?')">
+                </div>
+              <% end %>
             </div>
           </td>
         </tr>
