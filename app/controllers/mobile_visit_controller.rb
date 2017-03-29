@@ -18,7 +18,7 @@ class MobileVisitController < ApplicationController
     coordinator = User.select("user_id , CONCAT(COALESCE(first_name,''),COALESCE(middle_name,''),
                                 COALESCE(fathers_name,''),COALESCE(mothers_name,'')) as username").where("voided =?", false, ).having("username = ?", params[:visit_coordinator].gsub(" ","")).first rescue nil
 
-    @new_visit = MobileVisit.where(visit_date: params[:visit_date].to_date, visit_supervisor: coordinator.id).first_or_initialize
+    @new_visit = MobileVisit.where(visit_date: params[:visit_date].to_date, visit_supervisor: coordinator.id,voided: false).first_or_initialize
 
     @new_visit.save if @new_visit.id.blank?
 
@@ -53,7 +53,9 @@ class MobileVisitController < ApplicationController
 
       (products || []).each do |product|
 
-        product.update_attributes(:voided => true)
+        product.voided = true
+        product.save
+
         item = GeneralInventory.where("gn_identifier = ? AND voided = ?", product.gn_identifier, false).first
 
         next if item.blank?
