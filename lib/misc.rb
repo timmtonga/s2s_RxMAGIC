@@ -134,7 +134,7 @@ module Misc
                    "QHR"=>I18n.t('forms.options.every_hour'), "Q4HRS"=>I18n.t('forms.options.every_four_hours'),
                    "Q2HRS"=>I18n.t('forms.options.every_two_hours'), "QWK"=>I18n.t('forms.options.once_a_week')}
 
-    prn = (prn == "PRN" ? I18n.t('forms.options.as_needed') : I18n.t('forms.options.daily'))
+    prn = (prn == "PRN" ? I18n.t('forms.options.as_needed') : '')
 
     return (routes[route.downcase] + " "+ dose.to_s + " " + frequencies[frequency] +" " + prn).titleize
   end

@@ -88,6 +88,7 @@ es:
         directions: "Indicaciones"
         duration: "Duración del Tratamiento"
         previous: "Anterior"
+        quantity: "Cantidad"
     options:
       male: "Masculino"
       female: "Femenino"
@@ -142,10 +143,11 @@ es:
       five_times_a_day: "Cinco veces al día"
       six_times_a_day: "Seis veces al día"
       every_other_day: "Cada dos días"
-      once_a_week: "Una vez a la semana"
+      once_a_week: "Una vez cada semana"
       every_hour: "Cada hora"
       every_two_hours: "Cada dos horas"
       every_four_hours: "Cada cuatro horas"
+      every_night: "Cada noche"
   menu:
       terms:
         scan_barcode: "Escanear código de barras"
@@ -212,7 +214,7 @@ es:
         directions: "Indicaciones"
         quantity: "Cantidad"
         route: "Ruta"
-        take: "tomar"
+        take: "tome"
         apply: "aplicar"
         inject: "inyectar"
         inhale: "inhalar"

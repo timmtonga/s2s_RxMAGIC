@@ -40,8 +40,18 @@
         document.getElementById('search').setAttribute("onclick","showKeyboard();");
         keyboard = document.getElementsByClassName("keypad")[0]
         showAlphaKeypad();
+        setTimeout(initializeListener(), 3000);
       } );
 
+      function initializeListener()
+      {
+        barcode = document.getElementById("search");
+        barcode.focus();
+        timerHand = setTimeout(function () {
+          barcode.value = barcode.value.trim().replace(/\$/, "").replace(/\-/,"");
+        }, 3000);
+
+      }
 
     </script>
     <div style="height: 8vh;border: 1px inset black; border-width: 0px 0px 3px 0px;">
@@ -57,7 +67,7 @@
           <th style="width: 7.5%;"><%= t('menu.terms.category') %></th>
           <th style="width: 10%;"><%= t('menu.terms.current_quantity') %></th>
           <th style="width: 7.5%;"><%= t('menu.terms.expiration_date') %></th>
-          <th style="width: 25%;"><%= t('menu.terms.actions') %></th>
+          <th style="width: 17.5%;"><%= t('menu.terms.actions') %></th>
         </tr>
         </thead>
 

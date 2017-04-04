@@ -82,6 +82,7 @@ en:
         directions: "Directions"
         duration: "Duration"
         previous: "Previous"
+        quantity: "Quantity"
     options:
       male: "Male"
       female: "Female"
@@ -140,6 +141,7 @@ en:
       every_hour: "Every hour"
       every_two_hours: "Every 2 hours"
       every_four_hours: "Every 4 hours"
+      every_night: "Every night"
   menu:
       terms:
         scan_barcode: "Scan barcode"

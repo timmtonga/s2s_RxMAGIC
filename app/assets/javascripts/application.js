@@ -93,18 +93,19 @@ function createDirections(route, dose, frequency,doseType)
     frequencies = {"OD": I18n.t('forms.options.once_a_day'), "BD":I18n.t('forms.options.two_times_a_day'),
                     "TDS":I18n.t('forms.options.three_times_a_day'), "QID":I18n.t('forms.options.four_times_a_day'),
                     "QHR":I18n.t('forms.options.every_hour'), "Q4HRS":I18n.t('forms.options.every_four_hours'),
-                    "Q2HRS":I18n.t('forms.options.every_two_hours'), "QWK":I18n.t('forms.options.once_a_week')}
+                    "Q2HRS":I18n.t('forms.options.every_two_hours'), "QWK":I18n.t('forms.options.once_a_week'),
+                    "EOD":I18n.t('forms.options.every_other_day'), "QN":I18n.t('forms.options.every_night') }
     type = document.getElementsByName(doseType)
     var prn = document.forms[0].elements["doseType"].value;
 
     dir = (routes[route.toLowerCase()] == undefined ? "" : routes[route.toLowerCase()])
     return dir + " "+ dose + " " + (frequencies[frequency] == undefined ? "" : frequencies[frequency]) + " " +
-        (prn == "PRN" ? I18n.t('forms.options.as_needed') : I18n.t('forms.options.daily'));
+        (prn == "PRN" ? I18n.t('forms.options.as_needed') : '');
 }
 
 function calcQuantity(dose, frequency,duration) {
-    frequencies = {"OD": 1, "BD":2, "TDS":3, "QID":4, "Q4HRS":6,"QHR":24, "Q2HRS":12};
-    console.log((dose * frequencies[frequency] * duration))
+    frequencies = {"OD": 1, "BD":2, "TDS":3, "QID":4, "Q4HRS":6,"QHR":24, "Q2HRS":12, "EOD":0.5, "QWK":0.7, "QN": 1};
+
     return ((dose * frequencies[frequency] * duration) == NaN ? 0 : Math.ceil(dose * frequencies[frequency] * duration))
 }
 
