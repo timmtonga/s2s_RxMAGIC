@@ -17,6 +17,8 @@
       <th style="background-color: #2b2b2b;padding: 5px;color: #FFFFFF;border: 1px solid #ffffff;"><%= t('menu.terms.item') %></th>
       <th style="background-color: #2b2b2b;padding: 5px;color: #FFFFFF;border: 1px solid #ffffff;"><%= t('menu.terms.available_quantity') %></th>
       <th style="background-color: #2b2b2b;padding: 5px;color: #FFFFFF;border: 1px solid #ffffff;"><%= t('menu.terms.amount_dispensed') %></th>
+      <th style="background-color: #2b2b2b;padding: 5px;color: #FFFFFF;border: 1px solid #ffffff;">Avg dispensations per day</th>
+      <th style="background-color: #2b2b2b;padding: 5px;color: #FFFFFF;border: 1px solid #ffffff;">Projected coverage in days</th>
     </tr>
 
     <% (@items || []).each do |drug,item| %>
@@ -24,6 +26,8 @@
           <td style="text-align: left;padding: 5px;"><%= item["name"] %></td>
           <td style="text-align: left;padding: 5px;"><%= item["available"] %></td>
           <td style="text-align: left;padding: 5px;"><%= item["dispensed"] %></td>
+          <td style="text-align: left;padding: 5px;"><%= (item["dispensed"]/@days rescue '') %></td>
+          <td style="text-align: left;padding: 5px;"><%= (item["available"]/@days rescue '') %></td>
         </tr>
     <% end %>
   </table>

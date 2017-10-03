@@ -1,14 +1,14 @@
 class Patient < ActiveRecord::Base
   def fullname
-    self.first_name + " " +self.middle_name + " " + self.fathers_name + " " +self.mothers_name
+    (self.first_name || '') + " " + (self.middle_name || '') + " " + (self.fathers_name || '') + " " + (self.mothers_name || '')
   end
 
   def first_names
-    self.first_name + " " +self.middle_name
+    (self.first_name || '') + " " + (self.middle_name || '')
   end
 
   def last_names
-    self.fathers_name + " " +self.mothers_name
+(    self.fathers_name || '') + " " + (self.mothers_name || '')
   end
   def formatted_pnid
     id = self.patient_identifier

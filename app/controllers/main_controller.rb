@@ -49,6 +49,7 @@ class MainController < ApplicationController
                                               and g.date_received <= '#{end_date.to_date.strftime("%Y-%m-%d")}'
                                               GROUP BY g.drug_id")
 
+    @days = (end_date.to_date - start_date.to_date).to_i
     @items = view_context.compile_report(dispensations,inventory,later_dispensations)
 
   end

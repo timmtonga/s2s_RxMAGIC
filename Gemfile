@@ -6,7 +6,6 @@ gem 'rails', '4.2.0'
 # Use sqlite3 as the database for Active Record
 #gem 'sqlite3'
 
-gem 'mysql2'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -28,6 +27,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'passenger', '4.0.41'
 gem 'rails-i18n', '~> 4.0.0' # for Rails 4
 gem "i18n-js"
+gem 'mysql2', '~> 0.3.18'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

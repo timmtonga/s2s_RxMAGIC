@@ -21,9 +21,10 @@ module ZebraPrinter #:nodoc:
  
     # Initialize a new label with height weight and orientation. The orientation
     # can be 'T' for top, or 'B' for bottom
-    def initialize(width = (3*203), height = (2*203), orientation = 'T', number_of_labels = nil)
-      @width = width || (3*203)
-      @height = height || (2*203)
+	#     def initialize(width = (616), height = (322), orientation = 'T', number_of_labels = nil)
+    def initialize(width = (801), height = (329), orientation = 'T', number_of_labels = nil)
+      @width = width || (801)
+      @height = height || (329)
       @gap = '026'
       @orientation = orientation || 'T'
       @number_of_labels = number_of_labels || nil
@@ -299,7 +300,7 @@ module ZebraPrinter #:nodoc:
 
   class StandardLabel < Label  
     def initialize()
-      dimensions = (GlobalProperty.find_by_property("label_width_height").property_value rescue nil || "#{(3*203)},#{(2*203)}").split(",").collect{|d|d.to_i}
+      dimensions = (GlobalProperty.find_by_property("label_width_height").property_value rescue nil || "#{801},#{(329)}").split(",").collect{|d|d.to_i}
       super(dimensions.first, dimensions.last, 'T')
     end  
   end

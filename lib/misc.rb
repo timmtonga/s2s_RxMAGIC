@@ -29,7 +29,7 @@ module Misc
     label.font_horizontal_multiplier = 1
     label.font_vertical_multiplier = 1
     label.left_margin = 50
-    label.draw_barcode(610,30,1,1,3,6,80,false,"#{bottle_id}")
+    label.draw_barcode(710,30,1,1,2,6,80,false,"#{bottle_id}")
     label.draw_multi_text("#{item}", {:column_width => 520})
     label.draw_multi_text("Inventory #:#{Misc.dash_formatter(bottle_id)}",{:column_width => 520})
     label.draw_multi_text("Exp:#{expiration_date.strftime('%m/%Y')}", {:column_width => 520})
@@ -132,6 +132,7 @@ module Misc
     frequencies = {"OD"=> I18n.t('forms.options.once_a_day'), "BD"=>I18n.t('forms.options.two_times_a_day'),
                    "TDS"=>I18n.t('forms.options.three_times_a_day'), "QID"=>I18n.t('forms.options.four_times_a_day'),
                    "QHR"=>I18n.t('forms.options.every_hour'), "Q4HRS"=>I18n.t('forms.options.every_four_hours'),
+                   "EOD"=>I18n.t('forms.options.every_other_day'),"QN" =>I18n.t('forms.options.every_night'),
                    "Q2HRS"=>I18n.t('forms.options.every_two_hours'), "QWK"=>I18n.t('forms.options.once_a_week')}
 
     prn = (prn == "PRN" ? I18n.t('forms.options.as_needed') : '')
