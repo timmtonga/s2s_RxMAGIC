@@ -16,7 +16,7 @@
           Expiry Date:
         </td>
         <td>
-          <%= text_field_tag 'expiry_date', @item.expiration_date.strftime("%d-%m-%Y"),
+          <%= text_field_tag 'expiry_date', @item.expiration_date.strftime("%Y-%m-%d"),
                              {:id => 'expiry_date',
                               :field_type => 'date',
                               :helpText => "Expiry date",
